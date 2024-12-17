@@ -49,8 +49,6 @@ build CMakeFiles/lib.dir/src/testlib.cpp.obj: CXX_COMPILER__lib_unscanned_ C$:/U
   INCLUDES = -IC:/Users/User/Desktop/Personal_Programming/sgNet/include
   OBJECT_DIR = CMakeFiles\lib.dir
   OBJECT_FILE_DIR = CMakeFiles\lib.dir\src
-  TARGET_COMPILE_PDB = CMakeFiles\lib.dir\lib.pdb
-  TARGET_PDB = liblib.pdb
 
 
 # =============================================================================
@@ -64,9 +62,38 @@ build liblib.a: CXX_STATIC_LIBRARY_LINKER__lib_ CMakeFiles/lib.dir/src/testlib.c
   OBJECT_DIR = CMakeFiles\lib.dir
   POST_BUILD = cd .
   PRE_LINK = cd .
-  TARGET_COMPILE_PDB = CMakeFiles\lib.dir\lib.pdb
   TARGET_FILE = liblib.a
-  TARGET_PDB = liblib.pdb
+  TARGET_PDB = lib.a.dbg
+
+# =============================================================================
+# Object build statements for STATIC_LIBRARY target SgNet
+
+
+#############################################
+# Order-only phony target for SgNet
+
+build cmake_object_order_depends_target_SgNet: phony || .
+
+build CMakeFiles/SgNet.dir/src/tensor/tensor.cpp.obj: CXX_COMPILER__SgNet_unscanned_ C$:/Users/User/Desktop/Personal_Programming/sgNet/src/tensor/tensor.cpp || cmake_object_order_depends_target_SgNet
+  DEP_FILE = CMakeFiles\SgNet.dir\src\tensor\tensor.cpp.obj.d
+  INCLUDES = -IC:/Users/User/Desktop/Personal_Programming/sgNet/include
+  OBJECT_DIR = CMakeFiles\SgNet.dir
+  OBJECT_FILE_DIR = CMakeFiles\SgNet.dir\src\tensor
+
+
+# =============================================================================
+# Link build statements for STATIC_LIBRARY target SgNet
+
+
+#############################################
+# Link the static library libSgNet.a
+
+build libSgNet.a: CXX_STATIC_LIBRARY_LINKER__SgNet_ CMakeFiles/SgNet.dir/src/tensor/tensor.cpp.obj
+  OBJECT_DIR = CMakeFiles\SgNet.dir
+  POST_BUILD = cd .
+  PRE_LINK = cd .
+  TARGET_FILE = libSgNet.a
+  TARGET_PDB = SgNet.a.dbg
 
 # =============================================================================
 # Object build statements for EXECUTABLE target testApp
@@ -75,15 +102,13 @@ build liblib.a: CXX_STATIC_LIBRARY_LINKER__lib_ CMakeFiles/lib.dir/src/testlib.c
 #############################################
 # Order-only phony target for testApp
 
-build cmake_object_order_depends_target_testApp: phony || cmake_object_order_depends_target_lib
+build cmake_object_order_depends_target_testApp: phony || cmake_object_order_depends_target_SgNet cmake_object_order_depends_target_lib
 
 build CMakeFiles/testApp.dir/main.cpp.obj: CXX_COMPILER__testApp_unscanned_ C$:/Users/User/Desktop/Personal_Programming/sgNet/main.cpp || cmake_object_order_depends_target_testApp
   DEP_FILE = CMakeFiles\testApp.dir\main.cpp.obj.d
   INCLUDES = -IC:/Users/User/Desktop/Personal_Programming/sgNet/include
   OBJECT_DIR = CMakeFiles\testApp.dir
   OBJECT_FILE_DIR = CMakeFiles\testApp.dir
-  TARGET_COMPILE_PDB = CMakeFiles\testApp.dir\
-  TARGET_PDB = testApp.pdb
 
 
 # =============================================================================
@@ -93,15 +118,14 @@ build CMakeFiles/testApp.dir/main.cpp.obj: CXX_COMPILER__testApp_unscanned_ C$:/
 #############################################
 # Link the executable testApp.exe
 
-build testApp.exe: CXX_EXECUTABLE_LINKER__testApp_ CMakeFiles/testApp.dir/main.cpp.obj | liblib.a || liblib.a
-  LINK_LIBRARIES = liblib.a  -lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32
+build testApp.exe: CXX_EXECUTABLE_LINKER__testApp_ CMakeFiles/testApp.dir/main.cpp.obj | liblib.a libSgNet.a || libSgNet.a liblib.a
+  LINK_LIBRARIES = liblib.a  libSgNet.a  -lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32
   OBJECT_DIR = CMakeFiles\testApp.dir
   POST_BUILD = cd .
   PRE_LINK = cd .
-  TARGET_COMPILE_PDB = CMakeFiles\testApp.dir\
   TARGET_FILE = testApp.exe
   TARGET_IMPLIB = libtestApp.dll.a
-  TARGET_PDB = testApp.pdb
+  TARGET_PDB = testApp.exe.dbg
 
 
 #############################################
@@ -129,6 +153,8 @@ build rebuild_cache: phony CMakeFiles/rebuild_cache.util
 # =============================================================================
 # Target aliases.
 
+build SgNet: phony libSgNet.a
+
 build lib: phony liblib.a
 
 build testApp: phony testApp.exe
@@ -141,7 +167,7 @@ build testApp: phony testApp.exe
 #############################################
 # Folder: C:/Users/User/Desktop/Personal_Programming/sgNet/build
 
-build all: phony liblib.a testApp.exe
+build all: phony liblib.a libSgNet.a testApp.exe
 
 # =============================================================================
 # Built-in targets
@@ -150,14 +176,14 @@ build all: phony liblib.a testApp.exe
 #############################################
 # Re-run CMake if any of its inputs changed.
 
-build build.ninja: RERUN_CMAKE | C$:/Users/User/Desktop/Personal_Programming/sgNet/CMakeLists.txt C$:/mingw64/share/cmake-3.29/Modules/CMakeCXXCompiler.cmake.in C$:/mingw64/share/cmake-3.29/Modules/CMakeCXXCompilerABI.cpp C$:/mingw64/share/cmake-3.29/Modules/CMakeCXXInformation.cmake C$:/mingw64/share/cmake-3.29/Modules/CMakeCommonLanguageInclude.cmake C$:/mingw64/share/cmake-3.29/Modules/CMakeCompilerIdDetection.cmake C$:/mingw64/share/cmake-3.29/Modules/CMakeDetermineCXXCompiler.cmake C$:/mingw64/share/cmake-3.29/Modules/CMakeDetermineCompileFeatures.cmake C$:/mingw64/share/cmake-3.29/Modules/CMakeDetermineCompiler.cmake C$:/mingw64/share/cmake-3.29/Modules/CMakeDetermineCompilerABI.cmake C$:/mingw64/share/cmake-3.29/Modules/CMakeDetermineCompilerId.cmake C$:/mingw64/share/cmake-3.29/Modules/CMakeDetermineRCCompiler.cmake C$:/mingw64/share/cmake-3.29/Modules/CMakeDetermineSystem.cmake C$:/mingw64/share/cmake-3.29/Modules/CMakeFindBinUtils.cmake C$:/mingw64/share/cmake-3.29/Modules/CMakeGenericSystem.cmake C$:/mingw64/share/cmake-3.29/Modules/CMakeInitializeConfigs.cmake C$:/mingw64/share/cmake-3.29/Modules/CMakeLanguageInformation.cmake C$:/mingw64/share/cmake-3.29/Modules/CMakeNinjaFindMake.cmake C$:/mingw64/share/cmake-3.29/Modules/CMakeParseImplicitIncludeInfo.cmake C$:/mingw64/share/cmake-3.29/Modules/CMakeParseImplicitLinkInfo.cmake C$:/mingw64/share/cmake-3.29/Modules/CMakeParseLibraryArchitecture.cmake C$:/mingw64/share/cmake-3.29/Modules/CMakeRCCompiler.cmake.in C$:/mingw64/share/cmake-3.29/Modules/CMakeRCInformation.cmake C$:/mingw64/share/cmake-3.29/Modules/CMakeSystem.cmake.in C$:/mingw64/share/cmake-3.29/Modules/CMakeSystemSpecificInformation.cmake C$:/mingw64/share/cmake-3.29/Modules/CMakeSystemSpecificInitialize.cmake C$:/mingw64/share/cmake-3.29/Modules/CMakeTestCXXCompiler.cmake C$:/mingw64/share/cmake-3.29/Modules/CMakeTestCompilerCommon.cmake C$:/mingw64/share/cmake-3.29/Modules/CMakeTestRCCompiler.cmake C$:/mingw64/share/cmake-3.29/Modules/Compiler/ADSP-DetermineCompiler.cmake C$:/mingw64/share/cmake-3.29/Modules/Compiler/ARMCC-DetermineCompiler.cmake C$:/mingw64/share/cmake-3.29/Modules/Compiler/ARMClang-DetermineCompiler.cmake C$:/mingw64/share/cmake-3.29/Modules/Compiler/AppleClang-DetermineCompiler.cmake C$:/mingw64/share/cmake-3.29/Modules/Compiler/Borland-DetermineCompiler.cmake C$:/mingw64/share/cmake-3.29/Modules/Compiler/CMakeCommonCompilerMacros.cmake C$:/mingw64/share/cmake-3.29/Modules/Compiler/Clang-DetermineCompiler.cmake C$:/mingw64/share/cmake-3.29/Modules/Compiler/Clang-DetermineCompilerInternal.cmake C$:/mingw64/share/cmake-3.29/Modules/Compiler/Compaq-CXX-DetermineCompiler.cmake C$:/mingw64/share/cmake-3.29/Modules/Compiler/Cray-DetermineCompiler.cmake C$:/mingw64/share/cmake-3.29/Modules/Compiler/CrayClang-DetermineCompiler.cmake C$:/mingw64/share/cmake-3.29/Modules/Compiler/Embarcadero-DetermineCompiler.cmake C$:/mingw64/share/cmake-3.29/Modules/Compiler/Fujitsu-DetermineCompiler.cmake C$:/mingw64/share/cmake-3.29/Modules/Compiler/FujitsuClang-DetermineCompiler.cmake C$:/mingw64/share/cmake-3.29/Modules/Compiler/GHS-DetermineCompiler.cmake C$:/mingw64/share/cmake-3.29/Modules/Compiler/GNU-CXX-DetermineCompiler.cmake C$:/mingw64/share/cmake-3.29/Modules/Compiler/GNU-CXX.cmake C$:/mingw64/share/cmake-3.29/Modules/Compiler/GNU-FindBinUtils.cmake C$:/mingw64/share/cmake-3.29/Modules/Compiler/GNU.cmake C$:/mingw64/share/cmake-3.29/Modules/Compiler/HP-CXX-DetermineCompiler.cmake C$:/mingw64/share/cmake-3.29/Modules/Compiler/IAR-DetermineCompiler.cmake C$:/mingw64/share/cmake-3.29/Modules/Compiler/IBMCPP-CXX-DetermineVersionInternal.cmake C$:/mingw64/share/cmake-3.29/Modules/Compiler/IBMClang-CXX-DetermineCompiler.cmake C$:/mingw64/share/cmake-3.29/Modules/Compiler/Intel-DetermineCompiler.cmake C$:/mingw64/share/cmake-3.29/Modules/Compiler/IntelLLVM-DetermineCompiler.cmake C$:/mingw64/share/cmake-3.29/Modules/Compiler/LCC-CXX-DetermineCompiler.cmake C$:/mingw64/share/cmake-3.29/Modules/Compiler/MSVC-DetermineCompiler.cmake C$:/mingw64/share/cmake-3.29/Modules/Compiler/NVHPC-DetermineCompiler.cmake C$:/mingw64/share/cmake-3.29/Modules/Compiler/NVIDIA-DetermineCompiler.cmake C$:/mingw64/share/cmake-3.29/Modules/Compiler/OpenWatcom-DetermineCompiler.cmake C$:/mingw64/share/cmake-3.29/Modules/Compiler/OrangeC-DetermineCompiler.cmake C$:/mingw64/share/cmake-3.29/Modules/Compiler/PGI-DetermineCompiler.cmake C$:/mingw64/share/cmake-3.29/Modules/Compiler/PathScale-DetermineCompiler.cmake C$:/mingw64/share/cmake-3.29/Modules/Compiler/SCO-DetermineCompiler.cmake C$:/mingw64/share/cmake-3.29/Modules/Compiler/SunPro-CXX-DetermineCompiler.cmake C$:/mingw64/share/cmake-3.29/Modules/Compiler/TI-DetermineCompiler.cmake C$:/mingw64/share/cmake-3.29/Modules/Compiler/TIClang-DetermineCompiler.cmake C$:/mingw64/share/cmake-3.29/Modules/Compiler/Tasking-DetermineCompiler.cmake C$:/mingw64/share/cmake-3.29/Modules/Compiler/VisualAge-CXX-DetermineCompiler.cmake C$:/mingw64/share/cmake-3.29/Modules/Compiler/Watcom-DetermineCompiler.cmake C$:/mingw64/share/cmake-3.29/Modules/Compiler/XL-CXX-DetermineCompiler.cmake C$:/mingw64/share/cmake-3.29/Modules/Compiler/XLClang-CXX-DetermineCompiler.cmake C$:/mingw64/share/cmake-3.29/Modules/Compiler/zOS-CXX-DetermineCompiler.cmake C$:/mingw64/share/cmake-3.29/Modules/Internal/CMakeDetermineLinkerId.cmake C$:/mingw64/share/cmake-3.29/Modules/Internal/FeatureTesting.cmake C$:/mingw64/share/cmake-3.29/Modules/Platform/Windows-Determine-CXX.cmake C$:/mingw64/share/cmake-3.29/Modules/Platform/Windows-GNU-CXX-ABI.cmake C$:/mingw64/share/cmake-3.29/Modules/Platform/Windows-GNU-CXX.cmake C$:/mingw64/share/cmake-3.29/Modules/Platform/Windows-GNU.cmake C$:/mingw64/share/cmake-3.29/Modules/Platform/Windows-Initialize.cmake C$:/mingw64/share/cmake-3.29/Modules/Platform/Windows-windres.cmake C$:/mingw64/share/cmake-3.29/Modules/Platform/Windows.cmake C$:/mingw64/share/cmake-3.29/Modules/Platform/WindowsPaths.cmake CMakeCache.txt CMakeFiles/3.29.3/CMakeCXXCompiler.cmake CMakeFiles/3.29.3/CMakeRCCompiler.cmake CMakeFiles/3.29.3/CMakeSystem.cmake
+build build.ninja: RERUN_CMAKE | C$:/Users/User/Desktop/Personal_Programming/sgNet/CMakeLists.txt C$:/mingw64/share/cmake-3.29/Modules/CMakeCXXInformation.cmake C$:/mingw64/share/cmake-3.29/Modules/CMakeCommonLanguageInclude.cmake C$:/mingw64/share/cmake-3.29/Modules/CMakeGenericSystem.cmake C$:/mingw64/share/cmake-3.29/Modules/CMakeInitializeConfigs.cmake C$:/mingw64/share/cmake-3.29/Modules/CMakeLanguageInformation.cmake C$:/mingw64/share/cmake-3.29/Modules/CMakeRCInformation.cmake C$:/mingw64/share/cmake-3.29/Modules/CMakeSystemSpecificInformation.cmake C$:/mingw64/share/cmake-3.29/Modules/CMakeSystemSpecificInitialize.cmake C$:/mingw64/share/cmake-3.29/Modules/Compiler/CMakeCommonCompilerMacros.cmake C$:/mingw64/share/cmake-3.29/Modules/Compiler/GNU-CXX.cmake C$:/mingw64/share/cmake-3.29/Modules/Compiler/GNU.cmake C$:/mingw64/share/cmake-3.29/Modules/Platform/Windows-GNU-CXX-ABI.cmake C$:/mingw64/share/cmake-3.29/Modules/Platform/Windows-GNU-CXX.cmake C$:/mingw64/share/cmake-3.29/Modules/Platform/Windows-GNU.cmake C$:/mingw64/share/cmake-3.29/Modules/Platform/Windows-Initialize.cmake C$:/mingw64/share/cmake-3.29/Modules/Platform/Windows-windres.cmake C$:/mingw64/share/cmake-3.29/Modules/Platform/Windows.cmake C$:/mingw64/share/cmake-3.29/Modules/Platform/WindowsPaths.cmake CMakeCache.txt CMakeFiles/3.29.3/CMakeCXXCompiler.cmake CMakeFiles/3.29.3/CMakeRCCompiler.cmake CMakeFiles/3.29.3/CMakeSystem.cmake
   pool = console
 
 
 #############################################
 # A missing CMake input file is not an error.
 
-build C$:/Users/User/Desktop/Personal_Programming/sgNet/CMakeLists.txt C$:/mingw64/share/cmake-3.29/Modules/CMakeCXXCompiler.cmake.in C$:/mingw64/share/cmake-3.29/Modules/CMakeCXXCompilerABI.cpp C$:/mingw64/share/cmake-3.29/Modules/CMakeCXXInformation.cmake C$:/mingw64/share/cmake-3.29/Modules/CMakeCommonLanguageInclude.cmake C$:/mingw64/share/cmake-3.29/Modules/CMakeCompilerIdDetection.cmake C$:/mingw64/share/cmake-3.29/Modules/CMakeDetermineCXXCompiler.cmake C$:/mingw64/share/cmake-3.29/Modules/CMakeDetermineCompileFeatures.cmake C$:/mingw64/share/cmake-3.29/Modules/CMakeDetermineCompiler.cmake C$:/mingw64/share/cmake-3.29/Modules/CMakeDetermineCompilerABI.cmake C$:/mingw64/share/cmake-3.29/Modules/CMakeDetermineCompilerId.cmake C$:/mingw64/share/cmake-3.29/Modules/CMakeDetermineRCCompiler.cmake C$:/mingw64/share/cmake-3.29/Modules/CMakeDetermineSystem.cmake C$:/mingw64/share/cmake-3.29/Modules/CMakeFindBinUtils.cmake C$:/mingw64/share/cmake-3.29/Modules/CMakeGenericSystem.cmake C$:/mingw64/share/cmake-3.29/Modules/CMakeInitializeConfigs.cmake C$:/mingw64/share/cmake-3.29/Modules/CMakeLanguageInformation.cmake C$:/mingw64/share/cmake-3.29/Modules/CMakeNinjaFindMake.cmake C$:/mingw64/share/cmake-3.29/Modules/CMakeParseImplicitIncludeInfo.cmake C$:/mingw64/share/cmake-3.29/Modules/CMakeParseImplicitLinkInfo.cmake C$:/mingw64/share/cmake-3.29/Modules/CMakeParseLibraryArchitecture.cmake C$:/mingw64/share/cmake-3.29/Modules/CMakeRCCompiler.cmake.in C$:/mingw64/share/cmake-3.29/Modules/CMakeRCInformation.cmake C$:/mingw64/share/cmake-3.29/Modules/CMakeSystem.cmake.in C$:/mingw64/share/cmake-3.29/Modules/CMakeSystemSpecificInformation.cmake C$:/mingw64/share/cmake-3.29/Modules/CMakeSystemSpecificInitialize.cmake C$:/mingw64/share/cmake-3.29/Modules/CMakeTestCXXCompiler.cmake C$:/mingw64/share/cmake-3.29/Modules/CMakeTestCompilerCommon.cmake C$:/mingw64/share/cmake-3.29/Modules/CMakeTestRCCompiler.cmake C$:/mingw64/share/cmake-3.29/Modules/Compiler/ADSP-DetermineCompiler.cmake C$:/mingw64/share/cmake-3.29/Modules/Compiler/ARMCC-DetermineCompiler.cmake C$:/mingw64/share/cmake-3.29/Modules/Compiler/ARMClang-DetermineCompiler.cmake C$:/mingw64/share/cmake-3.29/Modules/Compiler/AppleClang-DetermineCompiler.cmake C$:/mingw64/share/cmake-3.29/Modules/Compiler/Borland-DetermineCompiler.cmake C$:/mingw64/share/cmake-3.29/Modules/Compiler/CMakeCommonCompilerMacros.cmake C$:/mingw64/share/cmake-3.29/Modules/Compiler/Clang-DetermineCompiler.cmake C$:/mingw64/share/cmake-3.29/Modules/Compiler/Clang-DetermineCompilerInternal.cmake C$:/mingw64/share/cmake-3.29/Modules/Compiler/Compaq-CXX-DetermineCompiler.cmake C$:/mingw64/share/cmake-3.29/Modules/Compiler/Cray-DetermineCompiler.cmake C$:/mingw64/share/cmake-3.29/Modules/Compiler/CrayClang-DetermineCompiler.cmake C$:/mingw64/share/cmake-3.29/Modules/Compiler/Embarcadero-DetermineCompiler.cmake C$:/mingw64/share/cmake-3.29/Modules/Compiler/Fujitsu-DetermineCompiler.cmake C$:/mingw64/share/cmake-3.29/Modules/Compiler/FujitsuClang-DetermineCompiler.cmake C$:/mingw64/share/cmake-3.29/Modules/Compiler/GHS-DetermineCompiler.cmake C$:/mingw64/share/cmake-3.29/Modules/Compiler/GNU-CXX-DetermineCompiler.cmake C$:/mingw64/share/cmake-3.29/Modules/Compiler/GNU-CXX.cmake C$:/mingw64/share/cmake-3.29/Modules/Compiler/GNU-FindBinUtils.cmake C$:/mingw64/share/cmake-3.29/Modules/Compiler/GNU.cmake C$:/mingw64/share/cmake-3.29/Modules/Compiler/HP-CXX-DetermineCompiler.cmake C$:/mingw64/share/cmake-3.29/Modules/Compiler/IAR-DetermineCompiler.cmake C$:/mingw64/share/cmake-3.29/Modules/Compiler/IBMCPP-CXX-DetermineVersionInternal.cmake C$:/mingw64/share/cmake-3.29/Modules/Compiler/IBMClang-CXX-DetermineCompiler.cmake C$:/mingw64/share/cmake-3.29/Modules/Compiler/Intel-DetermineCompiler.cmake C$:/mingw64/share/cmake-3.29/Modules/Compiler/IntelLLVM-DetermineCompiler.cmake C$:/mingw64/share/cmake-3.29/Modules/Compiler/LCC-CXX-DetermineCompiler.cmake C$:/mingw64/share/cmake-3.29/Modules/Compiler/MSVC-DetermineCompiler.cmake C$:/mingw64/share/cmake-3.29/Modules/Compiler/NVHPC-DetermineCompiler.cmake C$:/mingw64/share/cmake-3.29/Modules/Compiler/NVIDIA-DetermineCompiler.cmake C$:/mingw64/share/cmake-3.29/Modules/Compiler/OpenWatcom-DetermineCompiler.cmake C$:/mingw64/share/cmake-3.29/Modules/Compiler/OrangeC-DetermineCompiler.cmake C$:/mingw64/share/cmake-3.29/Modules/Compiler/PGI-DetermineCompiler.cmake C$:/mingw64/share/cmake-3.29/Modules/Compiler/PathScale-DetermineCompiler.cmake C$:/mingw64/share/cmake-3.29/Modules/Compiler/SCO-DetermineCompiler.cmake C$:/mingw64/share/cmake-3.29/Modules/Compiler/SunPro-CXX-DetermineCompiler.cmake C$:/mingw64/share/cmake-3.29/Modules/Compiler/TI-DetermineCompiler.cmake C$:/mingw64/share/cmake-3.29/Modules/Compiler/TIClang-DetermineCompiler.cmake C$:/mingw64/share/cmake-3.29/Modules/Compiler/Tasking-DetermineCompiler.cmake C$:/mingw64/share/cmake-3.29/Modules/Compiler/VisualAge-CXX-DetermineCompiler.cmake C$:/mingw64/share/cmake-3.29/Modules/Compiler/Watcom-DetermineCompiler.cmake C$:/mingw64/share/cmake-3.29/Modules/Compiler/XL-CXX-DetermineCompiler.cmake C$:/mingw64/share/cmake-3.29/Modules/Compiler/XLClang-CXX-DetermineCompiler.cmake C$:/mingw64/share/cmake-3.29/Modules/Compiler/zOS-CXX-DetermineCompiler.cmake C$:/mingw64/share/cmake-3.29/Modules/Internal/CMakeDetermineLinkerId.cmake C$:/mingw64/share/cmake-3.29/Modules/Internal/FeatureTesting.cmake C$:/mingw64/share/cmake-3.29/Modules/Platform/Windows-Determine-CXX.cmake C$:/mingw64/share/cmake-3.29/Modules/Platform/Windows-GNU-CXX-ABI.cmake C$:/mingw64/share/cmake-3.29/Modules/Platform/Windows-GNU-CXX.cmake C$:/mingw64/share/cmake-3.29/Modules/Platform/Windows-GNU.cmake C$:/mingw64/share/cmake-3.29/Modules/Platform/Windows-Initialize.cmake C$:/mingw64/share/cmake-3.29/Modules/Platform/Windows-windres.cmake C$:/mingw64/share/cmake-3.29/Modules/Platform/Windows.cmake C$:/mingw64/share/cmake-3.29/Modules/Platform/WindowsPaths.cmake CMakeCache.txt CMakeFiles/3.29.3/CMakeCXXCompiler.cmake CMakeFiles/3.29.3/CMakeRCCompiler.cmake CMakeFiles/3.29.3/CMakeSystem.cmake: phony
+build C$:/Users/User/Desktop/Personal_Programming/sgNet/CMakeLists.txt C$:/mingw64/share/cmake-3.29/Modules/CMakeCXXInformation.cmake C$:/mingw64/share/cmake-3.29/Modules/CMakeCommonLanguageInclude.cmake C$:/mingw64/share/cmake-3.29/Modules/CMakeGenericSystem.cmake C$:/mingw64/share/cmake-3.29/Modules/CMakeInitializeConfigs.cmake C$:/mingw64/share/cmake-3.29/Modules/CMakeLanguageInformation.cmake C$:/mingw64/share/cmake-3.29/Modules/CMakeRCInformation.cmake C$:/mingw64/share/cmake-3.29/Modules/CMakeSystemSpecificInformation.cmake C$:/mingw64/share/cmake-3.29/Modules/CMakeSystemSpecificInitialize.cmake C$:/mingw64/share/cmake-3.29/Modules/Compiler/CMakeCommonCompilerMacros.cmake C$:/mingw64/share/cmake-3.29/Modules/Compiler/GNU-CXX.cmake C$:/mingw64/share/cmake-3.29/Modules/Compiler/GNU.cmake C$:/mingw64/share/cmake-3.29/Modules/Platform/Windows-GNU-CXX-ABI.cmake C$:/mingw64/share/cmake-3.29/Modules/Platform/Windows-GNU-CXX.cmake C$:/mingw64/share/cmake-3.29/Modules/Platform/Windows-GNU.cmake C$:/mingw64/share/cmake-3.29/Modules/Platform/Windows-Initialize.cmake C$:/mingw64/share/cmake-3.29/Modules/Platform/Windows-windres.cmake C$:/mingw64/share/cmake-3.29/Modules/Platform/Windows.cmake C$:/mingw64/share/cmake-3.29/Modules/Platform/WindowsPaths.cmake CMakeCache.txt CMakeFiles/3.29.3/CMakeCXXCompiler.cmake CMakeFiles/3.29.3/CMakeRCCompiler.cmake CMakeFiles/3.29.3/CMakeSystem.cmake: phony
 
 
 #############################################

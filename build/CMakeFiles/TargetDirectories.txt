@@ -1,4 +1,5 @@
 C:/Users/User/Desktop/Personal_Programming/sgNet/build/CMakeFiles/lib.dir
+C:/Users/User/Desktop/Personal_Programming/sgNet/build/CMakeFiles/SgNet.dir
 C:/Users/User/Desktop/Personal_Programming/sgNet/build/CMakeFiles/testApp.dir
 C:/Users/User/Desktop/Personal_Programming/sgNet/build/CMakeFiles/edit_cache.dir
 C:/Users/User/Desktop/Personal_Programming/sgNet/build/CMakeFiles/rebuild_cache.dir
