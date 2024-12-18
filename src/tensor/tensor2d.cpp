@@ -208,12 +208,13 @@ SgNet::Tensor2d SgNet::Tensor2d::operator* (const std::vector<double> vals) cons
     return output;
 }
 
+// Matrix On matrix multiplication is NOT elementwise. This could definitely be made clearer 
 SgNet::Tensor2d SgNet::Tensor2d::operator* (const SgNet::Tensor2d& r) const {
 
     // dimension handling
-    if(this->dimensions[0]!= r.dimensions[0] || this->dimensions[1]!= r.dimensions[1]){
+    if(this->dimensions[1]!= r.dimensions[0]){
         std::stringstream ss;
-        ss << "Addition operation cannot be executed on dimensions of ["
+        ss << "Matrix multiplication cannot be executed on dimensions of ["
            << this->dimensions[0] << ", " << this->dimensions[1] 
            << "] and ["
            << r.dimensions[0] << ", " << r.dimensions[1] << "]";
@@ -221,12 +222,21 @@ SgNet::Tensor2d SgNet::Tensor2d::operator* (const SgNet::Tensor2d& r) const {
     }
 
 
-    SgNet::Tensor2d output = Tensor2d(this->dimensions);
+    SgNet::Tensor2d output = Tensor2d({this->dimensions[0],r.dimensions[1]});
 
-    // addition
+
+    // standard matrix multiplication
+    /*
+    Potential for optimization from naive alg
+    */
+
     for(int i=0;i<output.dimensions[0];i++){
         for(int j=0;j<output.dimensions[1];j++){
-            output[i][j] = this->data[i][j] * r.data[i][j];
+            int sum = 0;
+            for(int k = 0;k< this->dimensions[1];k++){
+                sum += (this->data[i][k] * r.data[k][j]);
+            }
+            output[i][j] = sum;
         }
     }
 
