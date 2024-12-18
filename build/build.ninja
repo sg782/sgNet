@@ -74,8 +74,8 @@ build liblib.a: CXX_STATIC_LIBRARY_LINKER__lib_ CMakeFiles/lib.dir/src/testlib.c
 
 build cmake_object_order_depends_target_SgNet: phony || .
 
-build CMakeFiles/SgNet.dir/src/tensor/tensor.cpp.obj: CXX_COMPILER__SgNet_unscanned_ C$:/Users/User/Desktop/Personal_Programming/sgNet/src/tensor/tensor.cpp || cmake_object_order_depends_target_SgNet
-  DEP_FILE = CMakeFiles\SgNet.dir\src\tensor\tensor.cpp.obj.d
+build CMakeFiles/SgNet.dir/src/tensor/tensor2d.cpp.obj: CXX_COMPILER__SgNet_unscanned_ C$:/Users/User/Desktop/Personal_Programming/sgNet/src/tensor/tensor2d.cpp || cmake_object_order_depends_target_SgNet
+  DEP_FILE = CMakeFiles\SgNet.dir\src\tensor\tensor2d.cpp.obj.d
   INCLUDES = -IC:/Users/User/Desktop/Personal_Programming/sgNet/include
   OBJECT_DIR = CMakeFiles\SgNet.dir
   OBJECT_FILE_DIR = CMakeFiles\SgNet.dir\src\tensor
@@ -88,7 +88,7 @@ build CMakeFiles/SgNet.dir/src/tensor/tensor.cpp.obj: CXX_COMPILER__SgNet_unscan
 #############################################
 # Link the static library libSgNet.a
 
-build libSgNet.a: CXX_STATIC_LIBRARY_LINKER__SgNet_ CMakeFiles/SgNet.dir/src/tensor/tensor.cpp.obj
+build libSgNet.a: CXX_STATIC_LIBRARY_LINKER__SgNet_ CMakeFiles/SgNet.dir/src/tensor/tensor2d.cpp.obj
   OBJECT_DIR = CMakeFiles\SgNet.dir
   POST_BUILD = cd .
   PRE_LINK = cd .
@@ -102,7 +102,7 @@ build libSgNet.a: CXX_STATIC_LIBRARY_LINKER__SgNet_ CMakeFiles/SgNet.dir/src/ten
 #############################################
 # Order-only phony target for testApp
 
-build cmake_object_order_depends_target_testApp: phony || cmake_object_order_depends_target_SgNet cmake_object_order_depends_target_lib
+build cmake_object_order_depends_target_testApp: phony || cmake_object_order_depends_target_SgNet
 
 build CMakeFiles/testApp.dir/main.cpp.obj: CXX_COMPILER__testApp_unscanned_ C$:/Users/User/Desktop/Personal_Programming/sgNet/main.cpp || cmake_object_order_depends_target_testApp
   DEP_FILE = CMakeFiles\testApp.dir\main.cpp.obj.d
@@ -118,8 +118,8 @@ build CMakeFiles/testApp.dir/main.cpp.obj: CXX_COMPILER__testApp_unscanned_ C$:/
 #############################################
 # Link the executable testApp.exe
 
-build testApp.exe: CXX_EXECUTABLE_LINKER__testApp_ CMakeFiles/testApp.dir/main.cpp.obj | liblib.a libSgNet.a || libSgNet.a liblib.a
-  LINK_LIBRARIES = liblib.a  libSgNet.a  -lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32
+build testApp.exe: CXX_EXECUTABLE_LINKER__testApp_ CMakeFiles/testApp.dir/main.cpp.obj | libSgNet.a || libSgNet.a
+  LINK_LIBRARIES = libSgNet.a  -lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32
   OBJECT_DIR = CMakeFiles\testApp.dir
   POST_BUILD = cd .
   PRE_LINK = cd .

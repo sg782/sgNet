@@ -1,0 +1,19 @@
+git status
+
+git add .
+
+git commit -m "Your descriptive commit message"
+
+git pull origin master --rebase
+
+git add .
+
+git rebase --continue
+
+git push origin master
+
+git stash
+
+git pull origin master --rebase
+
+git stash pop

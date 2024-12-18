@@ -5,7 +5,7 @@ cmake_minimum_required(VERSION 3.10)
 project(sgNet VERSION 1.0.0 LANGUAGES CXX)
 
 add_library(lib src/testlib.cpp)
-add_library(SgNet src/tensor/tensor.cpp)
+add_library(SgNet src/tensor/tensor2d.cpp)
 
 target_include_directories(lib 
 PUBLIC 
@@ -19,7 +19,7 @@ $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
 
 add_executable(testApp main.cpp)
 
-target_link_libraries(testApp PRIVATE lib SgNet)
+target_link_libraries(testApp PRIVATE SgNet)
 
 target_compile_features(lib PUBLIC cxx_std_17)
 target_compile_features(SgNet PUBLIC cxx_std_17)

@@ -14,8 +14,17 @@ namespace SgNet{
         std::vector<std::vector<double>> data;
         Tensor2d(std::vector<int> Dimensions);
 
-        void test();
+
+        // methods
         void print();
+        void setConstant(int val);
+
+
+        // operator overloads
+        Tensor2d operator+ (const Tensor2d& r) const;
+        std::vector<double>& operator[] (int index);
+
+        
     };
 
 }
