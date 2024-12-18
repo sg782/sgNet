@@ -22,6 +22,21 @@ namespace SgNet{
 
     };
     
+    template <typename T>
+    Affine<T>::Affine(int nDims, std::vector<int> dims){
+        b.resize(dims[0]);
+        w = T({5,6});
+    }
+
+    template <typename T>
+    T Affine<T>::forward(T inputs){
+        return inputs * 2;
+    }
+
+    template <typename T>
+    T Affine<T>::backward(T dValues){
+        return dValues;
+}
 
 
 

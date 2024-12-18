@@ -7,14 +7,14 @@ int main() {
     SgNet::Tensor2d t = SgNet::Tensor2d({5,6});
     t.print();
 
-    t.setConstant(7);
-    t = t / std::vector<double>{-10,10,1,2,3,5};
 
-    t.print();
-    SgNet::Tensor2d output = t.transpose();
+    SgNet::Affine<SgNet::Tensor2d> a(2,std::vector<int>{5,3});
 
-    t.print();
-    output.print();
+    t.setConstant(3);
+    SgNet::Tensor2d out = a.forward(t);
+    out.print();
+
+
     
     return 0;
 }

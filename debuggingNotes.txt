@@ -1,0 +1,6 @@
+C++ debuggin notes
+
+I am new to c++ so imma write some notes down
+
+
+1. MAKE SURE your class has a default constructor if you decide to declare it but not instantiate.

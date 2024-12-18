@@ -12,6 +12,7 @@ namespace SgNet{
     public:
         std::vector<int> dimensions;
         std::vector<std::vector<double>> data;
+        Tensor2d() = default;
         Tensor2d(std::vector<int> Dimensions);
 
 
@@ -21,7 +22,7 @@ namespace SgNet{
 
 
         Tensor2d transpose();
-        
+
 
         // operator overloads
         // each have a single value, vector, and matrix form
