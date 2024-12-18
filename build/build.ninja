@@ -36,36 +36,6 @@ include CMakeFiles/rules.ninja
 
 cmake_ninja_workdir = C$:/Users/User/Desktop/Personal_Programming/sgNet/build/
 # =============================================================================
-# Object build statements for STATIC_LIBRARY target lib
-
-
-#############################################
-# Order-only phony target for lib
-
-build cmake_object_order_depends_target_lib: phony || .
-
-build CMakeFiles/lib.dir/src/testlib.cpp.obj: CXX_COMPILER__lib_unscanned_ C$:/Users/User/Desktop/Personal_Programming/sgNet/src/testlib.cpp || cmake_object_order_depends_target_lib
-  DEP_FILE = CMakeFiles\lib.dir\src\testlib.cpp.obj.d
-  INCLUDES = -IC:/Users/User/Desktop/Personal_Programming/sgNet/include
-  OBJECT_DIR = CMakeFiles\lib.dir
-  OBJECT_FILE_DIR = CMakeFiles\lib.dir\src
-
-
-# =============================================================================
-# Link build statements for STATIC_LIBRARY target lib
-
-
-#############################################
-# Link the static library liblib.a
-
-build liblib.a: CXX_STATIC_LIBRARY_LINKER__lib_ CMakeFiles/lib.dir/src/testlib.cpp.obj
-  OBJECT_DIR = CMakeFiles\lib.dir
-  POST_BUILD = cd .
-  PRE_LINK = cd .
-  TARGET_FILE = liblib.a
-  TARGET_PDB = lib.a.dbg
-
-# =============================================================================
 # Object build statements for STATIC_LIBRARY target SgNet
 
 
@@ -80,6 +50,12 @@ build CMakeFiles/SgNet.dir/src/tensor/tensor2d.cpp.obj: CXX_COMPILER__SgNet_unsc
   OBJECT_DIR = CMakeFiles\SgNet.dir
   OBJECT_FILE_DIR = CMakeFiles\SgNet.dir\src\tensor
 
+build CMakeFiles/SgNet.dir/src/neural/layer/affine.cpp.obj: CXX_COMPILER__SgNet_unscanned_ C$:/Users/User/Desktop/Personal_Programming/sgNet/src/neural/layer/affine.cpp || cmake_object_order_depends_target_SgNet
+  DEP_FILE = CMakeFiles\SgNet.dir\src\neural\layer\affine.cpp.obj.d
+  INCLUDES = -IC:/Users/User/Desktop/Personal_Programming/sgNet/include
+  OBJECT_DIR = CMakeFiles\SgNet.dir
+  OBJECT_FILE_DIR = CMakeFiles\SgNet.dir\src\neural\layer
+
 
 # =============================================================================
 # Link build statements for STATIC_LIBRARY target SgNet
@@ -88,7 +64,7 @@ build CMakeFiles/SgNet.dir/src/tensor/tensor2d.cpp.obj: CXX_COMPILER__SgNet_unsc
 #############################################
 # Link the static library libSgNet.a
 
-build libSgNet.a: CXX_STATIC_LIBRARY_LINKER__SgNet_ CMakeFiles/SgNet.dir/src/tensor/tensor2d.cpp.obj
+build libSgNet.a: CXX_STATIC_LIBRARY_LINKER__SgNet_ CMakeFiles/SgNet.dir/src/tensor/tensor2d.cpp.obj CMakeFiles/SgNet.dir/src/neural/layer/affine.cpp.obj
   OBJECT_DIR = CMakeFiles\SgNet.dir
   POST_BUILD = cd .
   PRE_LINK = cd .
@@ -155,8 +131,6 @@ build rebuild_cache: phony CMakeFiles/rebuild_cache.util
 
 build SgNet: phony libSgNet.a
 
-build lib: phony liblib.a
-
 build testApp: phony testApp.exe
 
 # =============================================================================
@@ -167,7 +141,7 @@ build testApp: phony testApp.exe
 #############################################
 # Folder: C:/Users/User/Desktop/Personal_Programming/sgNet/build
 
-build all: phony liblib.a libSgNet.a testApp.exe
+build all: phony libSgNet.a testApp.exe
 
 # =============================================================================
 # Built-in targets

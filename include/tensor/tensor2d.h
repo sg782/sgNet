@@ -20,6 +20,9 @@ namespace SgNet{
         void setConstant(int val);
 
 
+        Tensor2d transpose();
+        
+
         // operator overloads
         // each have a single value, vector, and matrix form
         // currently, vector operations is only rowwise, Idk yet how i will do the colwise and still be able to keep std::vectors

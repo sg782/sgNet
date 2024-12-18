@@ -31,6 +31,18 @@ void SgNet::Tensor2d::setConstant(int val){
 }
 
 
+SgNet::Tensor2d SgNet::Tensor2d::transpose() {
+    SgNet::Tensor2d output = SgNet::Tensor2d({this->dimensions[1],this->dimensions[0]});
+
+    for(int i=0;i<this->data.size();i++){
+        for(int j=0;j<this->data[0].size();j++){
+            output[j][i] = this->data[i][j];
+        }
+    }
+    return output;
+}
+
+
 /*
 BASIC OPERATOR OVERLOADS
     + - * /
