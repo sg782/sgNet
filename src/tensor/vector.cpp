@@ -2,10 +2,14 @@
 #include <sstream>
 #include <stdexcept>
 #include <iostream>
+#include <cmath>
+#include <vector>
+
+
 
 
 SgNet::Vector::Vector(int size){
-    data = std::vector<double>(size);
+    data = std::vector<double*>(size);
 }
 
 int SgNet::Vector::size() const{
@@ -14,7 +18,7 @@ int SgNet::Vector::size() const{
 
 void SgNet::Vector::print(){
     for(int i=0;i<this->size();i++){
-        std::cout << this->operator[](i) << " ";
+        std::cout << *data[i] << " ";
     }
     std::cout << "\n";
 }
@@ -30,16 +34,21 @@ double SgNet::Vector::dot(const SgNet::Vector& v){
 
     double sum = 0;
     for(int i=0;i<this->size();i++){
-        sum += this->operator[](i) * v[i];
+        sum += *data[i] * *v[i];
     }
     return sum;
     
 }
 
 
-void SgNet::Vector::setConstant(int val){
+void SgNet::Vector::setConstant(double val){
+
+
     for(int i=0;i<this->size();i++){
-        this->operator[](i) = val;
+        if(data[i]!= nullptr){
+            delete data[i];
+        }
+        data[i] = new double(val);
     }
 }
 
@@ -52,7 +61,10 @@ void SgNet::Vector::set(std::vector<double> v){
         throw std::invalid_argument(ss.str());
     }
 
-    this-> data = v;
+    for(int i=0;i<data.size();i++){
+        data[i] = new double(v[i]);
+    }
+
 }
 
 void SgNet::Vector::set(SgNet::Vector v){
@@ -64,14 +76,14 @@ void SgNet::Vector::set(SgNet::Vector v){
     }
 
     for(int i=0;i<this->size();i++){
-        this->operator[](i) = v[i];
+        data[i] = new double(v[i]);
     }
 }
 
 SgNet::Vector SgNet::Vector::operator+ (const double val) const{
     SgNet::Vector out(this->size());
     for(int i=0;i<this->size();i++){
-        out[i] = this->operator[](i) + val;
+        out[i] = *data[i] + val;
     }
     return out;
 }
@@ -85,7 +97,7 @@ SgNet::Vector SgNet::Vector::operator+ (const Vector v) const{
 
     SgNet::Vector out(this->size());
     for(int i=0;i<this->size();i++){
-        out[i] = this->operator[](i) + v[i];
+        out[i] = *data[i] + *v[i];
     }
 
     return out;
@@ -95,7 +107,7 @@ SgNet::Vector SgNet::Vector::operator+ (const Vector v) const{
 SgNet::Vector SgNet::Vector::operator- (const double val) const{
     SgNet::Vector out(this->size());
     for(int i=0;i<this->size();i++){
-        out[i] = this->operator[](i) - val;
+        out[i] = *data[i] - val;
     }
     return out;
 }
@@ -119,7 +131,7 @@ SgNet::Vector SgNet::Vector::operator- (const Vector v) const{
 SgNet::Vector SgNet::Vector::operator* (const double val) const{
     SgNet::Vector out(this->size());
     for(int i=0;i<this->size();i++){
-        out[i] = this->operator[](i) * val;
+        out[i] = *data[i] * val;
     }
     return out;
 }
@@ -133,7 +145,7 @@ SgNet::Vector SgNet::Vector::operator* (const Vector v) const{
 
     SgNet::Vector out(this->size());
     for(int i=0;i<this->size();i++){
-        out[i] = this->operator[](i) * v[i];
+        out[i] = *data[i] /  *v[i];
     }
 
         return out;
@@ -143,7 +155,11 @@ SgNet::Vector SgNet::Vector::operator* (const Vector v) const{
 SgNet::Vector SgNet::Vector::operator/ (const double val) const{
     SgNet::Vector out(this->size());
     for(int i=0;i<this->size();i++){
-        out[i] = this->operator[](i) / val;
+        if(val ==0){
+            out[i] = INFINITY;
+            continue;
+        }
+        out[i] = *data[i] / val;
     }
     return out;
 }
@@ -157,17 +173,34 @@ SgNet::Vector SgNet::Vector::operator/ (const Vector v) const{
 
     SgNet::Vector out(this->size());
     for(int i=0;i<this->size();i++){
-        out[i] = this->operator[](i) / v[i];
+        if(v[i] == 0){
+            out[i] = INFINITY;
+            continue;
+        }
+        out[i] = *data[i] /  *v[i];
     }
 
     return out;
 }
 
 double& SgNet::Vector::operator[] (int index){
-    return this->data[index];
+    return *data[index];
 }
 
-const double& SgNet::Vector::operator[] (int index) const{
-    return this->data[index];
+const double* SgNet::Vector::operator[] (int index) const{
+    return data[index];
 }
+
+void SgNet::Vector::operator= (const double val){
+    this->setConstant(val);
+}
+
+void SgNet::Vector::operator= (const std::vector<double> v){
+    this->set(v);
+}
+void SgNet::Vector::operator= (const Vector v){
+    this->set(v);
+}
+
+
 

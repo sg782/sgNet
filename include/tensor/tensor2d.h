@@ -4,6 +4,7 @@
 #define TENSOR_2D_H
 
 #include <vector>
+#include "tensor/vector.h"
 
 
 namespace SgNet{
@@ -11,19 +12,19 @@ namespace SgNet{
     class Tensor2d{
     public:
         std::vector<int> dimensions;
-        std::vector<std::vector<double>> data;
+        std::vector<SgNet::Vector> data;
         Tensor2d() = default;
         Tensor2d(std::vector<int> Dimensions);
 
 
         // methods
         void print();
-        void setConstant(int val);
+        void setConstant(double val);
 
 
         // row and col operations
-        // std::vector<std::vector<double>>& Tensor2d::byRow();
-        // std::vector<std::vector<double>>& Tensor2d::byCol();
+        std::vector<Vector> byRow();
+        std::vector<Vector> byCol();
 
 
         Tensor2d transpose();
@@ -56,7 +57,7 @@ namespace SgNet{
         Tensor2d operator/ (const Tensor2d& r) const;
 
         // index operator. It returns a vector which can also be indexed.
-        std::vector<double>& operator[] (int index);
+        SgNet::Vector& operator[] (int index);
 
 
         

@@ -4,11 +4,20 @@
 #include <sstream>
 #include <stdexcept>
 #include <cmath>
+#include "tensor/vector.h"
+
+
+/*
+
+About half of the operations are converted to use the new vector class. This is enough to be able to implement the rowwise and colwise methods.
+
+
+*/
 
 SgNet::Tensor2d::Tensor2d(std::vector<int> dims){
     dimensions = dims;
-
-    data = std::vector<std::vector<double>>(dims[0], std::vector<double>(dims[1]));
+    
+    data = std::vector<SgNet::Vector>(dims[0], SgNet::Vector(dims[1]));
 }
 
 void SgNet::Tensor2d::print(){
@@ -22,11 +31,9 @@ void SgNet::Tensor2d::print(){
 }
 
 
-void SgNet::Tensor2d::setConstant(int val){
+void SgNet::Tensor2d::setConstant(double val){
     for(int i=0;i<data.size();i++){
-        for(int j=0;j<data[0].size();j++){
-            data[i][j] = val;
-        }
+        data[i].setConstant(val);
     }
 }
 
@@ -47,15 +54,29 @@ SgNet::Tensor2d SgNet::Tensor2d::transpose() {
 // rowWise and colwise operations;
 
 
-// std::vector<std::vector<double>>& SgNet::Tensor2d::byRow(){
-//     // returns a list of referenecs to each row vector for us to modify
-//     return data;
-// }
+std::vector<SgNet::Vector> SgNet::Tensor2d::byRow(){
+    // returns a list of referenecs to each row vector for us to modify
 
-// std::vector<std::vector<double>>& SgNet::Tensor2d::byCol(){
-//     // returns a list of referenecs to each col vector for us to modify
-    
-// }
+    return data;
+}
+
+std::vector<SgNet::Vector> SgNet::Tensor2d::byCol(){
+    // returns a list of referenecs to each col vector for us to modify
+
+    // we are essentially transposing, but we want to have original memory locations accessible
+    std::vector<SgNet::Vector> out(data[0].size(),SgNet::Vector(data.size()));
+
+    // references to each memory location, but in colwise form
+    for(int i=0;i<data.size();i++){
+        for(int j=0;j<data[0].size();j++){
+            std::cout << i << j << "\n";
+            std::cout <<data[i][j] << "\n";
+            out[j][i] = data[i][j];
+        }
+    }
+
+    return out;
+}
 
 
 
@@ -74,9 +95,7 @@ SgNet::Tensor2d SgNet::Tensor2d::operator+ (const double val) const{
     SgNet::Tensor2d output = Tensor2d(this->dimensions);
 
     for(int i=0;i<data.size();i++){
-        for(int j=0;j<data[0].size();j++){
-            output[i][j] = this->data[i][j] + val;
-        }
+        output[i] = data[i] + val;
     }
     return output;
 }
@@ -98,7 +117,7 @@ SgNet::Tensor2d SgNet::Tensor2d::operator+ (const std::vector<double> vals) cons
 
     for(int i=0;i<data.size();i++){
         for(int j=0;j<data[0].size();j++){
-            output[i][j] = this->data[i][j] + vals[j];
+            output[i][j] = *data[i][j] + vals[j];
         }
     }
     return output;
@@ -122,7 +141,7 @@ SgNet::Tensor2d SgNet::Tensor2d::operator+ (const SgNet::Tensor2d& r) const {
     // addition
     for(int i=0;i<output.dimensions[0];i++){
         for(int j=0;j<output.dimensions[1];j++){
-            output[i][j] = this->data[i][j] + r.data[i][j];
+            output[i][j] = *data[i][j] + *r.data[i][j];
         }
     }
 
@@ -135,10 +154,14 @@ SgNet::Tensor2d SgNet::Tensor2d::operator- (const double val) const{
     
     SgNet::Tensor2d output = Tensor2d(this->dimensions);
 
+    // for(int i=0;i<data.size();i++){
+    //     for(int j=0;j<data[0].size();j++){
+    //         output[i][j] = this->data[i][j] - val;
+    //     }
+    // }
+
     for(int i=0;i<data.size();i++){
-        for(int j=0;j<data[0].size();j++){
-            output[i][j] = this->data[i][j] - val;
-        }
+        output[i] = data[i] - val;
     }
     return output;
 }
@@ -160,7 +183,7 @@ SgNet::Tensor2d SgNet::Tensor2d::operator- (const std::vector<double> vals) cons
 
     for(int i=0;i<data.size();i++){
         for(int j=0;j<data[0].size();j++){
-            output[i][j] = this->data[i][j] - vals[j];
+            output[i][j] = *data[i][j] - vals[j];
         }
     }
     return output;
@@ -184,7 +207,7 @@ SgNet::Tensor2d SgNet::Tensor2d::operator- (const SgNet::Tensor2d& r) const {
     // subtraction
     for(int i=0;i<output.dimensions[0];i++){
         for(int j=0;j<output.dimensions[1];j++){
-            output[i][j] = this->data[i][j] - r.data[i][j];
+            output[i][j] = *data[i][j] - *r.data[i][j];
         }
     }
 
@@ -198,9 +221,7 @@ SgNet::Tensor2d SgNet::Tensor2d::operator* (const double val) const{
     SgNet::Tensor2d output = Tensor2d(this->dimensions);
 
     for(int i=0;i<data.size();i++){
-        for(int j=0;j<data[0].size();j++){
-            output[i][j] = this->data[i][j] * val;
-        }
+        output[i] = data[i] * val;
     }
     return output;
 }
@@ -222,7 +243,7 @@ SgNet::Tensor2d SgNet::Tensor2d::operator* (const std::vector<double> vals) cons
 
     for(int i=0;i<data.size();i++){
         for(int j=0;j<data[0].size();j++){
-            output[i][j] = this->data[i][j] * vals[j];
+            output[i][j] = *data[i][j] * vals[j];
         }
     }
     return output;
@@ -254,7 +275,7 @@ SgNet::Tensor2d SgNet::Tensor2d::operator* (const SgNet::Tensor2d& r) const {
         for(int j=0;j<output.dimensions[1];j++){
             int sum = 0;
             for(int k = 0;k< this->dimensions[1];k++){
-                sum += (this->data[i][k] * r.data[k][j]);
+                sum += (*data[i][j] * *r.data[k][j]);
             }
             output[i][j] = sum;
         }
@@ -270,13 +291,7 @@ SgNet::Tensor2d SgNet::Tensor2d::operator/ (const double val) const{
     SgNet::Tensor2d output = Tensor2d(this->dimensions);
 
     for(int i=0;i<data.size();i++){
-        for(int j=0;j<data[0].size();j++){
-            if(val==0){
-                output[i][j] = INFINITY;
-                continue;
-            }
-            output[i][j] = this->data[i][j] / val;
-        }
+        output[i]  = data[i] / val;
     }
     return output;
 }
@@ -302,7 +317,7 @@ SgNet::Tensor2d SgNet::Tensor2d::operator/ (const std::vector<double> vals) cons
                 output[i][j] = INFINITY;
                 continue;
             }
-            output[i][j] = this->data[i][j] / vals[j];
+            output[i][j] = *data[i][j]/ vals[j];
         }
     }
     return output;
@@ -331,7 +346,7 @@ SgNet::Tensor2d SgNet::Tensor2d::operator/ (const SgNet::Tensor2d& r) const {
                 continue;
             }
 
-            output[i][j] = this->data[i][j] / r.data[i][j];
+            output[i][j] = *data[i][j]/ *r.data[i][j];
         }
     }
 
@@ -341,6 +356,6 @@ SgNet::Tensor2d SgNet::Tensor2d::operator/ (const SgNet::Tensor2d& r) const {
 
 
 // indexing returns a vector (which can be indexed as well)
-std::vector<double>& SgNet::Tensor2d::operator[] (int index){
+SgNet::Vector& SgNet::Tensor2d::operator[] (int index){
     return this->data[index];
 }
