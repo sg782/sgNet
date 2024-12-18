@@ -49,6 +49,8 @@
         "xlocnum": "cpp",
         "xloctime": "cpp",
         "xmemory": "cpp",
-        "xtr1common": "cpp"
+        "xtr1common": "cpp",
+        "sstream": "cpp",
+        "string": "cpp"
     }
 }

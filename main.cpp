@@ -9,9 +9,20 @@ int main() {
     r.setConstant(5);
 
     t.setConstant(7);
-    t[1][2] = 5;
 
-    SgNet::Tensor2d output = t + r;
+
+    SgNet::Tensor2d output = t / r;
+
+
+    output.print();
+
+    output = output / 5;
+    output.print();
+
+    output = output / std::vector<double>{-10,10,1,2,3,5};
+    output.print();
+
+    output = output/0;
     output.print();
     return 0;
 }
