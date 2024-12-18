@@ -1,23 +1,21 @@
 #include "tensor/tensor2d.h"
 #include "neural/layer/affine.h"
+#include "tensor/vector.h"
 
 int main() {
 
-    SgNet::Tensor2d r = SgNet::Tensor2d({2,3});
-    SgNet::Tensor2d t = SgNet::Tensor2d({3,1});
+    SgNet::Vector g = SgNet::Vector(3);
 
-    r.setConstant(1);
-    r = r * std::vector<double>{1,2,3};
-    r[0][0] = -4;
+    g.setConstant(5);
 
-    t.setConstant(2);
-    t[0][0] = 4;
+    g.print();
 
+    g[2] = 1;
 
-    r.print();
-    t.print();
+    g.print();
 
-    SgNet::Tensor2d out = r*t;
+    SgNet::Vector out = g / 2;
+
     out.print();
 
 

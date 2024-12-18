@@ -5,6 +5,7 @@ cmake_minimum_required(VERSION 3.10)
 project(sgNet VERSION 1.0.0 LANGUAGES CXX)
 
 add_library(SgNet 
+    src/tensor/vector.cpp
     src/tensor/tensor2d.cpp
     src/neural/layer/affine.cpp
 )

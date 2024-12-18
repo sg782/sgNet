@@ -21,6 +21,11 @@ namespace SgNet{
         void setConstant(int val);
 
 
+        // row and col operations
+        // std::vector<std::vector<double>>& Tensor2d::byRow();
+        // std::vector<std::vector<double>>& Tensor2d::byCol();
+
+
         Tensor2d transpose();
 
 

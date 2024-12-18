@@ -44,6 +44,12 @@ cmake_ninja_workdir = C$:/Users/User/Desktop/Personal_Programming/sgNet/build/
 
 build cmake_object_order_depends_target_SgNet: phony || .
 
+build CMakeFiles/SgNet.dir/src/tensor/vector.cpp.obj: CXX_COMPILER__SgNet_unscanned_ C$:/Users/User/Desktop/Personal_Programming/sgNet/src/tensor/vector.cpp || cmake_object_order_depends_target_SgNet
+  DEP_FILE = CMakeFiles\SgNet.dir\src\tensor\vector.cpp.obj.d
+  INCLUDES = -IC:/Users/User/Desktop/Personal_Programming/sgNet/include
+  OBJECT_DIR = CMakeFiles\SgNet.dir
+  OBJECT_FILE_DIR = CMakeFiles\SgNet.dir\src\tensor
+
 build CMakeFiles/SgNet.dir/src/tensor/tensor2d.cpp.obj: CXX_COMPILER__SgNet_unscanned_ C$:/Users/User/Desktop/Personal_Programming/sgNet/src/tensor/tensor2d.cpp || cmake_object_order_depends_target_SgNet
   DEP_FILE = CMakeFiles\SgNet.dir\src\tensor\tensor2d.cpp.obj.d
   INCLUDES = -IC:/Users/User/Desktop/Personal_Programming/sgNet/include
@@ -64,7 +70,7 @@ build CMakeFiles/SgNet.dir/src/neural/layer/affine.cpp.obj: CXX_COMPILER__SgNet_
 #############################################
 # Link the static library libSgNet.a
 
-build libSgNet.a: CXX_STATIC_LIBRARY_LINKER__SgNet_ CMakeFiles/SgNet.dir/src/tensor/tensor2d.cpp.obj CMakeFiles/SgNet.dir/src/neural/layer/affine.cpp.obj
+build libSgNet.a: CXX_STATIC_LIBRARY_LINKER__SgNet_ CMakeFiles/SgNet.dir/src/tensor/vector.cpp.obj CMakeFiles/SgNet.dir/src/tensor/tensor2d.cpp.obj CMakeFiles/SgNet.dir/src/neural/layer/affine.cpp.obj
   OBJECT_DIR = CMakeFiles\SgNet.dir
   POST_BUILD = cd .
   PRE_LINK = cd .
@@ -108,7 +114,7 @@ build testApp.exe: CXX_EXECUTABLE_LINKER__testApp_ CMakeFiles/testApp.dir/main.c
 # Utility command for edit_cache
 
 build CMakeFiles/edit_cache.util: CUSTOM_COMMAND
-  COMMAND = C:\Windows\system32\cmd.exe /C "cd /D C:\Users\User\Desktop\Personal_Programming\sgNet\build && C:\mingw64\bin\cmake.exe -E echo "No interactive CMake dialog available.""
+  COMMAND = C:\WINDOWS\system32\cmd.exe /C "cd /D C:\Users\User\Desktop\Personal_Programming\sgNet\build && C:\mingw64\bin\cmake.exe -E echo "No interactive CMake dialog available.""
   DESC = No interactive CMake dialog available...
   restat = 1
 
@@ -119,7 +125,7 @@ build edit_cache: phony CMakeFiles/edit_cache.util
 # Utility command for rebuild_cache
 
 build CMakeFiles/rebuild_cache.util: CUSTOM_COMMAND
-  COMMAND = C:\Windows\system32\cmd.exe /C "cd /D C:\Users\User\Desktop\Personal_Programming\sgNet\build && C:\mingw64\bin\cmake.exe --regenerate-during-build -SC:\Users\User\Desktop\Personal_Programming\sgNet -BC:\Users\User\Desktop\Personal_Programming\sgNet\build"
+  COMMAND = C:\WINDOWS\system32\cmd.exe /C "cd /D C:\Users\User\Desktop\Personal_Programming\sgNet\build && C:\mingw64\bin\cmake.exe --regenerate-during-build -SC:\Users\User\Desktop\Personal_Programming\sgNet -BC:\Users\User\Desktop\Personal_Programming\sgNet\build"
   DESC = Running CMake to regenerate build system...
   pool = console
   restat = 1
