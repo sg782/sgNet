@@ -21,6 +21,8 @@ namespace SgNet{
         void print();
         void setConstant(double val);
 
+        Tensor2d matMult(SgNet::Tensor2d B);
+
 
         // row and col operations
         Tensor2d byRow();
@@ -39,22 +41,34 @@ namespace SgNet{
         Tensor2d operator+ (const double val) const;
         Tensor2d operator+ (const Vector& vals) const;
         Tensor2d operator+ (const Tensor2d& r) const;
+        void operator+= (const double val);
+        void operator+= (const Vector& vals);
+        void operator+= (const Tensor2d& r);
 
         // subtraction
         Tensor2d operator- (const double val) const;
         Tensor2d operator- (const Vector& vals) const;
         Tensor2d operator- (const Tensor2d& r) const;
+        void operator-= (const double val);
+        void operator-= (const Vector& vals);
+        void operator-= (const Tensor2d& r);
 
 
         //multiplication
         Tensor2d operator* (const double val) const;
         Tensor2d operator* (const Vector& vals) const;
         Tensor2d operator* (const Tensor2d& r) const;
+        void operator*= (const double val);
+        void operator*= (const Vector& vals);
+        void operator*= (const Tensor2d& r);
 
         //division
         Tensor2d operator/ (const double val) const;
         Tensor2d operator/ (const Vector& vals) const;
         Tensor2d operator/ (const Tensor2d& r) const;
+        void operator/= (const double val);
+        void operator/= (const Vector& vals);
+        void operator/= (const Tensor2d& r);
 
         // index operator. It returns a vector which can also be indexed.
         SgNet::Vector& operator[] (int index);

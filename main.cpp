@@ -6,15 +6,14 @@
 
 int main() {
 
-   using namespace SgNet;
+    using namespace SgNet;
 
-    Tensor2d g = Tensor2d({3,5});
+    Tensor2d a = Tensor2d({2,3});
 
-    g.byCol()[0] = 8;
+    a.setConstant(3);
+    a[0] += 3;
 
-    g[2][2] = 9;
-
-    g.print();
+   a.print();
 
      
     return 0;

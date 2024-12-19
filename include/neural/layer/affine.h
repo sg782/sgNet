@@ -36,8 +36,8 @@ namespace SgNet{
         this-> inputs = inputs;
 
         // forward pass on generic tensor type
-        T out = inputs * w;
-        out = out + b;
+        T out = inputs.matMult(w);
+        out.byCol() += b;
         return out;
     }
 

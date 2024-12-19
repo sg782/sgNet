@@ -39,18 +39,26 @@ namespace SgNet {
         void set(std::vector<double> vals);
         void set(SgNet::Vector vals);
 
+        
         Vector operator+ (const double val) const;
         Vector operator+ (const Vector vals) const;
+        void operator+= (const double val);
+        void operator+= (const Vector vals);
 
         Vector operator- (const double val) const;
         Vector operator- (const Vector vals) const;
+        void operator-= (const double val);
+        void operator-= (const Vector vals);
 
         Vector operator* (const double val) const;
         Vector operator* (const Vector vals) const;
+        void operator*= (const double val);
+        void operator*= (const Vector vals);
 
         Vector operator/ (const double val) const;
         Vector operator/ (const Vector vals) const;
-
+        void operator/= (const double val);
+        void operator/= (const Vector vals);
 
 
         // equality overloads make a copy, NOT a reference

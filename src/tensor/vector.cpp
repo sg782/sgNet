@@ -111,8 +111,27 @@ SgNet::Vector SgNet::Vector::operator+ (const Vector v) const{
     }
 
     return out;
+}
+
+void SgNet::Vector::operator+= (const double val){
+    for(int i=0;i<this->size();i++){
+        data[i] = data[i].val() + val;
+    }
+}
+
+void SgNet::Vector::operator+= (const Vector v){
+    if(this->size() != v.size()){
+        std::stringstream ss;
+        ss << "Vector lengths of " << this->size() << " and " << v.size() << " incompatible for addition.\n";
+        throw std::invalid_argument(ss.str());
+    }
+
+    for(int i=0;i<this->size();i++){
+        data[i] = data[i].val() + v[i].val();
+    }
 
 }
+
 
 // Subtraction
 SgNet::Vector SgNet::Vector::operator- (const double val) const{
@@ -140,6 +159,26 @@ SgNet::Vector SgNet::Vector::operator- (const Vector v) const{
 
 }
 
+void SgNet::Vector::operator-= (const double val){
+    for(int i=0;i<this->size();i++){
+        data[i] = data[i].val() - val;
+    }
+}
+
+void SgNet::Vector::operator-= (const Vector v){
+    if(this->size() != v.size()){
+        std::stringstream ss;
+        ss << "Vector lengths of " << this->size() << " and " << v.size() << " incompatible for subtraction.\n";
+        throw std::invalid_argument(ss.str());
+    }
+
+    for(int i=0;i<this->size();i++){
+        data[i] = data[i].val() - v[i].val();
+    }
+
+}
+
+
 // Multiplication
 SgNet::Vector SgNet::Vector::operator* (const double val) const{
     SgNet::Vector out(this->size());
@@ -165,6 +204,27 @@ SgNet::Vector SgNet::Vector::operator* (const Vector v) const{
     return out;
 
 }
+
+void SgNet::Vector::operator*= (const double val){
+    for(int i=0;i<this->size();i++){
+        data[i] = data[i].val() * val;
+    }
+}
+
+void SgNet::Vector::operator*= (const Vector v){
+    if(this->size() != v.size()){
+        std::stringstream ss;
+        ss << "Vector lengths of " << this->size() << " and " << v.size() << " incompatible for multiplication.\n";
+        throw std::invalid_argument(ss.str());
+    }
+
+    for(int i=0;i<this->size();i++){
+        data[i] = data[i].val() * v[i].val();
+    }
+
+}
+
+
 
 // Division
 SgNet::Vector SgNet::Vector::operator/ (const double val) const{
@@ -197,6 +257,25 @@ SgNet::Vector SgNet::Vector::operator/ (const Vector v) const{
     }
 
     return out;
+
+}
+
+void SgNet::Vector::operator/= (const double val){
+    for(int i=0;i<this->size();i++){
+        data[i] = data[i].val() / val;
+    }
+}
+
+void SgNet::Vector::operator/= (const Vector v){
+    if(this->size() != v.size()){
+        std::stringstream ss;
+        ss << "Vector lengths of " << this->size() << " and " << v.size() << " incompatible for division.\n";
+        throw std::invalid_argument(ss.str());
+    }
+
+    for(int i=0;i<this->size();i++){
+        data[i] = data[i].val() / v[i].val();
+    }
 
 }
 

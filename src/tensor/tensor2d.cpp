@@ -39,13 +39,46 @@ void SgNet::Tensor2d::setConstant(double val){
 }
 
 
+
+SgNet::Tensor2d SgNet::Tensor2d::matMult(SgNet::Tensor2d b){
+    // dimension handling
+    if(this->dimensions[1]!= b.dimensions[0]){
+        std::stringstream ss;
+        ss << "Matrix multiplication cannot be executed on dimensions of ["
+           << this->dimensions[0] << ", " << this->dimensions[1] 
+           << "] and ["
+           << b.dimensions[0] << ", " << b.dimensions[1] << "]";
+        	throw std::invalid_argument(ss.str());
+    }
+
+
+    SgNet::Tensor2d output = Tensor2d({this->dimensions[0],b.dimensions[1]});
+
+
+    // standard matrix multiplication
+    /*
+    Potential for optimization from naive alg
+    */
+
+    for(int i=0;i<output.dimensions[0];i++){
+        for(int j=0;j<output.dimensions[1];j++){
+            output[i][j] = this->operator[](i).dot(b.byCol()[j]);
+        }
+    }
+
+    return output;
+
+}
+
+
+
 SgNet::Tensor2d SgNet::Tensor2d::transpose() {
     // tranpose makes a copy
     SgNet::Tensor2d output = SgNet::Tensor2d({this->dimensions[1],this->dimensions[0]});
 
     for(int i=0;i<this->data.size();i++){
         for(int j=0;j<this->data[0].size();j++){
-            //output[j][i] = new double(*data[i][j]);
+            output[j][i] = new double(*data[i][j]);
         }
     }
     return output;
@@ -91,6 +124,8 @@ SgNet::Tensor2d SgNet::Tensor2d::byCol(){
 /*
 BASIC OPERATOR OVERLOADS
     + - * /
+
+    this was tedious, do not recommend
 */
 
 // addition overloads
@@ -143,6 +178,47 @@ SgNet::Tensor2d SgNet::Tensor2d::operator+ (const SgNet::Tensor2d& r) const {
         output[i] = data[i] + r.data[i];
     }
     return output;
+}
+
+void SgNet::Tensor2d::operator+= (const double val){
+    for(int i=0;i<this->data.size();i++){
+        data[i] = data[i] + val;
+    }
+}
+
+void SgNet::Tensor2d::operator+= (const Vector& vals) {
+    // broadcast vector across all rows in tensor
+
+    if(this->dimensions[1]!= vals.size()){
+        std::stringstream ss;
+        ss << "Addition operation cannot be executed on dimensions of ["
+            << this->dimensions[0] << ", " << this->dimensions[1] 
+            << "] and vector of length " << vals.size() << "\n";
+            throw std::invalid_argument(ss.str());
+    }
+
+    for(int i=0;i<data.size();i++){
+        data[i] = data[i] + vals;
+    }
+}
+
+void SgNet::Tensor2d::operator+= (const Tensor2d& r){
+
+    // dimension handling
+    if(this->dimensions[0]!= r.dimensions[0] || this->dimensions[1]!= r.dimensions[1]){
+        std::stringstream ss;
+        ss << "Addition operation cannot be executed on dimensions of ["
+           << this->dimensions[0] << ", " << this->dimensions[1] 
+           << "] and ["
+           << r.dimensions[0] << ", " << r.dimensions[1] << "]";
+        	throw std::invalid_argument(ss.str());
+    }
+    // addition
+    for(int i=0;i<data.size();i++){
+        // adding each row
+        data[i] = data[i] + r.data[i];
+    }
+
 }
 
 
@@ -198,6 +274,49 @@ SgNet::Tensor2d SgNet::Tensor2d::operator- (const SgNet::Tensor2d& r) const {
     return output;
 }
 
+void SgNet::Tensor2d::operator-= (const double val){
+    for(int i=0;i<this->data.size();i++){
+        data[i] = data[i] - val;
+    }
+}
+
+void SgNet::Tensor2d::operator-= (const Vector& vals) {
+    // broadcast vector across all rows in tensor
+
+    if(this->dimensions[1]!= vals.size()){
+        std::stringstream ss;
+        ss << "Subtraction operation cannot be executed on dimensions of ["
+            << this->dimensions[0] << ", " << this->dimensions[1] 
+            << "] and vector of length " << vals.size() << "\n";
+            throw std::invalid_argument(ss.str());
+    }
+
+    for(int i=0;i<data.size();i++){
+        data[i] = data[i] - vals;
+    }
+}
+
+void SgNet::Tensor2d::operator-= (const Tensor2d& r){
+
+    // dimension handling
+    if(this->dimensions[0]!= r.dimensions[0] || this->dimensions[1]!= r.dimensions[1]){
+        std::stringstream ss;
+        ss << "Subtraction operation cannot be executed on dimensions of ["
+           << this->dimensions[0] << ", " << this->dimensions[1] 
+           << "] and ["
+           << r.dimensions[0] << ", " << r.dimensions[1] << "]";
+        	throw std::invalid_argument(ss.str());
+    }
+    // addition
+    for(int i=0;i<data.size();i++){
+        // adding each row
+        data[i] = data[i] - r.data[i];
+    }
+
+}
+
+
+
 // multiplication overloads
 SgNet::Tensor2d SgNet::Tensor2d::operator* (const double val) const{
     
@@ -248,6 +367,47 @@ SgNet::Tensor2d SgNet::Tensor2d::operator* (const SgNet::Tensor2d& r) const {
         output[i] = data[i] * r.data[i];
     }
     return output;
+}
+
+void SgNet::Tensor2d::operator*= (const double val){
+    for(int i=0;i<this->data.size();i++){
+        data[i] = data[i] * val;
+    }
+}
+
+void SgNet::Tensor2d::operator*= (const Vector& vals) {
+    // broadcast vector across all rows in tensor
+
+    if(this->dimensions[1]!= vals.size()){
+        std::stringstream ss;
+        ss << "Multiplication operation cannot be executed on dimensions of ["
+            << this->dimensions[0] << ", " << this->dimensions[1] 
+            << "] and vector of length " << vals.size() << "\n";
+            throw std::invalid_argument(ss.str());
+    }
+
+    for(int i=0;i<data.size();i++){
+        data[i] = data[i] * vals;
+    }
+}
+
+void SgNet::Tensor2d::operator*= (const Tensor2d& r){
+
+    // dimension handling
+    if(this->dimensions[0]!= r.dimensions[0] || this->dimensions[1]!= r.dimensions[1]){
+        std::stringstream ss;
+        ss << "Multiplication operation cannot be executed on dimensions of ["
+           << this->dimensions[0] << ", " << this->dimensions[1] 
+           << "] and ["
+           << r.dimensions[0] << ", " << r.dimensions[1] << "]";
+        	throw std::invalid_argument(ss.str());
+    }
+    // addition
+    for(int i=0;i<data.size();i++){
+        // adding each row
+        data[i] = data[i] * r.data[i];
+    }
+
 }
 
 
@@ -306,6 +466,47 @@ SgNet::Tensor2d SgNet::Tensor2d::operator/ (const SgNet::Tensor2d& r) const {
     }
     return output;
 }
+
+void SgNet::Tensor2d::operator/= (const double val){
+    for(int i=0;i<this->data.size();i++){
+        data[i] = data[i] / val;
+    }
+}
+
+void SgNet::Tensor2d::operator/= (const Vector& vals) {
+    // broadcast vector across all rows in tensor
+
+    if(this->dimensions[1]!= vals.size()){
+        std::stringstream ss;
+        ss << "Division operation cannot be executed on dimensions of ["
+            << this->dimensions[0] << ", " << this->dimensions[1] 
+            << "] and vector of length " << vals.size() << "\n";
+            throw std::invalid_argument(ss.str());
+    }
+
+    for(int i=0;i<data.size();i++){
+        data[i] = data[i] / vals;
+    }
+}
+
+void SgNet::Tensor2d::operator/= (const Tensor2d& r){
+    // dimension handling
+    if(this->dimensions[0]!= r.dimensions[0] || this->dimensions[1]!= r.dimensions[1]){
+        std::stringstream ss;
+        ss << "Division operation cannot be executed on dimensions of ["
+           << this->dimensions[0] << ", " << this->dimensions[1] 
+           << "] and ["
+           << r.dimensions[0] << ", " << r.dimensions[1] << "]";
+        	throw std::invalid_argument(ss.str());
+    }
+    // addition
+    for(int i=0;i<data.size();i++){
+        // adding each row
+        data[i] = data[i] / r.data[i];
+    }
+
+}
+
 
 
 // indexing returns a vector (which can be indexed as well)
