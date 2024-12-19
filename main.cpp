@@ -10,10 +10,8 @@ int main() {
 
     Tensor2d a = Tensor2d({2,3});
 
-    a.setConstant(3);
-    a[0] += 3;
-
-   a.print();
+    a.setRandom(0,1);
+    a.print();
 
      
     return 0;

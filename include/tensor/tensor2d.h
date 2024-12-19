@@ -20,6 +20,7 @@ namespace SgNet{
         // methods
         void print();
         void setConstant(double val);
+        void setRandom(double mean, double stdDev);
 
         Tensor2d matMult(SgNet::Tensor2d B);
 

@@ -4,6 +4,7 @@
 #include <iostream>
 #include <cmath>
 #include <vector>
+#include <random>
 
 
 
@@ -55,6 +56,21 @@ void SgNet::Vector::setConstant(double val){
             *data[i] = val;
         }
     }
+}
+
+void SgNet::Vector::setRandom(double mean, double stdDev){
+// https://stackoverflow.com/questions/19944111/creating-a-gaussian-random-generator-with-a-mean-and-standard-deviation
+    std::random_device rd;
+    
+    std::mt19937 e2(rd());
+
+    std::normal_distribution<> dist(mean,stdDev);
+
+    for(int i=0;i<data.size();i++){
+        data[i] = dist(e2);
+    }
+
+
 }
 
 void SgNet::Vector::set(std::vector<double> v){
