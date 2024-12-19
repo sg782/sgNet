@@ -20,7 +20,9 @@ namespace SgNet{
         double& operator*();
         bool operator== (double* val);
 
-        void print();
+        const double val() const;
+
+        void printValue();
         void printAddress();
 
     };

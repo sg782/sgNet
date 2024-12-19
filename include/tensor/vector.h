@@ -25,7 +25,7 @@ namespace SgNet {
 
     class Vector{
     public:
-        std::vector<double*> data;
+        std::vector<Frisbee> data;
         Vector() = default;
         Vector(int size);
 
@@ -51,8 +51,8 @@ namespace SgNet {
         void operator= (const std::vector<double> v);
         void operator= (const Vector v);
 
-        double* operator[] (int index);
-        const double* operator[] (int index) const;
+        Frisbee& operator[] (int index);
+        const Frisbee& operator[] (int index) const;
     };
 
 }

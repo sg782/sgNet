@@ -8,8 +8,10 @@
 
 
 
-SgNet::Vector::Vector(int size) : data(size,nullptr){
-   
+SgNet::Vector::Vector(int size) : data(size){
+    for(int i=0;i<size;i++){
+        data[i] = new double(0);
+    }
 }
 
 int SgNet::Vector::size() const{
@@ -38,7 +40,7 @@ double SgNet::Vector::dot(const SgNet::Vector& v){
 
     double sum = 0;
     for(int i=0;i<this->size();i++){
-        sum += *data[i] * *v[i];
+        sum += data[i].val() * v[i].val();
     }
     return sum;
     
@@ -61,7 +63,7 @@ void SgNet::Vector::set(std::vector<double> v){
 
     if(this->size() != v.size()){
         std::stringstream ss;
-        ss << "Dot product cannot be executed on dimensions of "
+        ss << "Set with std::vector cannot be executed on dimensions of "
            << this->size() << " and " << v.size() << "\n";
         throw std::invalid_argument(ss.str());
     }
@@ -75,7 +77,7 @@ void SgNet::Vector::set(std::vector<double> v){
 void SgNet::Vector::set(SgNet::Vector v){
     if(this->size() != v.size()){
         std::stringstream ss;
-        ss << "Dot product cannot be executed on dimensions of "
+        ss << "Set with SgNet::Vector cannot be executed on dimensions of "
            << this->size() << " and " << v.size() << "\n";
         throw std::invalid_argument(ss.str());
     }
@@ -88,7 +90,7 @@ void SgNet::Vector::set(SgNet::Vector v){
 SgNet::Vector SgNet::Vector::operator+ (const double val) const{
     SgNet::Vector out(this->size());
     for(int i=0;i<this->size();i++){
-        *out[i] = *data[i] + val;
+        out[i] = data[i].val() + val;
     }
     return out;
 }
@@ -103,7 +105,7 @@ SgNet::Vector SgNet::Vector::operator+ (const Vector v) const{
     SgNet::Vector out(this->size());
     for(int i=0;i<this->size();i++){
 
-        *out[i] = *data[i] + *v[i];
+        out[i] = data[i].val() + v[i].val();
     }
 
     return out;
@@ -111,25 +113,13 @@ SgNet::Vector SgNet::Vector::operator+ (const Vector v) const{
 }
 
 
-double* SgNet::Vector::operator[] (int index){
+SgNet::Frisbee& SgNet::Vector::operator[] (int index){
     return data[index];
 }
 
-const double* SgNet::Vector::operator[] (int index) const{
+const SgNet::Frisbee& SgNet::Vector::operator[] (int index) const{
     return data[index];
 }
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

@@ -17,7 +17,10 @@ About half of the operations are converted to use the new vector class. This is 
 SgNet::Tensor2d::Tensor2d(std::vector<int> dims){
     dimensions = dims;
     
-    data = std::vector<SgNet::Vector>(dims[0], SgNet::Vector(dims[1]));
+    data = std::vector<SgNet::Vector>(dims[0],SgNet::Vector(dims[1]));
+    for(int i=0;i<data.size();i++){
+        data[i] = SgNet::Vector(dims[1]);
+    }
 
 }
 
@@ -69,14 +72,10 @@ SgNet::Tensor2d SgNet::Tensor2d::byCol(){
     int cols = data.size();
     SgNet::Tensor2d out({rows,cols});
 
-    out.print();
-
-
-
     // references to each memory location, but in colwise form
     for(int i=0;i<data.size();i++){
         for(int j=0;j<data[0].size();j++){
-           std::cout << data[i][j];
+            out[j][i] = data[i][j];
         }
     }
 
@@ -122,7 +121,7 @@ SgNet::Tensor2d SgNet::Tensor2d::operator+ (const std::vector<double> vals) cons
 
     for(int i=0;i<data.size();i++){
         for(int j=0;j<data[0].size();j++){
-            *output[i][j] = *data[i][j] + vals[j];
+            *output[i][j] = data[i][j].val() + vals[j];
         }
     }
     return output;
@@ -146,7 +145,7 @@ SgNet::Tensor2d SgNet::Tensor2d::operator+ (const SgNet::Tensor2d& r) const {
     // addition
     for(int i=0;i<output.dimensions[0];i++){
         for(int j=0;j<output.dimensions[1];j++){
-            *output[i][j] = *data[i][j] + *r.data[i][j];
+            output[i][j] = data[i][j].val() + r.data[i][j].val();
         }
     }
 

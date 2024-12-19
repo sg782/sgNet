@@ -21,11 +21,17 @@ double& SgNet::Frisbee::operator*() {
     return *ref;
 }
 
+const double SgNet::Frisbee::val() const{
+    return(*ref);
+}
+
+
+
 bool SgNet::Frisbee::operator==(double* val){
     return(ref==val);
 }
 
-void SgNet::Frisbee::print(){
+void SgNet::Frisbee::printValue(){
     std::cout << *ref << "\n";
 }
 void SgNet::Frisbee::printAddress(){

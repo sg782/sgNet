@@ -8,22 +8,16 @@ int main() {
 
    using namespace SgNet;
 
+    Tensor2d g = Tensor2d({3,5});
 
-    double* var = new double(5.0);
+    Tensor2d h = g.byCol();
 
+    h[1][0] = 4;
+    g[2][2] = 9;
 
-   Frisbee g = Frisbee(var);
+    g.print();
 
-   g.print();
-   g.printAddress();
-
-   g = 20;
-   
-   g.print();
-   g.printAddress();
-
-   std::cout << var << "\n";
-
+    h.print();
      
     return 0;
 }
