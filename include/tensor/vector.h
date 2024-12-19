@@ -32,7 +32,11 @@ namespace SgNet {
         void print();
         void resize(int newSize);
 
+
         int size() const;
+
+        double sum() const;
+  
 
         double dot(const Vector& v);
 

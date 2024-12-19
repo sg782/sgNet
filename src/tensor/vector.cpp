@@ -34,6 +34,14 @@ void SgNet::Vector::resize(int newSize){
     data.resize(newSize);
 }
 
+double SgNet::Vector::sum() const{
+    double sum = 0;
+    for(int i=0;i<data.size();i++){
+        sum += data[i].val();
+    }
+    return sum;
+}
+
 double SgNet::Vector::dot(const SgNet::Vector& v){
         if(this->size() != v.size()){
         std::stringstream ss;

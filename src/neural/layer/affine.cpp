@@ -1,24 +1,47 @@
 #include "neural/layer/affine.h"
 #include <vector>
+#include <iostream>
 
 
 // due to the existence of the Generic type, we must do somethign special here
 // should i look into inheritance for the tensors (yes);
 
 
-// template <typename T>
-// SgNet::Affine<T>::Affine(int nDims, std::vector<int> dims){
-//     b.resize(dims[0]);
-//     w = T();
-// }
+    SgNet::Affine::Affine(int nDims, std::vector<int> dims,double learningRate){
+        
+        this->learningRate = learningRate;
+        b.resize(dims[1]);
+        b = Vector(dims[1]);
+        b.setConstant(0.0);
 
-// template <typename T>
-// T SgNet::Affine<T>::forward(T inputs){
-//     return inputs * 2;
-// }
+        w = Tensor2d(dims);
+        w.setRandom(0,1);
+    }
 
-// template <typename T>
-// T SgNet::Affine<T>::backward(T dValues){
-//     return dValues;
-// }
-    
+    SgNet::Tensor2d SgNet::Affine::forward(Tensor2d inputs){
+        this-> inputs = inputs;
+
+        // forward pass on generic tensor type
+        Tensor2d out = inputs.matMult(w);
+        out.byRow() += b;
+
+        inputs.print();
+        w.print();
+        out.print();
+
+
+        return out;
+    }
+
+    SgNet::Tensor2d SgNet::Affine::backward(Tensor2d dValues){
+
+        Tensor2d dW = inputs.transpose().matMult(dValues);
+        Vector dB = dValues.colSum();
+        Tensor2d dInputs = dValues.matMult(w.transpose());
+
+        // update weights
+        w -= (dW * learningRate);
+        b -= (dB * learningRate);
+
+        return dInputs;
+    }

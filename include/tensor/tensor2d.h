@@ -16,11 +16,17 @@ namespace SgNet{
         Tensor2d() = default;
         Tensor2d(std::vector<int> Dimensions);
 
+        int numRows();
+        int numCols();
 
         // methods
         void print();
         void setConstant(double val);
         void setRandom(double mean, double stdDev);
+
+        double sum() const;
+        Vector rowSum();
+        Vector colSum();
 
         Tensor2d matMult(SgNet::Tensor2d B);
 

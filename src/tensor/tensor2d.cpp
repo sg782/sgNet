@@ -32,6 +32,37 @@ void SgNet::Tensor2d::print(){
 }
 
 
+double SgNet::Tensor2d::sum() const{
+    double sum;
+    for(int i=0;i<data.size();i++){
+        sum += data[i].sum();
+    }
+    return sum;
+}
+SgNet::Vector SgNet::Tensor2d::rowSum(){
+    Vector sum(data.size());
+    for(int i=0;i<data.size();i++){
+        sum[i] = data[i].sum();
+    }
+    return sum;
+}
+
+SgNet::Vector SgNet::Tensor2d::colSum(){
+    Tensor2d thisCol = this->byCol();
+    return thisCol.rowSum();
+}
+
+
+
+
+int SgNet::Tensor2d::numRows(){
+    return data.size();
+}
+int SgNet::Tensor2d::numCols(){
+    return data[0].size();
+}
+
+
 void SgNet::Tensor2d::setConstant(double val){
     for(int i=0;i<data.size();i++){
         data[i].setConstant(val);
@@ -187,7 +218,7 @@ SgNet::Tensor2d SgNet::Tensor2d::operator+ (const SgNet::Tensor2d& r) const {
 
 void SgNet::Tensor2d::operator+= (const double val){
     for(int i=0;i<this->data.size();i++){
-        data[i] = data[i] + val;
+        data[i] += val;
     }
 }
 
@@ -203,8 +234,10 @@ void SgNet::Tensor2d::operator+= (const Vector& vals) {
     }
 
     for(int i=0;i<data.size();i++){
-        data[i] = data[i] + vals;
+        data[i] += vals;
     }
+
+    this->print();
 }
 
 void SgNet::Tensor2d::operator+= (const Tensor2d& r){
@@ -221,7 +254,7 @@ void SgNet::Tensor2d::operator+= (const Tensor2d& r){
     // addition
     for(int i=0;i<data.size();i++){
         // adding each row
-        data[i] = data[i] + r.data[i];
+        data[i] += r.data[i];
     }
 
 }
@@ -281,7 +314,7 @@ SgNet::Tensor2d SgNet::Tensor2d::operator- (const SgNet::Tensor2d& r) const {
 
 void SgNet::Tensor2d::operator-= (const double val){
     for(int i=0;i<this->data.size();i++){
-        data[i] = data[i] - val;
+        data[i] -= val;
     }
 }
 
@@ -297,7 +330,7 @@ void SgNet::Tensor2d::operator-= (const Vector& vals) {
     }
 
     for(int i=0;i<data.size();i++){
-        data[i] = data[i] - vals;
+        data[i] -= vals;
     }
 }
 
@@ -315,7 +348,7 @@ void SgNet::Tensor2d::operator-= (const Tensor2d& r){
     // addition
     for(int i=0;i<data.size();i++){
         // adding each row
-        data[i] = data[i] - r.data[i];
+        data[i] -= r.data[i];
     }
 
 }
@@ -376,7 +409,7 @@ SgNet::Tensor2d SgNet::Tensor2d::operator* (const SgNet::Tensor2d& r) const {
 
 void SgNet::Tensor2d::operator*= (const double val){
     for(int i=0;i<this->data.size();i++){
-        data[i] = data[i] * val;
+        data[i] *= val;
     }
 }
 
@@ -392,7 +425,7 @@ void SgNet::Tensor2d::operator*= (const Vector& vals) {
     }
 
     for(int i=0;i<data.size();i++){
-        data[i] = data[i] * vals;
+        data[i] *= vals;
     }
 }
 
@@ -410,13 +443,13 @@ void SgNet::Tensor2d::operator*= (const Tensor2d& r){
     // addition
     for(int i=0;i<data.size();i++){
         // adding each row
-        data[i] = data[i] * r.data[i];
+        data[i] *= r.data[i];
     }
 
 }
 
 
-// multiplication overloads
+// divison overloads
 SgNet::Tensor2d SgNet::Tensor2d::operator/ (const double val) const{
     
     SgNet::Tensor2d output = Tensor2d(this->dimensions);
@@ -474,7 +507,7 @@ SgNet::Tensor2d SgNet::Tensor2d::operator/ (const SgNet::Tensor2d& r) const {
 
 void SgNet::Tensor2d::operator/= (const double val){
     for(int i=0;i<this->data.size();i++){
-        data[i] = data[i] / val;
+        data[i] /= val;
     }
 }
 
@@ -490,7 +523,7 @@ void SgNet::Tensor2d::operator/= (const Vector& vals) {
     }
 
     for(int i=0;i<data.size();i++){
-        data[i] = data[i] / vals;
+        data[i] /= vals;
     }
 }
 
@@ -507,7 +540,7 @@ void SgNet::Tensor2d::operator/= (const Tensor2d& r){
     // addition
     for(int i=0;i<data.size();i++){
         // adding each row
-        data[i] = data[i] / r.data[i];
+        data[i] /= r.data[i];
     }
 
 }

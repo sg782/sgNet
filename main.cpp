@@ -8,20 +8,18 @@ int main() {
 
     using namespace SgNet;
 
+    double learningRate = 0.5;
+    Affine layer = Affine(2,{3,2},learningRate);
 
-    Affine<Tensor2d> layer = Affine<Tensor2d>(2,{3,4});
+    Tensor2d g = Tensor2d({2,3});
 
+    g.setConstant(3);
 
+    Tensor2d out = layer.forward(g);
 
-    Tensor2d a = Tensor2d({2,3});
-
-    a.setConstant(1);
-    a[1].set({-1,5,8});
-
-
-    Tensor2d out = layer.forward(a);
-
-    out.print();
+    Tensor2d out2 = layer.backward(g);
+   
+    out2.print();
 
      
     return 0;
