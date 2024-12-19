@@ -42,6 +42,15 @@ namespace SgNet {
         Vector operator+ (const double val) const;
         Vector operator+ (const Vector vals) const;
 
+        Vector operator- (const double val) const;
+        Vector operator- (const Vector vals) const;
+
+        Vector operator* (const double val) const;
+        Vector operator* (const Vector vals) const;
+
+        Vector operator/ (const double val) const;
+        Vector operator/ (const Vector vals) const;
+
 
 
         // equality overloads make a copy, NOT a reference

@@ -37,23 +37,23 @@ namespace SgNet{
 
         // addition
         Tensor2d operator+ (const double val) const;
-        Tensor2d operator+ (const std::vector<double> vals) const;
+        Tensor2d operator+ (const Vector& vals) const;
         Tensor2d operator+ (const Tensor2d& r) const;
 
         // subtraction
         Tensor2d operator- (const double val) const;
-        Tensor2d operator- (const std::vector<double> vals) const;
+        Tensor2d operator- (const Vector& vals) const;
         Tensor2d operator- (const Tensor2d& r) const;
 
 
         //multiplication
         Tensor2d operator* (const double val) const;
-        Tensor2d operator* (const std::vector<double> vals) const;
+        Tensor2d operator* (const Vector& vals) const;
         Tensor2d operator* (const Tensor2d& r) const;
 
         //division
         Tensor2d operator/ (const double val) const;
-        Tensor2d operator/ (const std::vector<double> vals) const;
+        Tensor2d operator/ (const Vector& vals) const;
         Tensor2d operator/ (const Tensor2d& r) const;
 
         // index operator. It returns a vector which can also be indexed.

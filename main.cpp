@@ -10,14 +10,12 @@ int main() {
 
     Tensor2d g = Tensor2d({3,5});
 
-    Tensor2d h = g.byCol();
+    g.byCol()[0] = 8;
 
-    h[1][0] = 4;
     g[2][2] = 9;
 
     g.print();
 
-    h.print();
      
     return 0;
 }
