@@ -23,8 +23,8 @@ namespace SgNet{
 
 
         // row and col operations
-        std::vector<Vector> byRow();
-        std::vector<Vector> byCol();
+        Tensor2d byRow();
+        Tensor2d byCol();
 
 
         Tensor2d transpose();

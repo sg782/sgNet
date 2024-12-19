@@ -62,6 +62,12 @@ build CMakeFiles/SgNet.dir/src/neural/layer/affine.cpp.obj: CXX_COMPILER__SgNet_
   OBJECT_DIR = CMakeFiles\SgNet.dir
   OBJECT_FILE_DIR = CMakeFiles\SgNet.dir\src\neural\layer
 
+build CMakeFiles/SgNet.dir/src/utils/frisbee.cpp.obj: CXX_COMPILER__SgNet_unscanned_ C$:/Users/User/Desktop/Personal_Programming/sgNet/src/utils/frisbee.cpp || cmake_object_order_depends_target_SgNet
+  DEP_FILE = CMakeFiles\SgNet.dir\src\utils\frisbee.cpp.obj.d
+  INCLUDES = -IC:/Users/User/Desktop/Personal_Programming/sgNet/include
+  OBJECT_DIR = CMakeFiles\SgNet.dir
+  OBJECT_FILE_DIR = CMakeFiles\SgNet.dir\src\utils
+
 
 # =============================================================================
 # Link build statements for STATIC_LIBRARY target SgNet
@@ -70,7 +76,7 @@ build CMakeFiles/SgNet.dir/src/neural/layer/affine.cpp.obj: CXX_COMPILER__SgNet_
 #############################################
 # Link the static library libSgNet.a
 
-build libSgNet.a: CXX_STATIC_LIBRARY_LINKER__SgNet_ CMakeFiles/SgNet.dir/src/tensor/vector.cpp.obj CMakeFiles/SgNet.dir/src/tensor/tensor2d.cpp.obj CMakeFiles/SgNet.dir/src/neural/layer/affine.cpp.obj
+build libSgNet.a: CXX_STATIC_LIBRARY_LINKER__SgNet_ CMakeFiles/SgNet.dir/src/tensor/vector.cpp.obj CMakeFiles/SgNet.dir/src/tensor/tensor2d.cpp.obj CMakeFiles/SgNet.dir/src/neural/layer/affine.cpp.obj CMakeFiles/SgNet.dir/src/utils/frisbee.cpp.obj
   OBJECT_DIR = CMakeFiles\SgNet.dir
   POST_BUILD = cd .
   PRE_LINK = cd .

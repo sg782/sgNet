@@ -1,23 +1,28 @@
 #include "tensor/tensor2d.h"
 #include "neural/layer/affine.h"
 #include "tensor/vector.h"
+#include "utils/frisbee.h"
 #include <iostream>
 
 int main() {
 
-    SgNet::Tensor2d a = SgNet::Tensor2d({3,4});
+   using namespace SgNet;
 
-    SgNet::Vector b = SgNet::Vector(3);
 
-    b.setConstant(1);
-    std::cout << b[0];
-    
-    a.setConstant(3);
+    double* var = new double(5.0);
 
-    std::cout<<a[0][0];
 
-    a.print();
+   Frisbee g = Frisbee(var);
 
+   g.print();
+   g.printAddress();
+
+   g = 20;
+   
+   g.print();
+   g.printAddress();
+
+   std::cout << var << "\n";
 
      
     return 0;

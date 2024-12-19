@@ -1,0 +1,5 @@
+1. MAKE SURE memory is handled how I want it to be handled 
+    - update override equality signs to pass references and not just copy
+    - check all of the overridden operators
+        - for both vector and tensor2d
+2. watch a video on pointers

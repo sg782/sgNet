@@ -4,6 +4,7 @@
 #define VECTOR_H
 
 #include <vector>
+#include "utils/frisbee.h"
 
 // I should definitely make this nestable
 /*
@@ -41,23 +42,16 @@ namespace SgNet {
         Vector operator+ (const double val) const;
         Vector operator+ (const Vector vals) const;
 
-        Vector operator- (const double val) const;
-        Vector operator- (const Vector vals) const;
 
-        Vector operator* (const double val) const;
-        Vector operator* (const Vector vals) const;
-
-        Vector operator/ (const double val) const;
-        Vector operator/ (const Vector vals) const;
 
         // equality overloads make a copy, NOT a reference
         // maybe I should change that
         // it would make sense for SET to do the copying and = to make a reference
-        void operator= (const double val);
+        void operator= (double val);
         void operator= (const std::vector<double> v);
         void operator= (const Vector v);
 
-        double& operator[] (int index);
+        double* operator[] (int index);
         const double* operator[] (int index) const;
     };
 
