@@ -3,3 +3,5 @@
     - check all of the overridden operators
         - for both vector and tensor2d
 2. watch a video on pointers
+3. CHECK vector addition on a  using +=
+    - does not seem to actually update, rather it makes a copy

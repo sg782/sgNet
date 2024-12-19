@@ -30,6 +30,9 @@ void SgNet::Vector::print(){
     std::cout << "\n";
 }
 
+void SgNet::Vector::resize(int newSize){
+    data.resize(newSize);
+}
 
 double SgNet::Vector::dot(const SgNet::Vector& v){
         if(this->size() != v.size()){
@@ -314,6 +317,7 @@ void SgNet::Vector::operator= (const std::vector<double> v){
     this->set(v);
 }
 void SgNet::Vector::operator= (const Vector v){
+
     this->set(v);
 }
 

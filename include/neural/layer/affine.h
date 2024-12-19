@@ -5,6 +5,7 @@
 
 #include <vector>
 #include <iostream>
+#include "tensor/vector.h"
 namespace SgNet{
 
     template <typename T>
@@ -14,7 +15,7 @@ namespace SgNet{
     public:
         T w;
         T inputs;
-        std::vector<double> b;
+        double b;
 
         Affine(int nDims, std::vector<int> dims);
         
@@ -26,9 +27,11 @@ namespace SgNet{
     
     template <typename T>
     Affine<T>::Affine(int nDims, std::vector<int> dims){
-        b.resize(dims[0]);
+        
+        b = 0;
 
         w = T(dims);
+        w.setRandom(0,1);
     }
 
     template <typename T>
@@ -37,7 +40,7 @@ namespace SgNet{
 
         // forward pass on generic tensor type
         T out = inputs.matMult(w);
-        out.byCol() += b;
+        out += b;
         return out;
     }
 

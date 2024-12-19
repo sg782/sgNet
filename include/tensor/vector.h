@@ -30,6 +30,7 @@ namespace SgNet {
         Vector(int size);
 
         void print();
+        void resize(int newSize);
 
         int size() const;
 

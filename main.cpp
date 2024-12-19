@@ -8,10 +8,20 @@ int main() {
 
     using namespace SgNet;
 
+
+    Affine<Tensor2d> layer = Affine<Tensor2d>(2,{3,4});
+
+
+
     Tensor2d a = Tensor2d({2,3});
 
-    a.setRandom(0,1);
-    a.print();
+    a.setConstant(1);
+    a[1].set({-1,5,8});
+
+
+    Tensor2d out = layer.forward(a);
+
+    out.print();
 
      
     return 0;
