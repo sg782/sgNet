@@ -5,6 +5,7 @@
 #include <stdexcept>
 #include <cmath>
 #include "tensor/vector.h"
+#include <array>
 
 
 /*
@@ -29,6 +30,19 @@ void SgNet::Tensor2d::print(){
     for(int i=0;i<dimensions[0];i++){
         data[i].print();
     }
+}
+
+std::array<int,2> SgNet::Tensor2d::shape() const{
+    std::array<int,2> out;
+    out[0] = data.size();
+    out[1] = data[0].size();
+    return out;
+}
+
+void SgNet::Tensor2d::printShape() const{
+    std::array<int,2> out = this->shape();
+
+    std::cout << "[" << out[0] << ", " << out[1] << "]\n";
 }
 
 
@@ -77,6 +91,7 @@ void SgNet::Tensor2d::setRandom(double mean, double stdDev){
 
 
 SgNet::Tensor2d SgNet::Tensor2d::matMult(SgNet::Tensor2d b){
+
     // dimension handling
     if(this->dimensions[1]!= b.dimensions[0]){
         std::stringstream ss;

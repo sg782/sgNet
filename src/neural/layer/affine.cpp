@@ -25,19 +25,21 @@
         Tensor2d out = inputs.matMult(w);
         out.byRow() += b;
 
-        inputs.print();
-        w.print();
-        out.print();
-
-
         return out;
     }
 
     SgNet::Tensor2d SgNet::Affine::backward(Tensor2d dValues){
 
+
+
         Tensor2d dW = inputs.transpose().matMult(dValues);
         Vector dB = dValues.colSum();
+
+
+
         Tensor2d dInputs = dValues.matMult(w.transpose());
+
+
 
         // update weights
         w -= (dW * learningRate);

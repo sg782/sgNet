@@ -5,6 +5,7 @@
 
 #include <vector>
 #include "tensor/vector.h"
+#include <array>
 
 
 namespace SgNet{
@@ -23,6 +24,9 @@ namespace SgNet{
         void print();
         void setConstant(double val);
         void setRandom(double mean, double stdDev);
+        std::array<int,2> shape()const;
+
+        void printShape()const;
 
         double sum() const;
         Vector rowSum();
