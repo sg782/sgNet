@@ -77,6 +77,40 @@ int SgNet::Tensor2d::numCols(){
 }
 
 
+void SgNet::Tensor2d::max(double val){
+    for(int i=0;i<this->numRows();i++){
+        this->operator[](i).max(val);
+    }
+}
+
+double SgNet::Tensor2d::max(){
+    Vector maxes = Vector(this->numRows());
+
+    for(int i=0;i<this->numRows();i++){
+        maxes[i] = this->operator[](i).max();
+    }
+    return maxes.max();
+}
+
+
+void SgNet::Tensor2d::min(double val){
+    for(int i=0;i<this->numRows();i++){
+        this->operator[](i).min(val);
+    }
+}
+
+double SgNet::Tensor2d::min(){
+    Vector mins = Vector(this->numRows());
+
+    for(int i=0;i<this->numRows();i++){
+        mins[i] = this->operator[](i).min();
+    }
+    return mins.min();
+}
+
+
+
+
 void SgNet::Tensor2d::setConstant(double val){
     for(int i=0;i<data.size();i++){
         data[i].setConstant(val);

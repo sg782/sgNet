@@ -42,6 +42,47 @@ double SgNet::Vector::sum() const{
     return sum;
 }
 
+void SgNet::Vector::max(double val){
+    for(int i=0;i<this->size();i++){
+        if(this->operator[](i).val() > val){
+            this->operator[](i) = val;
+        }
+    }
+}
+
+double SgNet::Vector::max(){
+    double maxVal = -INFINITY;
+    for(int i=0;i<this->size();i++){
+        if(this->operator[](i).val() > maxVal){
+            maxVal = this->operator[](i).val();
+        }
+    }
+    return maxVal;
+}
+
+
+void SgNet::Vector::min(double val){
+    for(int i=0;i<this->size();i++){
+        if(this->operator[](i).val() < val){
+            this->operator[](i) = val;
+        }
+    }
+}
+
+double SgNet::Vector::min(){
+    double minVal = INFINITY;
+    for(int i=0;i<this->size();i++){
+        if(this->operator[](i).val() < minVal){
+            minVal = this->operator[](i).val();
+        }
+    }
+    return minVal;
+}
+
+
+
+
+
 double SgNet::Vector::dot(const SgNet::Vector& v){
         if(this->size() != v.size()){
         std::stringstream ss;

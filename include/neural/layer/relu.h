@@ -1,7 +1,7 @@
 #pragma once
 
-#ifndef AFFINE_H
-#define AFFINE_H
+#ifndef RELU_H
+#define RELU_H
 
 #include <vector>
 #include <iostream>
@@ -10,15 +10,12 @@
 namespace SgNet{
 
 
-    class Affine{
+    class Relu{
         
     public:
-        double learningRate;
-        Tensor2d w;
         Tensor2d inputs;
-        Vector b;
 
-        Affine(int nDims, std::vector<int> dims,double learningRate);
+        Relu(int nDims, std::vector<int> dims);
         
         Tensor2d forward(Tensor2d inputs);
 

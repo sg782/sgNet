@@ -45,6 +45,12 @@ namespace SgNet {
         void set(std::vector<double> vals);
         void set(SgNet::Vector vals);
 
+        void max(double val);
+        double max();
+
+        void min(double val);
+        double min();
+
         
         Vector operator+ (const double val) const;
         Vector operator+ (const Vector vals) const;

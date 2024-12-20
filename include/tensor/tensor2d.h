@@ -39,6 +39,12 @@ namespace SgNet{
         Tensor2d byRow();
         Tensor2d byCol();
 
+        void max(double val);
+        double max();
+
+        void min(double val);
+        double min();
+
 
         Tensor2d transpose();
 

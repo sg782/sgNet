@@ -7,3 +7,8 @@
 4. update and add more error/ bounds messages
 5. update vector default constructor or whatever to let me declare a vector then set it to something later without resizing
 6. VECTOR and TENSOR: add a shape() method that returns the shape
+7. add a rowwise and colwise maximum
+    - maybe rowwise and colwise tensors will have to become their own class
+        - or could just add colMax and rowMax functions
+8. add norm
+9. vector change it to array operations maybe idk. it doesnt need to be resizable

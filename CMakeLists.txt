@@ -8,6 +8,8 @@ add_library(SgNet
     src/tensor/vector.cpp
     src/tensor/tensor2d.cpp
     src/neural/layer/affine.cpp
+    src/neural/layer/relu.cpp
+    src/neural/layer/softmax.cpp
     src/utils/frisbee.cpp
 )
 
