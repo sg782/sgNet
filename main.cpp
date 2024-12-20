@@ -9,7 +9,10 @@ int main() {
     using namespace SgNet;
 
 
+    Vector v = Vector(10);
+    v.setRandom(5,10);
 
+    (v>5).print();
 
     // double learningRate = 0.5;
     // Affine layer = Affine(2,{5,10},learningRate);

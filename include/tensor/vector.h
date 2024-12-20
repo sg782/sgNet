@@ -72,6 +72,17 @@ namespace SgNet {
         void operator/= (const double val);
         void operator/= (const Vector vals);
 
+        Vector operator> (const double val) const;
+        Vector operator> (const Vector vals) const;
+        Vector operator>= (const double val);
+        Vector operator>= (const Vector vals);
+
+        Vector operator< (const double val) const;
+        Vector operator< (const Vector vals) const;
+        Vector operator<= (const double val);
+        Vector operator<= (const Vector vals);
+
+
 
         // equality overloads make a copy, NOT a reference
         // maybe I should change that

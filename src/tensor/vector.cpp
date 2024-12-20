@@ -348,6 +348,93 @@ void SgNet::Vector::operator/= (const Vector v){
 }
 
 
+SgNet::Vector SgNet::Vector::operator< (const double val) const{
+    Vector out = Vector(this->size());
+    out.setConstant(0);
+    for(int i=0;i<this->size();i++){
+        if(this->operator[](i).val() < val){
+            out[i] = 1;
+        }
+    }
+    return out;
+}
+SgNet::Vector SgNet::Vector::operator< (const SgNet::Vector vals) const{
+    Vector out = Vector(this->size());
+    out.setConstant(0);
+    for(int i=0;i<this->size();i++){
+        if(this->operator[](i).val() < vals[i].val()){
+            out[i] = 1;
+        }
+    }
+    return out;
+
+}
+SgNet::Vector SgNet::Vector::operator<= (const double val){
+    Vector out = Vector(this->size());
+    out.setConstant(0);
+    for(int i=0;i<this->size();i++){
+        if(this->operator[](i).val() <= val){
+            out[i] = 1;
+        }
+    }
+    return out;
+}
+SgNet::Vector SgNet::Vector::operator<= (const SgNet::Vector vals){
+    Vector out = Vector(this->size());
+    out.setConstant(0);
+    for(int i=0;i<this->size();i++){
+        if(this->operator[](i).val() <= vals[i].val()){
+            out[i] = 1;
+        }
+    }
+    return out;
+}
+
+
+SgNet::Vector SgNet::Vector::operator> (const double val) const{
+    Vector out = Vector(this->size());
+    out.setConstant(0);
+    for(int i=0;i<this->size();i++){
+        if(this->operator[](i).val() > val){
+            out[i] = 1;
+        }
+    }
+    return out;
+
+}
+SgNet::Vector SgNet::Vector::operator> (const SgNet::Vector vals) const{
+    Vector out = Vector(this->size());
+    out.setConstant(0);
+    for(int i=0;i<this->size();i++){
+        if(this->operator[](i).val() > vals[i].val()){
+            out[i] = 1;
+        }
+    }
+    return out;
+}
+SgNet::Vector SgNet::Vector::operator>= (const double val){
+    Vector out = Vector(this->size());
+    out.setConstant(0);
+    for(int i=0;i<this->size();i++){
+        if(this->operator[](i).val() >= val){
+            out[i] = 1;
+        }
+    }
+    return out;
+}
+SgNet::Vector SgNet::Vector::operator>= (const SgNet::Vector vals){
+    Vector out = Vector(this->size());
+    out.setConstant(0);
+    for(int i=0;i<this->size();i++){
+        if(this->operator[](i).val() >= vals[i].val()){
+            out[i] = 1;
+        }
+    }
+    return out;
+}
+
+
+
 SgNet::Frisbee& SgNet::Vector::operator[] (int index){
     return data[index];
 }
@@ -357,7 +444,6 @@ const SgNet::Frisbee& SgNet::Vector::operator[] (int index) const{
 }
 
 
-
 void SgNet::Vector::operator= (double val){
     this->setConstant(val);
 }
@@ -365,6 +451,7 @@ void SgNet::Vector::operator= (double val){
 void SgNet::Vector::operator= (const std::vector<double> v){
     this->set(v);
 }
+
 void SgNet::Vector::operator= (const Vector v){
 
     this->set(v);
