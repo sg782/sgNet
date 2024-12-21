@@ -17,14 +17,14 @@ namespace SgNet{
         Tensor2d() = default;
         Tensor2d(std::vector<int> Dimensions);
 
-        int numRows();
-        int numCols();
+        int numRows() const;
+        int numCols() const;
 
         // methods
         void print();
         void setConstant(double val);
         void setRandom(double mean, double stdDev);
-        std::array<int,2> shape()const;
+        std::vector<int> shape()const;
 
         void printShape()const;
 
@@ -87,8 +87,23 @@ namespace SgNet{
         void operator/= (const Vector& vals);
         void operator/= (const Tensor2d& r);
 
+        Tensor2d operator> (const double val) const;
+        Tensor2d operator> (const Vector vals) const;
+        Tensor2d operator> (const Tensor2d vals)const;
+        Tensor2d operator>= (const double val) const;
+        Tensor2d operator>= (const Vector vals)const;
+        Tensor2d operator>= (const Tensor2d vals)const;
+
+        Tensor2d operator< (const double val) const;
+        Tensor2d operator< (const Vector vals) const;
+        Tensor2d operator< (const Tensor2d vals)const;
+        Tensor2d operator<= (const double val)const;
+        Tensor2d operator<= (const Vector vals)const;
+        Tensor2d operator<= (const Tensor2d vals)const;
+
         // index operator. It returns a vector which can also be indexed.
         SgNet::Vector& operator[] (int index);
+        const SgNet::Vector operator[] (int index) const;
 
 
         

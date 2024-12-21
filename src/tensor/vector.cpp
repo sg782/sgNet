@@ -369,7 +369,7 @@ SgNet::Vector SgNet::Vector::operator< (const SgNet::Vector vals) const{
     return out;
 
 }
-SgNet::Vector SgNet::Vector::operator<= (const double val){
+SgNet::Vector SgNet::Vector::operator<= (const double val) const{
     Vector out = Vector(this->size());
     out.setConstant(0);
     for(int i=0;i<this->size();i++){
@@ -379,7 +379,7 @@ SgNet::Vector SgNet::Vector::operator<= (const double val){
     }
     return out;
 }
-SgNet::Vector SgNet::Vector::operator<= (const SgNet::Vector vals){
+SgNet::Vector SgNet::Vector::operator<= (const SgNet::Vector vals) const{
     Vector out = Vector(this->size());
     out.setConstant(0);
     for(int i=0;i<this->size();i++){
@@ -412,7 +412,7 @@ SgNet::Vector SgNet::Vector::operator> (const SgNet::Vector vals) const{
     }
     return out;
 }
-SgNet::Vector SgNet::Vector::operator>= (const double val){
+SgNet::Vector SgNet::Vector::operator>= (const double val) const{
     Vector out = Vector(this->size());
     out.setConstant(0);
     for(int i=0;i<this->size();i++){
@@ -422,7 +422,7 @@ SgNet::Vector SgNet::Vector::operator>= (const double val){
     }
     return out;
 }
-SgNet::Vector SgNet::Vector::operator>= (const SgNet::Vector vals){
+SgNet::Vector SgNet::Vector::operator>= (const SgNet::Vector vals) const{
     Vector out = Vector(this->size());
     out.setConstant(0);
     for(int i=0;i<this->size();i++){

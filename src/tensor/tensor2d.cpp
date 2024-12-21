@@ -32,15 +32,15 @@ void SgNet::Tensor2d::print(){
     }
 }
 
-std::array<int,2> SgNet::Tensor2d::shape() const{
-    std::array<int,2> out;
+std::vector<int> SgNet::Tensor2d::shape() const{
+    std::vector<int> out;
     out[0] = data.size();
     out[1] = data[0].size();
     return out;
 }
 
 void SgNet::Tensor2d::printShape() const{
-    std::array<int,2> out = this->shape();
+    std::vector<int> out = this->shape();
 
     std::cout << "[" << out[0] << ", " << out[1] << "]\n";
 }
@@ -69,10 +69,10 @@ SgNet::Vector SgNet::Tensor2d::colSum(){
 
 
 
-int SgNet::Tensor2d::numRows(){
+int SgNet::Tensor2d::numRows() const{
     return data.size();
 }
-int SgNet::Tensor2d::numCols(){
+int SgNet::Tensor2d::numCols() const{
     return data[0].size();
 }
 
@@ -599,4 +599,104 @@ void SgNet::Tensor2d::operator/= (const Tensor2d& r){
 // indexing returns a vector (which can be indexed as well)
 SgNet::Vector& SgNet::Tensor2d::operator[] (int index){
     return this->data[index];
+}
+
+const SgNet::Vector SgNet::Tensor2d::operator[] (int index) const{
+    const SgNet::Vector out = data[index];
+    return out;
+}
+
+
+
+
+
+
+SgNet::Tensor2d SgNet::Tensor2d::operator> (const double val) const{
+    SgNet::Tensor2d out = Tensor2d(this->shape());
+    for(int i=0;i<this->numRows();i++){
+        out[i] = (this->data[i] > val);
+    }
+    return out;
+}
+SgNet::Tensor2d SgNet::Tensor2d::operator> (const SgNet::Vector vals) const{
+    SgNet::Tensor2d out = Tensor2d(this->shape());
+    for(int i=0;i<this->numRows();i++){
+        out[i] = (this->data[i] > vals[i].val());
+    }
+    return out;
+}
+SgNet::Tensor2d SgNet::Tensor2d::operator> (const SgNet::Tensor2d vals)const{
+    SgNet::Tensor2d out = SgNet::Tensor2d(this->shape());
+    for(int i=0;i<this->numRows();i++){
+        out[i] = (this->data[i] > vals[i]);
+    }
+
+    return out;
+}
+SgNet::Tensor2d SgNet::Tensor2d::operator>= (const double val) const{
+    SgNet::Tensor2d out = Tensor2d(this->shape());
+    for(int i=0;i<this->numRows();i++){
+        out[i] = (this->data[i] >= val);
+    }
+    return out;
+}
+SgNet::Tensor2d SgNet::Tensor2d::operator>= (const Vector vals)const{
+    SgNet::Tensor2d out = Tensor2d(this->shape());
+    for(int i=0;i<this->numRows();i++){
+        out[i] = (this->data[i] >= vals[i].val());
+    }
+    return out;
+}
+SgNet::Tensor2d SgNet::Tensor2d::operator>= (const Tensor2d vals)const{
+    SgNet::Tensor2d out = SgNet::Tensor2d(this->shape());
+    for(int i=0;i<this->numRows();i++){
+        out[i] = (this->data[i] >= vals[i]);
+    }
+
+    return out;
+}
+
+SgNet::Tensor2d SgNet::Tensor2d::operator< (const double val) const{
+    SgNet::Tensor2d out = Tensor2d(this->shape());
+    for(int i=0;i<this->numRows();i++){
+        out[i] = (this->data[i] < val);
+    }
+    return out;
+}
+SgNet::Tensor2d SgNet::Tensor2d::operator< (const Vector vals) const{
+    SgNet::Tensor2d out = Tensor2d(this->shape());
+    for(int i=0;i<this->numRows();i++){
+        out[i] = (this->data[i] < vals[i].val());
+    }
+    return out;
+}
+SgNet::Tensor2d SgNet::Tensor2d::operator< (const Tensor2d vals)const{
+    SgNet::Tensor2d out = SgNet::Tensor2d(this->shape());
+    for(int i=0;i<this->numRows();i++){
+        out[i] = (this->data[i] < vals[i]);
+    }
+
+    return out;
+}
+SgNet::Tensor2d SgNet::Tensor2d::operator<= (const double val)const{
+    SgNet::Tensor2d out = Tensor2d(this->shape());
+    for(int i=0;i<this->numRows();i++){
+        out[i] = (this->data[i] <= val);
+    }
+    return out;
+}
+SgNet::Tensor2d SgNet::Tensor2d::operator<= (const Vector vals)const{
+    SgNet::Tensor2d out = Tensor2d(this->shape());
+    for(int i=0;i<this->numRows();i++){
+        out[i] = (this->data[i] <= vals[i].val());
+    }
+    return out;
+}
+SgNet::Tensor2d SgNet::Tensor2d::operator<= (const Tensor2d vals)const{
+    SgNet::Tensor2d out = SgNet::Tensor2d(this->shape());
+    for(int i=0;i<this->numRows();i++){
+        out[i] = (this->data[i] <= vals[i]);
+    }
+
+    return out;
 }
