@@ -10,7 +10,6 @@ SgNet::Tensor2d SgNet::Softmax::forward(SgNet::Tensor2d inputs){
     // subtract max of each row, as it does not affect the output but improves stability 
 
     SgNet::Tensor2d out(inputs.shape());
-    std::cout <<"here\n";
     for(int i=0;i<out.numRows();i++){
         out[i] = inputs[i].exp();
         double rowSum = out[i].sum();

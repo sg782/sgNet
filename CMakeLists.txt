@@ -13,6 +13,7 @@ add_library(SgNet
     src/utils/frisbee.cpp
     src/neural/loss/categoricalCrossEntropy.cpp
     src/utils/fileReading.cpp
+    src/utils/timer.cpp
 )
 
 

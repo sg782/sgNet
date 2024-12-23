@@ -25,6 +25,8 @@
         Tensor2d out = inputs.matMult(w);
         out.byRow() += b;
 
+        std::cout << "\n\nt\n\n";
+
         return out;
     }
 

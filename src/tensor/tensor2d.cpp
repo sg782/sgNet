@@ -285,8 +285,6 @@ void SgNet::Tensor2d::operator+= (const Vector& vals) {
     for(int i=0;i<data.size();i++){
         data[i] += vals;
     }
-
-    this->print();
 }
 
 void SgNet::Tensor2d::operator+= (const Tensor2d& r){
