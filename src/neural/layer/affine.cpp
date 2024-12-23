@@ -1,6 +1,7 @@
 #include "neural/layer/affine.h"
 #include <vector>
 #include <iostream>
+#include "utils/timer.h"
 
 
 // due to the existence of the Generic type, we must do somethign special here
@@ -22,10 +23,13 @@
         this-> inputs = inputs;
 
         // forward pass on generic tensor type
+        SgNet::Timer t = SgNet::Timer();
+
         Tensor2d out = inputs.matMult(w);
+
         out.byRow() += b;
 
-        std::cout << "\n\nt\n\n";
+
 
         return out;
     }

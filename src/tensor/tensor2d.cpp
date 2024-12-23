@@ -6,6 +6,7 @@
 #include <cmath>
 #include "tensor/vector.h"
 #include <array>
+#include "utils/timer.h"
 
 
 /*
@@ -145,9 +146,11 @@ SgNet::Tensor2d SgNet::Tensor2d::matMult(SgNet::Tensor2d b){
     Potential for optimization from naive alg
     */
 
+    Tensor2d bCol = b.byCol();
+
     for(int i=0;i<output.dimensions[0];i++){
         for(int j=0;j<output.dimensions[1];j++){
-            output[i][j] = this->operator[](i).dot(b.byCol()[j]);
+            output[i][j] = this->operator[](i).dot(bCol[j]);
         }
     }
 

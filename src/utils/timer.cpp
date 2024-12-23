@@ -8,10 +8,10 @@ SgNet::Timer::Timer() {
 }
 
 
-void SgNet::Timer::timeStop(std::string message) {
+double SgNet::Timer::timeStop(std::string message) {
 
 	if (muted == true) {
-		return;
+		return 0.0;
 	}
 
 	auto curTime = std::chrono::high_resolution_clock::now();
@@ -23,6 +23,7 @@ void SgNet::Timer::timeStop(std::string message) {
 	std::cout << "\t - Time since previous call: " << recentDuration.count() << " ms\n";
 
 	recentTime = curTime;
+    return recentDuration.count();
 }
 
 void SgNet::Timer::logTotalElapsedTime() {

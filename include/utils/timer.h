@@ -18,7 +18,7 @@ namespace SgNet{
 
         void start();
 
-        void timeStop(std::string message);
+        double timeStop(std::string message);
 
         void logTotalElapsedTime();
 
