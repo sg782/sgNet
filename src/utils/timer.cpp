@@ -1,4 +1,4 @@
-#include "timer.h"
+#include "utils/timer.h"
 #include <chrono>
 #include <iostream>
 #include <string>
@@ -20,7 +20,7 @@ void SgNet::Timer::timeStop(std::string message) {
 
 	std::cout << "\nTime Log\n";
 	std::cout << "\t - " << message << "\n";
-	std::cout << "\t - Time since previous call: " << recentDuration.count() << "\n";
+	std::cout << "\t - Time since previous call: " << recentDuration.count() << " ms\n";
 
 	recentTime = curTime;
 }

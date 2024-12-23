@@ -4,6 +4,7 @@
 #define TIMER_H
 
 #include <chrono>
+#include <string>
 
 namespace SgNet{
     class Timer {

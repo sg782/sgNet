@@ -7,11 +7,14 @@
 #include "neural/loss/categoricalCrossEntropy.h"
 #include "utils/fileReading.h"
 #include "neural/layer/relu.h"
+#include "utils/timer.h"
 
 int main() {
     using namespace SgNet;
 
-    int numSamples = 100;
+
+    Timer t = Timer();
+    int numSamples = 20;
     double learningRate = 0.005;
 
     Tensor2d data({numSamples,784});
@@ -23,32 +26,24 @@ int main() {
 
 
     Affine a1 = Affine(2,{784,128},learningRate);
-    Relu r1 = Relu({128});
 
-    Affine a2 = Affine(2,{128,10},learningRate);
-    Softmax s2 = Softmax(10);
-
-    CCE cce = CCE();
-
-
-    int nIters = 1;
-
-    for(int i=0;i<nIters;i++){
-        std::cout << "\nhere\n";
-        Tensor2d out1 = a1.forward(data);
-                std::cout << "\nhere\n";
-
-        Tensor2d rOut1 = r1.forward(out1);
-                std::cout << "\nhere\n";
+    t.start();
+    t.timeStop("start affine");
+    Tensor2d out1 = a1.forward(data);
+    t.timeStop("End of affine layer");
 
 
-        // Tensor2d out2 = a2.forward(rOut1);
-        // out2.printShape();
-        // Tensor2d sOut2 = s2.forward(out2);
 
-        // sOut2.printShape();
+    // 784 -> 128 affine layer 
+    /*
+    5 samples
+      time: ~6000ms
+       - this is truly terrible
 
-    }
+    20 samples
+      time: ~24000ms
+       - at least it scales linearly haha
+    */
 
      
     return 0;
