@@ -5,34 +5,19 @@
 #include <iostream>
 #include "neural/layer/softmax.h"
 #include "neural/loss/categoricalCrossEntropy.h"
+#include "utils/fileReading.h"
 
 int main() {
     using namespace SgNet;
 
-    Tensor2d t = Tensor2d({2,5});
-    Vector labels = Vector(2);
-    labels[0] = 1;
-    labels[1] = 2;
-    t.setRandom(0,10);
+    Tensor2d data({10,784});
+    Vector labels({10});
 
-    Softmax s = Softmax(5);
+    loadData(data,labels,10);
 
-    CCE l = CCE();
+    data.print();
 
-
-
-    Tensor2d out = s.forward(t);
-
-    double loss = l.calculate(out,labels);
-
-    Tensor2d back = l.backward(out,labels);
-
-    // just checking for running
-
-    std::cout << loss << "\n";
-    t.print();
-    out.print();
-    back.print();
+    labels.print();
 
      
     return 0;

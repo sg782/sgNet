@@ -12,6 +12,7 @@ add_library(SgNet
     src/neural/layer/softmax.cpp
     src/utils/frisbee.cpp
     src/neural/loss/categoricalCrossEntropy.cpp
+    src/utils/fileReading.cpp
 )
 
 
