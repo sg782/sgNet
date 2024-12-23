@@ -23,7 +23,7 @@ namespace SgNet{
         // methods
         void print();
         void setConstant(double val);
-        void setRandom(double mean, double stdDev);
+        void setRandomGaussian(double mean, double stdDev);
         std::vector<int> shape()const;
 
         void printShape()const;

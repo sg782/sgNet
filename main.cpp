@@ -14,14 +14,16 @@ int main() {
 
 
     Timer t = Timer();
-    int numSamples = 20;
-    double learningRate = 0.005;
+    int numSamples = 100;
+    double learningRate = 0.0005;
 
 
-    Tensor2d dummyData({50,100});
-    dummyData.setRandom(0,1);
-    Affine testAffine(2,{100,100},learningRate);
+    Tensor2d data({numSamples,784});
+    Vector labels(numSamples);
 
+    loadData(data,labels,numSamples);
+    data -=127.5;
+    data/=127.5;
 
     // we will use a benchmark of a dataset of 150 samples, each holding 100 double values, passing through a 100->100 affine
     /*
@@ -38,36 +40,38 @@ int main() {
     */
 
 
-    t.start();
-    int numTests = 5;
-    double cumulativeTime = 0.0;
-    
-    for(int i=0;i<numTests;i++){
-        t.timeStop("Start forward");
-        Tensor2d out = testAffine.forward(dummyData);
-        cumulativeTime += t.timeStop("End forward");
 
-        out.printShape();
+
+
+    Affine a1(2,{784,128},learningRate);
+    Relu r1({128});
+    Affine a2(2,{128,10},learningRate);
+    Softmax s2(128);
+
+    CCE cce =CCE();
+
+    // training loop
+    int numIters = 30;
+
+    for(int i=0;i<numIters;i++){
+
+        // FORWARD
+        Tensor2d out1 = a1.forward(data);
+        Tensor2d rOut1 = r1.forward(out1);
+        Tensor2d out2 = a2.forward(rOut1);
+        Tensor2d sOut2 = s2.forward(out2);
+
+        double loss = cce.calculate(sOut2,labels);
+        std::cout << "Training loss: " << loss << "\n";
+
+        Tensor2d gradient = cce.backward(sOut2,labels);
+
+        // BACKWARD
+        Tensor2d sBack2 = s2.backward(gradient);
+        Tensor2d back2 = a2.backward(sBack2);
+        Tensor2d rBack1 = r1.backward(back2);
+        Tensor2d back1 = a1.backward(rBack1);
     }
-
-    double avgTime = cumulativeTime/numTests;
-
-    std::cout << "Average Time: " << avgTime << " ms\n";
-
-
-
-
-    // col major vs row major test
-    // Tensor2d test({5000,5000});
-    // test.setConstant(0);
-    // t.start();
-    // for(int i=0;i<test.numRows();i++){
-    //     for(int j=0;j<test.numCols();j++){
-    //         double val = test[i][j].val();
-    //     }
-    // }
-    // t.timeStop("end indexing");
-
 
 
 
@@ -75,6 +79,8 @@ int main() {
 
     // 784 -> 128 affine layer 
     /*
+
+    BEFORE:
     5 samples
       time: ~6000ms
        - this is truly terrible
@@ -82,6 +88,15 @@ int main() {
     20 samples
       time: ~24000ms
        - at least it scales linearly haha
+
+    AFTER:
+    5 samples
+      time: ~30 ms
+
+    20 samples
+      time: ~65ms
+
+    much better
     */
 
      

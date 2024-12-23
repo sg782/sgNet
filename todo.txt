@@ -12,6 +12,7 @@
         - or could just add colMax and rowMax functions
 8. add norm
 9. vector change it to array operations maybe idk. it doesnt need to be resizable
+10. standardize the API for all the layers
 
 
 unrelated but i should make a voxel renderer
