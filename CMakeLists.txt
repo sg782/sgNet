@@ -11,6 +11,7 @@ add_library(SgNet
     src/neural/layer/relu.cpp
     src/neural/layer/softmax.cpp
     src/utils/frisbee.cpp
+    src/neural/loss/categoricalCrossEntropy.cpp
 )
 
 

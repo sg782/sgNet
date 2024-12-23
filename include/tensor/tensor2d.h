@@ -48,6 +48,8 @@ namespace SgNet{
 
         Tensor2d transpose();
 
+        Tensor2d exp() const;
+
 
         // operator overloads
         // each have a single value, vector, and matrix form

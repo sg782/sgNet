@@ -15,7 +15,7 @@ namespace SgNet{
     public:
         Tensor2d inputs;
 
-        Relu(int nDims, std::vector<int> dims);
+        Relu(std::vector<int> dims);
         
         Tensor2d forward(Tensor2d inputs);
 

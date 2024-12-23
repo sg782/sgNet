@@ -1,5 +1,6 @@
 {
     "files.associations": {
+        "*.ndjson": "jsonl",
         "*.dbclient-js": "javascript",
         "format": "cpp",
         "initializer_list": "cpp",
@@ -54,6 +55,7 @@
         "string": "cpp",
         "algorithm": "cpp",
         "optional": "cpp",
-        "random": "cpp"
+        "random": "cpp",
+        "array": "cpp"
     }
 }

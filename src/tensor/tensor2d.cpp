@@ -33,7 +33,7 @@ void SgNet::Tensor2d::print(){
 }
 
 std::vector<int> SgNet::Tensor2d::shape() const{
-    std::vector<int> out;
+    std::vector<int> out(2);
     out[0] = data.size();
     out[1] = data[0].size();
     return out;
@@ -592,6 +592,14 @@ void SgNet::Tensor2d::operator/= (const Tensor2d& r){
         data[i] /= r.data[i];
     }
 
+}
+
+SgNet::Tensor2d SgNet::Tensor2d::exp()const{
+    SgNet::Tensor2d out(this->shape());
+    for(int i=0;i<data.size();i++){
+        out[i] = this->operator[](i).exp();
+    }
+    return out;
 }
 
 

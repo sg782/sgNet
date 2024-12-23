@@ -29,6 +29,8 @@ namespace SgNet {
         Vector() = default;
         Vector(int size);
 
+    
+
         void print();
         void resize(int newSize);
 
@@ -50,6 +52,8 @@ namespace SgNet {
 
         void min(double val);
         double min();
+
+        Vector exp() const;
 
         
         Vector operator+ (const double val) const;

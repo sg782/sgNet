@@ -1,7 +1,7 @@
 #include "neural/layer/relu.h"
 #include <vector>
 
-SgNet::Relu::Relu(int nDims,std::vector<int> dims){
+SgNet::Relu::Relu(std::vector<int> dims){
 
 }
 

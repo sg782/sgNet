@@ -9,6 +9,7 @@
 
 
 
+
 SgNet::Vector::Vector(int size) : data(size){
     for(int i=0;i<size;i++){
         data[i] = new double(0);
@@ -79,7 +80,13 @@ double SgNet::Vector::min(){
     return minVal;
 }
 
-
+SgNet::Vector SgNet::Vector::exp() const{
+    SgNet::Vector out(this->size());
+    for(int i=0;i<this->size();i++){
+        out[i] = std::exp(this->operator[](i).val());
+    }
+    return out;
+}
 
 
 
@@ -164,7 +171,6 @@ SgNet::Vector SgNet::Vector::operator+ (const double val) const{
     }
     return out;
 }
-
 SgNet::Vector SgNet::Vector::operator+ (const Vector v) const{
     if(this->size() != v.size()){
         std::stringstream ss;
@@ -180,13 +186,11 @@ SgNet::Vector SgNet::Vector::operator+ (const Vector v) const{
 
     return out;
 }
-
 void SgNet::Vector::operator+= (const double val){
     for(int i=0;i<this->size();i++){
         data[i] = data[i].val() + val;
     }
 }
-
 void SgNet::Vector::operator+= (const Vector v){
     if(this->size() != v.size()){
         std::stringstream ss;
@@ -209,7 +213,6 @@ SgNet::Vector SgNet::Vector::operator- (const double val) const{
     }
     return out;
 }
-
 SgNet::Vector SgNet::Vector::operator- (const Vector v) const{
     if(this->size() != v.size()){
         std::stringstream ss;
@@ -226,13 +229,11 @@ SgNet::Vector SgNet::Vector::operator- (const Vector v) const{
     return out;
 
 }
-
 void SgNet::Vector::operator-= (const double val){
     for(int i=0;i<this->size();i++){
         data[i] = data[i].val() - val;
     }
 }
-
 void SgNet::Vector::operator-= (const Vector v){
     if(this->size() != v.size()){
         std::stringstream ss;
@@ -255,7 +256,6 @@ SgNet::Vector SgNet::Vector::operator* (const double val) const{
     }
     return out;
 }
-
 SgNet::Vector SgNet::Vector::operator* (const Vector v) const{
     if(this->size() != v.size()){
         std::stringstream ss;
@@ -272,13 +272,11 @@ SgNet::Vector SgNet::Vector::operator* (const Vector v) const{
     return out;
 
 }
-
 void SgNet::Vector::operator*= (const double val){
     for(int i=0;i<this->size();i++){
         data[i] = data[i].val() * val;
     }
 }
-
 void SgNet::Vector::operator*= (const Vector v){
     if(this->size() != v.size()){
         std::stringstream ss;
@@ -306,7 +304,6 @@ SgNet::Vector SgNet::Vector::operator/ (const double val) const{
     }
     return out;
 }
-
 SgNet::Vector SgNet::Vector::operator/ (const Vector v) const{
     if(this->size() != v.size()){
         std::stringstream ss;
@@ -327,13 +324,11 @@ SgNet::Vector SgNet::Vector::operator/ (const Vector v) const{
     return out;
 
 }
-
 void SgNet::Vector::operator/= (const double val){
     for(int i=0;i<this->size();i++){
         data[i] = data[i].val() / val;
     }
 }
-
 void SgNet::Vector::operator/= (const Vector v){
     if(this->size() != v.size()){
         std::stringstream ss;

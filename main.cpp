@@ -3,31 +3,36 @@
 #include "tensor/vector.h"
 #include "utils/frisbee.h"
 #include <iostream>
+#include "neural/layer/softmax.h"
+#include "neural/loss/categoricalCrossEntropy.h"
 
 int main() {
-
     using namespace SgNet;
 
+    Tensor2d t = Tensor2d({2,5});
+    Vector labels = Vector(2);
+    labels[0] = 1;
+    labels[1] = 2;
+    t.setRandom(0,10);
 
-    Vector v = Vector(10);
-    v.setRandom(5,10);
+    Softmax s = Softmax(5);
 
-    (v>5).print();
-
-    // double learningRate = 0.5;
-    // Affine layer = Affine(2,{5,10},learningRate);
-
-
-    // Tensor2d g = Tensor2d({4,5});
+    CCE l = CCE();
 
 
-    // g.setConstant(3);
 
-    // Tensor2d out = layer.forward(g);
+    Tensor2d out = s.forward(t);
 
-    // Tensor2d out2 = layer.backward(out);
+    double loss = l.calculate(out,labels);
 
-    // out2.print();
+    Tensor2d back = l.backward(out,labels);
+
+    // just checking for running
+
+    std::cout << loss << "\n";
+    t.print();
+    out.print();
+    back.print();
 
      
     return 0;

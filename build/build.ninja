@@ -80,6 +80,12 @@ build CMakeFiles/SgNet.dir/src/utils/frisbee.cpp.obj: CXX_COMPILER__SgNet_unscan
   OBJECT_DIR = CMakeFiles\SgNet.dir
   OBJECT_FILE_DIR = CMakeFiles\SgNet.dir\src\utils
 
+build CMakeFiles/SgNet.dir/src/neural/loss/categoricalCrossEntropy.cpp.obj: CXX_COMPILER__SgNet_unscanned_ C$:/Users/User/Desktop/Personal_Programming/sgNet/src/neural/loss/categoricalCrossEntropy.cpp || cmake_object_order_depends_target_SgNet
+  DEP_FILE = CMakeFiles\SgNet.dir\src\neural\loss\categoricalCrossEntropy.cpp.obj.d
+  INCLUDES = -IC:/Users/User/Desktop/Personal_Programming/sgNet/include
+  OBJECT_DIR = CMakeFiles\SgNet.dir
+  OBJECT_FILE_DIR = CMakeFiles\SgNet.dir\src\neural\loss
+
 
 # =============================================================================
 # Link build statements for STATIC_LIBRARY target SgNet
@@ -88,7 +94,7 @@ build CMakeFiles/SgNet.dir/src/utils/frisbee.cpp.obj: CXX_COMPILER__SgNet_unscan
 #############################################
 # Link the static library libSgNet.a
 
-build libSgNet.a: CXX_STATIC_LIBRARY_LINKER__SgNet_ CMakeFiles/SgNet.dir/src/tensor/vector.cpp.obj CMakeFiles/SgNet.dir/src/tensor/tensor2d.cpp.obj CMakeFiles/SgNet.dir/src/neural/layer/affine.cpp.obj CMakeFiles/SgNet.dir/src/neural/layer/relu.cpp.obj CMakeFiles/SgNet.dir/src/neural/layer/softmax.cpp.obj CMakeFiles/SgNet.dir/src/utils/frisbee.cpp.obj
+build libSgNet.a: CXX_STATIC_LIBRARY_LINKER__SgNet_ CMakeFiles/SgNet.dir/src/tensor/vector.cpp.obj CMakeFiles/SgNet.dir/src/tensor/tensor2d.cpp.obj CMakeFiles/SgNet.dir/src/neural/layer/affine.cpp.obj CMakeFiles/SgNet.dir/src/neural/layer/relu.cpp.obj CMakeFiles/SgNet.dir/src/neural/layer/softmax.cpp.obj CMakeFiles/SgNet.dir/src/utils/frisbee.cpp.obj CMakeFiles/SgNet.dir/src/neural/loss/categoricalCrossEntropy.cpp.obj
   OBJECT_DIR = CMakeFiles\SgNet.dir
   POST_BUILD = cd .
   PRE_LINK = cd .
