@@ -3,20 +3,16 @@
 #ifndef TENSOR_H
 #define TENSOR_H
 
-#include <vector>
+#include "tensor/tensor2d.h"
+#include "tensor/vector.h"
 
 
 namespace SgNet{
 
-    class Tensor{
+    class Tensor3d{
     public:
-        int flatLength;
-        int nDimensions;
-        std::vector<int> dimensions;
-        std::vector<double> flatVector;
-        Tensor(int nDimensions,std::vector<int> Dimensions);
+        Tensor3d(std::vector<int> Dimensions);
 
-        void test();
         void print();
     };
 
