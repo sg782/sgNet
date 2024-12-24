@@ -7,6 +7,7 @@ project(sgNet VERSION 1.0.0 LANGUAGES CXX)
 add_library(SgNet 
     src/tensor/vector.cpp
     src/tensor/tensor2d.cpp
+    src/tensor/tensor.cpp
     src/neural/layer/affine.cpp
     src/neural/layer/relu.cpp
     src/neural/layer/softmax.cpp

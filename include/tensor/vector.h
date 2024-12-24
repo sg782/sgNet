@@ -39,6 +39,7 @@ namespace SgNet {
         int size() const;
 
         double sum() const;
+        double product() const;
   
 
         double dot(const Vector& v);
@@ -57,6 +58,8 @@ namespace SgNet {
         Vector exp() const;
         Vector square() const;
         Vector tanh() const;
+
+        Vector slice(int startIndex, int endIndex);
 
         
         Vector operator+ (const double val) const;

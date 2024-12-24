@@ -43,6 +43,14 @@ double SgNet::Vector::sum() const{
     return sum;
 }
 
+double SgNet::Vector::product() const{
+    double prod = 1;
+    for(int i=0;i<data.size();i++){
+        prod *= data[i].val();
+    }
+    return prod;
+}
+
 void SgNet::Vector::max(double val){
     for(int i=0;i<this->size();i++){
         if(this->operator[](i).val() > val){
@@ -106,6 +114,30 @@ SgNet::Vector SgNet::Vector::tanh() const{
 
         out[i] = (ePlusX - eMinusX) / (ePlusX + eMinusX);
     }
+    return out;
+}
+
+SgNet::Vector SgNet::Vector::slice(int startIndex, int endIndex){
+    int subLength = endIndex - startIndex;
+    if(subLength<0){
+        // also add bounds control as well
+        throw std::invalid_argument("End index must be greater than start index!");
+    }
+    if(startIndex < 0){
+        throw std::invalid_argument("Start Index must be posiive!!!");
+
+    }
+    if(endIndex>this->size()){
+        throw std::invalid_argument("End index out of bounds!");
+
+    }
+    
+
+    SgNet::Vector out(subLength);
+    for(int i=0;i<subLength;i++){
+        out[i] = this->operator[](i + startIndex);
+    }
+
     return out;
 }
 
