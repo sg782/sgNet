@@ -117,7 +117,7 @@ SgNet::Vector SgNet::Vector::tanh() const{
     return out;
 }
 
-SgNet::Vector SgNet::Vector::slice(int startIndex, int endIndex){
+SgNet::Vector SgNet::Vector::slice(int startIndex, int endIndex) const{
     int subLength = endIndex - startIndex;
     if(subLength<0){
         // also add bounds control as well
@@ -131,13 +131,11 @@ SgNet::Vector SgNet::Vector::slice(int startIndex, int endIndex){
         throw std::invalid_argument("End index out of bounds!");
 
     }
-    
 
     SgNet::Vector out(subLength);
     for(int i=0;i<subLength;i++){
         out[i] = this->operator[](i + startIndex);
     }
-
     return out;
 }
 
@@ -209,6 +207,19 @@ void SgNet::Vector::set(SgNet::Vector v){
 
     for(int i=0;i<this->size();i++){
         data[i] = new double(*v[i]);
+    }
+}
+
+void SgNet::Vector::setReference(SgNet::Vector v){
+    if(this->size() != v.size()){
+        std::stringstream ss;
+        ss << "Set with SgNet::Vector cannot be executed on dimensions of "
+           << this->size() << " and " << v.size() << "\n";
+        throw std::invalid_argument(ss.str());
+    }
+
+    for(int i=0;i<this->size();i++){
+        data[i] = v[i];
     }
 }
 

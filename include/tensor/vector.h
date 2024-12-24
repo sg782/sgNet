@@ -48,6 +48,8 @@ namespace SgNet {
         void setRandom(double mean, double stdDev);
         void set(std::vector<double> vals);
         void set(SgNet::Vector vals);
+        void setReference(SgNet::Vector vals);
+
 
         void max(double val);
         double max();
@@ -59,7 +61,7 @@ namespace SgNet {
         Vector square() const;
         Vector tanh() const;
 
-        Vector slice(int startIndex, int endIndex);
+        Vector slice(int startIndex, int endIndex) const;
 
         
         Vector operator+ (const double val) const;

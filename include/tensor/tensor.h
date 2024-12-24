@@ -21,9 +21,18 @@ namespace SgNet{
         Tensor() = default;
         Tensor(Vector dims);
 
+        void setConstant(double val);
+
+
+        void setData(Vector data);
+
         // most important function 
-        SgNet::Tensor& operator[] (int index);
-        const SgNet::Tensor operator[] (int index) const;
+        Tensor operator[] (int index);
+        const Tensor operator[] (int index) const;
+
+
+
+        void print();
     };
 }
 

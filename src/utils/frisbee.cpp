@@ -39,6 +39,12 @@ const double SgNet::Frisbee::val() const{
 }
 
 
+const double* SgNet::Frisbee::address() const{
+    return(ref);
+}
+
+
+
 
 bool SgNet::Frisbee::operator==(double* val){
     return(ref==val);

@@ -11,9 +11,30 @@
 #include "neural/layer/sigmoid.h"
 #include "neural/layer/tanh.h"
 #include "neural/layer/leakyRelu.h"
+#include "tensor/tensor.h"
 
 int main() {
     using namespace SgNet;
+
+    Vector v(3);
+
+    v.setConstant(3);
+
+    Tensor r(v);
+
+    r.setConstant(5);
+
+    Tensor q = r[0];
+
+    q.print();
+
+    r.print();
+
+    q.setConstant(3);
+
+    q.print();
+
+    r.print();
 
 
      
