@@ -22,6 +22,7 @@ On the contrary to the previous remark, I will have the data be pointers
 */
 
 namespace SgNet {
+    
 
     class Vector{
     public:
@@ -54,6 +55,8 @@ namespace SgNet {
         double min();
 
         Vector exp() const;
+        Vector square() const;
+        Vector tanh() const;
 
         
         Vector operator+ (const double val) const;
@@ -75,6 +78,37 @@ namespace SgNet {
         Vector operator/ (const Vector vals) const;
         void operator/= (const double val);
         void operator/= (const Vector vals);
+
+
+        friend Vector operator+ (double scalar, Vector vec){
+            Vector out(vec.size());
+            for(int i=0;i<vec.size();i++){
+                out[i] = scalar + vec[i].val();
+            }
+            return out;
+        }
+        friend Vector operator- (double scalar, Vector vec){
+            Vector out(vec.size());
+            for(int i=0;i<vec.size();i++){
+                out[i] = scalar - vec[i].val();
+            }
+            return out;
+        }
+        friend Vector operator* (double scalar, Vector vec){
+            Vector out(vec.size());
+            for(int i=0;i<vec.size();i++){
+                out[i] = scalar * vec[i].val();
+            }
+            return out;
+        }
+        friend Vector operator/ (double scalar, Vector vec){
+            Vector out(vec.size());
+            for(int i=0;i<vec.size();i++){
+                out[i] = scalar / vec[i].val();
+            }
+            return out;
+        }
+
 
         Vector operator> (const double val) const;
         Vector operator> (const Vector vals) const;

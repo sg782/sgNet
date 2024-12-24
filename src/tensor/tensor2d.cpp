@@ -595,10 +595,28 @@ void SgNet::Tensor2d::operator/= (const Tensor2d& r){
 
 }
 
+
+
 SgNet::Tensor2d SgNet::Tensor2d::exp()const{
     SgNet::Tensor2d out(this->shape());
     for(int i=0;i<data.size();i++){
         out[i] = this->operator[](i).exp();
+    }
+    return out;
+}
+
+SgNet::Tensor2d SgNet::Tensor2d::square()const{
+    SgNet::Tensor2d out(this->shape());
+    for(int i=0;i<data.size();i++){
+        out[i] = this->operator[](i).square();
+    }
+    return out;
+}
+
+SgNet::Tensor2d SgNet::Tensor2d::tanh()const{
+    SgNet::Tensor2d out(this->shape());
+    for(int i=0;i<data.size();i++){
+        out[i] = this->operator[](i).tanh();
     }
     return out;
 }

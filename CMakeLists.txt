@@ -10,6 +10,9 @@ add_library(SgNet
     src/neural/layer/affine.cpp
     src/neural/layer/relu.cpp
     src/neural/layer/softmax.cpp
+    src/neural/layer/sigmoid.cpp
+    src/neural/layer/tanh.cpp
+    src/neural/layer/leakyRelu.cpp
     src/utils/frisbee.cpp
     src/neural/loss/categoricalCrossEntropy.cpp
     src/utils/fileReading.cpp

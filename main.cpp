@@ -8,12 +8,13 @@
 #include "utils/fileReading.h"
 #include "neural/layer/relu.h"
 #include "utils/timer.h"
+#include "neural/layer/sigmoid.h"
+#include "neural/layer/tanh.h"
+#include "neural/layer/leakyRelu.h"
 
 int main() {
     using namespace SgNet;
 
-
-    Timer t = Timer();
     int numSamples = 100;
     double learningRate = 0.0005;
 
@@ -39,12 +40,8 @@ int main() {
     
     */
 
-
-
-
-
     Affine a1(2,{784,128},learningRate);
-    Relu r1({128});
+    LeakyRelu r1(128,.1);
     Affine a2(2,{128,10},learningRate);
     Softmax s2(128);
 

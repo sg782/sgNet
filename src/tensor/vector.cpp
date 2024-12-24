@@ -88,6 +88,26 @@ SgNet::Vector SgNet::Vector::exp() const{
     return out;
 }
 
+SgNet::Vector SgNet::Vector::square() const{
+    SgNet::Vector out(this->size());
+    for(int i=0;i<this->size();i++){
+        double val = this->operator[](i).val();
+        out[i] = val*val;
+    }
+    return out;
+}
+
+SgNet::Vector SgNet::Vector::tanh() const{
+    SgNet::Vector out(this->size());
+    for(int i=0;i<this->size();i++){
+        double val = this->operator[](i).val();
+        double ePlusX = std::exp(val);
+        double eMinusX  = std::exp(-val);
+
+        out[i] = (ePlusX - eMinusX) / (ePlusX + eMinusX);
+    }
+    return out;
+}
 
 
 double SgNet::Vector::dot(const SgNet::Vector& v){
@@ -341,6 +361,8 @@ void SgNet::Vector::operator/= (const Vector v){
     }
 
 }
+
+
 
 
 SgNet::Vector SgNet::Vector::operator< (const double val) const{

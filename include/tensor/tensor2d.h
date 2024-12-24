@@ -49,7 +49,8 @@ namespace SgNet{
         Tensor2d transpose();
 
         Tensor2d exp() const;
-
+        Tensor2d square() const;
+        Tensor2d tanh() const;
 
         // operator overloads
         // each have a single value, vector, and matrix form
@@ -72,7 +73,6 @@ namespace SgNet{
         void operator-= (const Vector& vals);
         void operator-= (const Tensor2d& r);
 
-
         //multiplication
         Tensor2d operator* (const double val) const;
         Tensor2d operator* (const Vector& vals) const;
@@ -88,6 +88,36 @@ namespace SgNet{
         void operator/= (const double val);
         void operator/= (const Vector& vals);
         void operator/= (const Tensor2d& r);
+
+
+        friend Tensor2d operator+ (double scalar, Tensor2d tensor){
+            Tensor2d out(tensor.shape());
+            for(int i=0;i<tensor.numRows();i++){
+                out[i] = scalar + tensor[i];
+            }
+            return out;
+        }
+        friend Tensor2d operator- (double scalar, Tensor2d tensor){
+            Tensor2d out(tensor.shape());
+            for(int i=0;i<tensor.numRows();i++){
+                out[i] = scalar - tensor[i];
+            }
+            return out;
+        }
+        friend Tensor2d operator* (double scalar, Tensor2d tensor){
+            Tensor2d out(tensor.shape());
+            for(int i=0;i<tensor.numRows();i++){
+                out[i] = scalar * tensor[i];
+            }
+            return out;
+        }
+        friend Tensor2d operator/ (double scalar, Tensor2d tensor){
+            Tensor2d out(tensor.shape());
+            for(int i=0;i<tensor.numRows();i++){
+                out[i] = scalar / tensor[i];
+            }
+            return out;
+        }
 
         Tensor2d operator> (const double val) const;
         Tensor2d operator> (const Vector vals) const;
