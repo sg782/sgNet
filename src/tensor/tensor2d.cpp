@@ -120,7 +120,7 @@ void SgNet::Tensor2d::setConstant(double val){
 
 void SgNet::Tensor2d::setRandomGaussian(double mean, double stdDev){
     for(int i=0;i<data.size();i++){
-        data[i].setRandom(mean,stdDev);
+        data[i].setRandomGaussian(mean,stdDev);
     }
 }
 

@@ -13,6 +13,8 @@
 8. add norm
 9. vector change it to array operations maybe idk. it doesnt need to be resizable
 10. standardize the API for all the layers
+11. ADD bounds checks to all indexing and slicing functions
+12. make vector initialiation possible using bracket notation: ie Vector v(3) = {1,5,4}
 
 
 unrelated but i should make a voxel renderer

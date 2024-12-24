@@ -167,7 +167,7 @@ void SgNet::Vector::setConstant(double val){
     }
 }
 
-void SgNet::Vector::setRandom(double mean, double stdDev){
+void SgNet::Vector::setRandomGaussian(double mean, double stdDev){
 // https://stackoverflow.com/questions/19944111/creating-a-gaussian-random-generator-with-a-mean-and-standard-deviation
     std::random_device rd;
     

@@ -22,21 +22,16 @@ int main() {
 
     Tensor r(v);
 
-    r.setConstant(5);
+    r.setRandomGaussian(0,10);
 
-    Tensor q = r[0];
-
-    q.print();
-
-    r.print();
-
-    q.setConstant(3);
-
-    q.print();
+    Vector i = Vector(3);
+    i[0] = 1;
+    i[1] = 0;
+    i[2] = 2;
 
     r.print();
 
-
+    std::cout << "\n" << r.at(i).val() << "\n";
      
     return 0;
 }

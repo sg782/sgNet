@@ -45,7 +45,7 @@ namespace SgNet {
         double dot(const Vector& v);
 
         void setConstant(double val);
-        void setRandom(double mean, double stdDev);
+        void setRandomGaussian(double mean, double stdDev);
         void set(std::vector<double> vals);
         void set(SgNet::Vector vals);
         void setReference(SgNet::Vector vals);
