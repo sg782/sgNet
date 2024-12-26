@@ -33,6 +33,7 @@ namespace SgNet {
     
 
         void print();
+        void printAddresses();
         void resize(int newSize);
 
 
@@ -46,6 +47,7 @@ namespace SgNet {
 
         void setConstant(double val);
         void setRandomGaussian(double mean, double stdDev);
+        void setRandomInt(int low, int high);
         void set(std::vector<double> vals);
         void set(SgNet::Vector vals);
         void setReference(SgNet::Vector vals);
@@ -65,6 +67,9 @@ namespace SgNet {
 
         Vector splice(int index,int length);
         Vector concat(Vector other);
+
+        // add an overload for inserting a vector?
+        Vector insert(int index, double val);
 
         Vector copy();
 

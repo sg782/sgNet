@@ -5,6 +5,7 @@
 
 #include "tensor/vector.h"
 #include "utils/frisbee.h"
+#include <vector>
 
 namespace SgNet{
 
@@ -22,10 +23,18 @@ namespace SgNet{
         Tensor() = default;
         Tensor(Vector dims);
 
+        // vector should be of type int. I just dont want to add more overloads rn 
+        Tensor(std::vector<double> dims);
+
+
         void setConstant(double val);
         void setRandomGaussian(double mean, double stdDev);
+        void setRandomInt(int low, int high);
+
 
         Tensor matMult(Tensor b);
+
+        Vector getDimensionalIndex(int index);
 
 
         void setData(Vector data);

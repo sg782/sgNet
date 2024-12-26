@@ -31,6 +31,17 @@ void SgNet::Vector::print(){
     std::cout << "\n";
 }
 
+void SgNet::Vector::printAddresses(){
+    for(int i=0;i<this->size();i++){
+        if(data[i]==nullptr){
+            std::cout << "null ";
+        }else{
+            std::cout << data[i].address() << " ";
+        }
+    }
+    std::cout << "\n";
+}
+
 void SgNet::Vector::resize(int newSize){
     data.resize(newSize);
 }
@@ -95,7 +106,7 @@ SgNet::Vector SgNet::Vector::concat(SgNet::Vector other){
 SgNet::Vector SgNet::Vector::splice(int index, int length){
 // add bounds checking later
 
-SgNet::Vector out(this->size() - length);
+    SgNet::Vector out(this->size() - length);
     for(int i=0;i<index;i++){
         out[i] = data[i];
     }
@@ -103,6 +114,24 @@ SgNet::Vector out(this->size() - length);
     for(int i=index;i<out.size();i++){
         out[i] = data[i+length];
     }
+
+    return out;
+}
+
+SgNet::Vector SgNet::Vector::insert(int index,double val){
+    // do bounds checking later
+    SgNet::Vector out(this->size() + 1);
+
+    for(int i=0;i<index;i++){
+        out[i] = data[i];
+    }
+
+    out[index] = val;
+
+    for(int i=index+1;i<out.size();i++){
+        out[i] = data[i-1];
+    }
+
 
     return out;
 }
@@ -221,6 +250,14 @@ void SgNet::Vector::setRandomGaussian(double mean, double stdDev){
 
 
 }
+
+void SgNet::Vector::setRandomInt(int low, int high){
+
+    for(int i=0;i<this->size();i++){
+        data[i] = low + std::rand() / (RAND_MAX / (high - low + 1) + 1);
+    }
+}
+
 
 void SgNet::Vector::set(std::vector<double> v){
 

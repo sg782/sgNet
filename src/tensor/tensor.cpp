@@ -17,6 +17,20 @@ SgNet::Tensor::Tensor(Vector dims){
     data = Vector(flatLength);
 }
 
+SgNet::Tensor::Tensor(std::vector<double> dims){
+    // vector should be of type int. I just dont want to add more overloads rn 
+    
+    nDims = dims.size();
+    this->dims.resize(nDims);
+    this->dims.set(dims);
+
+    this->setIndexDims();
+
+    flatLength = static_cast<int>(this->dims.product());
+    data.resize(flatLength);
+    data = Vector(flatLength);
+}
+
 void SgNet::Tensor::setIndexDims(){
     indexDims.resize(nDims);
     indexDims.setConstant(1);
@@ -34,14 +48,61 @@ void SgNet::Tensor::setRandomGaussian(double mean, double stdDev){
     data.setRandomGaussian(mean,stdDev);
 }
 
+void SgNet::Tensor::setRandomInt(int low, int high){
+    data.setRandomInt(low,high);
+}
 
 SgNet::Tensor SgNet::Tensor::matMult(SgNet::Tensor b){
+
+    // check that these are 2dimensional
     if(nDims!= 2 || b.nDims!=2){
         throw std::runtime_error("Matrix Multiplication requires 2d tensors");
     }
 
+    // check validity
+    if(this->dims[1].val() != b.dims[0].val()){
+        std::stringstream ss;
+        ss << "Matrix multiplication cannot be executed on dimensions of ["
+           << this->dims[0].val() << ", " << this->dims[1].val()
+           << "] and ["
+           << b.dims[0].val() << ", " << b.dims[1].val() << "]";
+        	throw std::invalid_argument(ss.str());
+    }
 
-    // must first implement getAxis
+
+
+    Vector outDims(2);
+    outDims[0] = this->dims[0].val();
+    outDims[1] = b.dims[1].val();
+
+    Tensor out(outDims);
+
+    // since we know that 'out' is 2 dimensional, we can explicitly index over it
+    // instead of calling the getDimensional index function
+
+    for(int i=0;i<out.dims[0].val();i++){
+        for(int j=0;j<out.dims[1].val();j++){
+            // we will explicitly index instead of doing the overloaded tensor index
+            // should avoid wasting memory
+
+            // lots of method calls here
+            out.data[(i*out.dims[1].val())+j] = this->getAxis(0,i).asVector().dot(b.getAxis(1,j).asVector());
+        }
+    }
+
+    return out;
+}
+
+SgNet::Vector SgNet::Tensor::getDimensionalIndex(int index){
+    Vector out(nDims);
+
+    for(int i=0;i<nDims;i++){
+        int idx = index / indexDims[i].val();
+        out[i] = idx;
+        index -= (idx * indexDims[i].val());
+    }
+
+    return out;
 }
 
 SgNet::Vector SgNet::Tensor::asVector(){
@@ -63,14 +124,14 @@ SgNet::Tensor SgNet::Tensor::getAxis(int axis, int index){
 
     multiply each index by it's cooresponding indexDim value from original tensor, always leaving the relevant axis index equal to index
 
-
-    
-    
     */
 
+   // i hope this ends up being an efficient way to do this, because it is sleek!
     for(int i=0;i<out.flatLength;i++){
-
+        double idx = out.getDimensionalIndex(i).insert(axis,index).dot(indexDims);
+        out.data[i] = data[static_cast<int>(idx)];
     }
+    return out;
 }
 
 SgNet::Frisbee SgNet::Tensor::at(int index){

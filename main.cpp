@@ -16,22 +16,31 @@
 int main() {
     using namespace SgNet;
 
-    Vector v(10);
-    v.setRandomGaussian(0,10);
+    Vector aDims(2);
+    aDims[0] = 2;
+    aDims[1] = 3;
 
-    v.print();
+    Vector bDims(2);
+    bDims[0] = 3;
+    bDims[1] = 2;
 
-    Vector o = v.splice(2,3).copy();
+    Tensor a(aDims);
+    Tensor b(bDims);
 
-    o.print();
+    int low = 0;
+    int high = 5;
 
-    Vector q = o.concat(v);
+    a.setRandomInt(low,high);
+    b.setRandomInt(low,high);
 
-    q.print();
+    Tensor out = a.matMult(b);
 
-    v[0] = 0;
+    a.print();
+    std::cout << "\n";
+    b.print();
+    std::cout << "\n";
+    out.print();
 
-    q.print();
 
 
 
