@@ -16,22 +16,24 @@
 int main() {
     using namespace SgNet;
 
-    Vector v(3);
+    Vector v(10);
+    v.setRandomGaussian(0,10);
 
-    v.setConstant(3);
+    v.print();
 
-    Tensor r(v);
+    Vector o = v.splice(2,3).copy();
 
-    r.setRandomGaussian(0,10);
+    o.print();
 
-    Vector i = Vector(3);
-    i[0] = 1;
-    i[1] = 0;
-    i[2] = 2;
+    Vector q = o.concat(v);
 
-    r.print();
+    q.print();
 
-    std::cout << "\n" << r.at(i).val() << "\n";
-     
-    return 0;
+    v[0] = 0;
+
+    q.print();
+
+
+
+
 }

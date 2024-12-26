@@ -6,10 +6,6 @@
 #include "tensor/vector.h"
 #include "utils/frisbee.h"
 
-
-
-
-
 namespace SgNet{
 
     class Tensor{
@@ -29,12 +25,20 @@ namespace SgNet{
         void setConstant(double val);
         void setRandomGaussian(double mean, double stdDev);
 
+        Tensor matMult(Tensor b);
+
 
         void setData(Vector data);
 
         // most important function 
         Tensor operator[] (int index);
         const Tensor operator[] (int index) const;
+
+
+        Tensor getAxis(int axis,int index);
+        Vector asVector();
+
+
 
 
         Frisbee at(int index);
@@ -44,6 +48,16 @@ namespace SgNet{
         /*
         make Tensor at(index) and at(vector indices) functions to get frisbee output
         */
+
+       Tensor operator+ (const double val) const;
+       Tensor operator- (const double val) const;
+       Tensor operator* (const double val) const;
+       Tensor operator/ (const double val) const;
+
+       void operator+=(const double val);
+       void operator-=(const double val);
+       void operator*=(const double val);
+       void operator/=(const double val);
 
 
         void print();

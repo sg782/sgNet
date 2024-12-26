@@ -70,6 +70,46 @@ double SgNet::Vector::max(){
 }
 
 
+SgNet::Vector SgNet::Vector::copy(){
+    SgNet::Vector out(this->size());
+    for(int i=0;i<this->size();i++){
+        out[i] = new double(data[i].val());
+    }
+
+    return out;
+}
+
+SgNet::Vector SgNet::Vector::concat(SgNet::Vector other){
+    SgNet::Vector out(this->size() + other.size());
+
+    for(int i=0;i<this->size();i++){
+        out[i] = data[i];
+    }
+    for(int i=0;i<other.size();i++){
+        out[i+this->size()] = other[i];
+    }
+
+    return out;
+}
+
+SgNet::Vector SgNet::Vector::splice(int index, int length){
+// add bounds checking later
+
+SgNet::Vector out(this->size() - length);
+    for(int i=0;i<index;i++){
+        out[i] = data[i];
+    }
+
+    for(int i=index;i<out.size();i++){
+        out[i] = data[i+length];
+    }
+
+    return out;
+}
+
+
+
+
 void SgNet::Vector::min(double val){
     for(int i=0;i<this->size();i++){
         if(this->operator[](i).val() < val){

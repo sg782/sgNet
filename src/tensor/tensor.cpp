@@ -35,6 +35,43 @@ void SgNet::Tensor::setRandomGaussian(double mean, double stdDev){
 }
 
 
+SgNet::Tensor SgNet::Tensor::matMult(SgNet::Tensor b){
+    if(nDims!= 2 || b.nDims!=2){
+        throw std::runtime_error("Matrix Multiplication requires 2d tensors");
+    }
+
+
+    // must first implement getAxis
+}
+
+SgNet::Vector SgNet::Tensor::asVector(){
+    // maybe this should return the actual values
+    return data;
+}
+
+SgNet::Tensor SgNet::Tensor::getAxis(int axis, int index){
+    // 0 indexed
+    SgNet::Vector newDims = dims.splice(axis,1).copy();
+
+    SgNet::Tensor out(newDims);
+
+
+    // this indices are computed as follows
+    /*
+    - using the indexDims   
+    - as if we are iterating over the properly dimensioned arrays   
+
+    multiply each index by it's cooresponding indexDim value from original tensor, always leaving the relevant axis index equal to index
+
+
+    
+    
+    */
+
+    for(int i=0;i<out.flatLength;i++){
+
+    }
+}
 
 SgNet::Frisbee SgNet::Tensor::at(int index){
     if(nDims != 1){
@@ -57,10 +94,9 @@ SgNet::Frisbee SgNet::Tensor::at(SgNet::Vector indices){
 
     double dbIdx = indexDims.dot(indices);
     int index = static_cast<int>(dbIdx);
-    
+
     return data[index];
 }
-
 
 
 
@@ -90,10 +126,8 @@ void SgNet::Tensor::print(){
     }
 }
 
-
-
-
 SgNet::Tensor SgNet::Tensor::operator[](int index){
+
     if(nDims<1){
         throw std::invalid_argument("you indexed too far !!!");
     }
@@ -137,4 +171,49 @@ const SgNet::Tensor SgNet::Tensor::operator[] (int index) const{
     out.setData(data.slice(startIdx,endIdx));
 
     return out;
+}
+
+
+// addition overloads
+SgNet::Tensor SgNet::Tensor::operator+ (const double val) const{
+    SgNet::Tensor output = Tensor(this->dims);
+    output.setData(data+val);    
+    return output;
+}
+
+void SgNet::Tensor::operator+= (const double val){
+    data += val;
+}
+
+// subtraction overloads
+SgNet::Tensor SgNet::Tensor::operator- (const double val) const{
+    SgNet::Tensor output = Tensor(this->dims);
+    output.setData(data-val);    
+    return output;
+}
+
+void SgNet::Tensor::operator-= (const double val){
+    data -= val;
+}
+
+// multiplication overloads
+SgNet::Tensor SgNet::Tensor::operator* (const double val) const{
+    SgNet::Tensor output = Tensor(this->dims);
+    output.setData(data*val);    
+    return output;
+}
+
+void SgNet::Tensor::operator*= (const double val){
+    data *= val;
+}
+
+// division overloads
+SgNet::Tensor SgNet::Tensor::operator/ (const double val) const{
+    SgNet::Tensor output = Tensor(this->dims);
+    output.setData(data/val);    
+    return output;
+}
+
+void SgNet::Tensor::operator/= (const double val){
+    data /= val;
 }

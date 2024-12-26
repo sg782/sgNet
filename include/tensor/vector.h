@@ -63,6 +63,11 @@ namespace SgNet {
 
         Vector slice(int startIndex, int endIndex) const;
 
+        Vector splice(int index,int length);
+        Vector concat(Vector other);
+
+        Vector copy();
+
         
         Vector operator+ (const double val) const;
         Vector operator+ (const Vector vals) const;
