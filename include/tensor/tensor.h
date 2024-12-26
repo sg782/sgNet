@@ -35,6 +35,10 @@ namespace SgNet{
         void setRandomInt(int low, int high);
 
 
+        double sum() const;
+        int getDim(int idx) const;
+
+
         Tensor matMult(Tensor b);
 
         Vector getDimensionalIndex(int index);
@@ -58,6 +62,7 @@ namespace SgNet{
         Frisbee at(int index);
 
         Frisbee at(Vector indices);
+        Frisbee at(std::vector<int> indices);
 
         /*
         make Tensor at(index) and at(vector indices) functions to get frisbee output
@@ -72,6 +77,8 @@ namespace SgNet{
        void operator-=(const double val);
        void operator*=(const double val);
        void operator/=(const double val);
+
+       void operator-=(Tensor other);
 
        void operator= (Tensor b);
 

@@ -34,6 +34,11 @@ namespace SgNet{
         double& operator*();
         bool operator== (double* val);
 
+        void operator+= (const double val);
+        void operator-= (const double val);
+        void operator*= (const double val);
+        void operator/= (const double val);
+
         const double val() const;
         double* address();
 

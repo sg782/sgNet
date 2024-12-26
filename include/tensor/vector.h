@@ -149,6 +149,8 @@ namespace SgNet {
         // it would make sense for SET to do the copying and = to make a reference
         void operator= (double val);
         void operator= (const std::vector<double> v);
+        void operator= (const std::vector<int> v);
+
         void operator= (const Vector v);
 
         Frisbee& operator[] (int index);

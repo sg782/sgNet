@@ -632,6 +632,10 @@ void SgNet::Vector::operator= (const std::vector<double> v){
     this->set(v);
 }
 
+void SgNet::Vector::operator= (const std::vector<int> v){
+    this->set(v);
+}
+
 void SgNet::Vector::operator= (const Vector v){
 
     this->set(v);

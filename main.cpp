@@ -16,36 +16,56 @@
 int main() {
     using namespace SgNet;
 
-    Vector aDims(2);
-    aDims[0] = 4;
-    aDims[1] = 4;
+    // Vector aDims(3);
+    // aDims = 4;
+    
 
-    Vector bDims(2);
-    bDims[0] = 3;
-    bDims[1] = 2;
+    // Vector bDims(3);
+    // bDims[0] = 3;
+    // bDims[1] = 2;
+    // bDims[2] = 3;
+
+    // Tensor a(aDims);
+    // Tensor b(bDims);
+
+    // a.setConstant(0);
+    // b.setConstant(1);
+
+    // a.print();
+    // b.print();
+
+    // Vector startPoint(3);
+    // startPoint[0] = 1;
+    // startPoint[1] = 1;
+    // startPoint[2] = 1;
+
+    // a.print();
+
+    // b.print();
+
+    // a.block(startPoint,b.dims).copyData(b);
+
+   
+    // a.print();
+
+    // b.print();
+
+
+    Vector aDims(3);
+    aDims = 4;
 
     Tensor a(aDims);
-    Tensor b(bDims);
+    a.setConstant(5);
 
-    a.setConstant(0);
-    b.setConstant(1);
+    Tensor b(aDims);
+    b.setConstant(2);
+
+    a-=b;
 
     a.print();
-    b.print();
-
-    Vector startPoint(2);
-    startPoint[0] = 0;
-    startPoint[1] = 0;
 
 
 
-
-
-    Tensor c = a.block(startPoint,b.dims);
-
-    c.copyData(b);
-
-    
 
 
     

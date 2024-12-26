@@ -18,6 +18,7 @@ add_library(SgNet
     src/neural/loss/categoricalCrossEntropy.cpp
     src/utils/fileReading.cpp
     src/utils/timer.cpp
+    src/neural/layer/convolution2d.cpp
 )
 
 

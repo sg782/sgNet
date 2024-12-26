@@ -1,9 +1,11 @@
-#include "convolution2d.h"
 #include <array>
 #include <algorithm>
 #include "tensor/tensor.h"
 #include "tensor/vector.h"
 #include <iostream>
+#include "neural/layer/convolution2d.h"
+#include <cmath>
+
 
 
 /*
@@ -22,7 +24,7 @@ SgNet::Convolution2d::Convolution2d(std::array<int, 2> kernelShape, int inputCha
 
 
 	// initialize weights and biases
-	this->filters = Tensor(std::vector<int>{numFilters,kernelShape[0],kernelShape[1]});
+	this->filters = SgNet::Tensor(std::vector<int>{numFilters,kernelShape[0],kernelShape[1]});
 
 	for (int i = 0; i < numFilters; i++) {
 		filters[i].setRandomGaussian(0,1);
@@ -48,14 +50,14 @@ SgNet::Tensor SgNet::Convolution2d::forward(SgNet::Tensor inputs) {
 	int inputCols = inputs.dims[3].val();
 
     
-    Tensor paddedInputs(std::vector<int>{n,numChannels,inputRows + 2*padding,inputCols + 2*padding});
+    SgNet::Tensor paddedInputs(std::vector<int>{n,numChannels,inputRows + 2*padding,inputCols + 2*padding});
 	//Eigen::MatrixXd paddedInput(inputRows + 2 * padding, inputCols + 2 * padding);
 	//paddedInput.setZero();
 
 	// pad inputs for each channel of each input
-    Vector startPoint(4);
+    SgNet::Vector startPoint(4);
 
-    // i need to improve vector initialization
+    // i need to improve SgNet::Vector initialization
     startPoint[0] = 0;
     startPoint[1] = 1;
     startPoint[2] = padding;
@@ -63,7 +65,7 @@ SgNet::Tensor SgNet::Convolution2d::forward(SgNet::Tensor inputs) {
 
 
 
-    paddedInputs.block(startPoint,inputs.dims) = inputs;
+    paddedInputs.block(startPoint,inputs.dims).copyData(inputs);;
 	// for (int i = 0; i < n; i++) {
 	// 	for (int j = 0; j < numChannels; j++) {
 	// 		paddedInputs[i][j].block(padding, padding, inputRows, inputCols) = inputs[i][j];
@@ -76,10 +78,20 @@ SgNet::Tensor SgNet::Convolution2d::forward(SgNet::Tensor inputs) {
 	int outputCols = ((inputCols + 2 * padding - kernelShape[1]) / strideLength) + 1;
 
 	
-	std::vector<std::vector<Eigen::MatrixXd>> output(n,
-		std::vector<Eigen::MatrixXd>(numFilters,Eigen::MatrixXd::Zero(outputRows, outputCols))
-	);
+	// std::vector<std::vector<Eigen::MatrixXd>> output(n,
+	// 	std::vector<Eigen::MatrixXd>(numFilters,Eigen::MatrixXd::Zero(outputRows, outputCols))
+	// );
 
+    SgNet::Tensor output({n,numFilters,outputRows,outputCols});
+
+    
+    SgNet::Vector indices(4);
+    indices.setConstant(0);
+
+    SgNet::Vector blockIndices(4);
+
+    SgNet::Vector blockDims(4);
+    blockDims = std::vector<int>{1,1,kernelShape[0],kernelShape[1]};
 
 	for (int i = 0; i < n; i++) {
 	// for each test in batch
@@ -96,7 +108,23 @@ SgNet::Tensor SgNet::Convolution2d::forward(SgNet::Tensor inputs) {
 
 						// summation across all n batches
 
-						output[i][j](k, l) += (paddedInputs[i][p].block(k * strideLength, l * strideLength, filters[j].rows(), filters[j].cols()).array() * filters[j].array()).sum();
+                        indices = std::vector<int>{i,j,k,l};
+                        blockIndices = std::vector<int>{i,j,k*strideLength,l*strideLength};
+
+
+            
+                        
+                        SgNet::Vector blockDims(4);
+
+                        SgNet::Tensor block = paddedInputs.block(blockIndices,blockDims);
+
+                        // we can just do the dot prod! since they are represented by flat vectors
+                        double convSum = block.data.dot(filters.getAxis(9,j).asVector());
+
+                       // paddedInputs[i][p].block(k * strideLength, l * strideLength, filters[j].rows(), filters[j].cols())
+
+
+                        output.at(indices) += convSum;
 
 
 						// we will assume bounding is correct
@@ -110,7 +138,9 @@ SgNet::Tensor SgNet::Convolution2d::forward(SgNet::Tensor inputs) {
 
 
 			// add bias of filter j to the output activation
-			output[i][j].array() += bias(j);
+            SgNet::Vector ijInd(2);
+            ijInd = std::vector<int>{i,j};
+			output.at(ijInd) += bias[j].val();;
 		}
 	}
 
@@ -123,9 +153,9 @@ SgNet::Tensor SgNet::Convolution2d::forward(SgNet::Tensor inputs) {
 	*/
 }
 
-std::vector<std::vector<Eigen::MatrixXd>> Convolution2d::backward(std::vector<std::vector<Eigen::MatrixXd>> dValues) {
+SgNet::Tensor SgNet::Convolution2d::backward(SgNet::Tensor dValues) {
 
-	int batchSize = dValues.size();
+	int batchSize = dValues.dims[0].val();
 	
 
 	/*
@@ -134,37 +164,39 @@ std::vector<std::vector<Eigen::MatrixXd>> Convolution2d::backward(std::vector<st
 		**we will also average across our batch**
 	*/
 	// dB
-	Eigen::VectorXd db(numFilters);
-	db.setZero();
+	SgNet::Vector db(numFilters);
+	db.setConstant(0);
 
 	for (int i = 0; i < batchSize; i++) {
 		for (int j = 0; j < numFilters; j++) {
 			// sum db across all items in the batch
-			db(j) += dValues[i][j].sum();
+			db[j] += dValues[i][j].sum();
 		}
 	}
 	db /= batchSize;
 	
 
 	// dW
-	std::vector<Eigen::MatrixXd> dW(numFilters, Eigen::MatrixXd(filters[0].rows(),filters[0].cols()));
-	for (int i = 0; i < dW.size(); i++) {
-		dW[i].setZero();
+    SgNet::Tensor dW(std::vector<int>{numFilters,kernelShape[0],kernelShape[1]});
+
+	for (int i = 0; i < dW.getDim(0); i++) {
+		dW[i].setConstant(0);
 	}
 	for (int i = 0; i < batchSize; i++) {
 		for (int j = 0; j < numFilters; j++) {
 			// since we are zero indexed, the formula will be slightly altered
 			
-			for (int k = 0; k < filters[j].rows(); k++) {
-				for (int l = 0; l < filters[j].cols(); l++) {
+			for (int k = 0; k < kernelShape[0]; k++) {
+				for (int l = 0; l < kernelShape[1]; l++) {
 
-					for (int m = 0; m < dValues[i][j].rows(); m++) {
-						for (int n =  0; n < dValues[i][j].cols(); n++) {
+                    // could that also be written as dValues.getDim(2) and getDim(3)?
+					for (int m = 0; m < dValues[i][j].getDim(0); m++) {
+						for (int n =  0; n < dValues[i][j].getDim(1); n++) {
 							int dValRow = (m * strideLength) + k;
 							int dValCol = (n * strideLength) + l;
 
 							// sum all
-							dW[j](k, l) += paddedInputs[i][j](dValRow, dValCol) * dValues[i][j](m,n);
+                            dW.at(std::vector<int>{j,k,l}) += paddedInputs.at(std::vector<int>{i,j,dValRow,dValCol}).val() * dValues.at(std::vector<int>{i,j,m,n}).val();
 						}
 					}
 
@@ -175,7 +207,7 @@ std::vector<std::vector<Eigen::MatrixXd>> Convolution2d::backward(std::vector<st
 	}
 	
 	// average across batch
-	for (int i = 0; i < dW.size(); i++) {
+	for (int i = 0; i < dW.getDim(0); i++) {
 		dW[i] /= batchSize;
 	}
 	
@@ -199,17 +231,17 @@ std::vector<std::vector<Eigen::MatrixXd>> Convolution2d::backward(std::vector<st
 
 
 	// fully naive and shameless 'solution'
-	std::vector<std::vector<Eigen::MatrixXd>> dInputs(batchSize, std::vector<Eigen::MatrixXd>(numFilters,Eigen::MatrixXd(inputs[0][0].rows(),inputs[0][0].cols())));
+    SgNet::Tensor dInputs(inputs.dims);
 
 	for (int i = 0; i < batchSize; i++) {
 		for (int j = 0; j < numFilters; j++) {
 
 			// this part especially can be trimmed down
-			for (int k = 0; k < inputs[i][j].rows();k++) {
-				for (int l = 0; l < inputs[i][j].cols();l++) {
+			for (int k = 0; k < inputs[i][j].getDim(0);k++) {
+				for (int l = 0; l < inputs[i][j].getDim(1);l++) {
 
-					for (int m = 0; m < dValues[i][j].rows(); m++) {
-						for (int n = 0; n < dValues[i][j].cols(); n++) {
+					for (int m = 0; m < dValues[i][j].getDim(0); m++) {
+						for (int n = 0; n < dValues[i][j].getDim(1); n++) {
 
 							// inside this loop we can quite explicitly find dO[m,n] / dA[k,l]
 							int weightIndexRow = k - (m * strideLength);
@@ -219,11 +251,11 @@ std::vector<std::vector<Eigen::MatrixXd>> Convolution2d::backward(std::vector<st
 							// here, we are checking if our weight indices are in  bounds
 							if (weightIndexRow >= 0 && 
 								weightIndexCol >= 0 &&
-								weightIndexRow < filters[j].rows() && 
-								weightIndexCol < filters[j].cols()
+								weightIndexRow < filters[j].getDim(0) && 
+								weightIndexCol < filters[j].getDim(1)
 								) {
 
-								dInputs[i][j](k,l) += filters[j](weightIndexRow, weightIndexCol) * dValues[i][j](m,n);
+                                dInputs.at(std::vector<int>{i,j,k,l}) += filters.at(std::vector<int>{j,weightIndexRow,weightIndexCol}).val() * dValues.at(std::vector<int>{i,j,m,n}).val();
 							}
 							else {
 								// add zero
@@ -242,12 +274,11 @@ std::vector<std::vector<Eigen::MatrixXd>> Convolution2d::backward(std::vector<st
 
 
 	// might need to call .array()
-	bias -= db * learningRate;
+	bias -= (db * learningRate);
 
-	for (int i = 0; i < numFilters; i++) {
-		filters[i].array() -= dW[i].array() * learningRate;
-	}
+    filters -= (dW * learningRate);
 
+    
 
 
 	/*
@@ -261,5 +292,6 @@ std::vector<std::vector<Eigen::MatrixXd>> Convolution2d::backward(std::vector<st
 	
 
 	return dInputs;
+    // thats all folks!
 }
 

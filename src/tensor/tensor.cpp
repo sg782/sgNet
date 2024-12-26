@@ -66,6 +66,14 @@ SgNet::Tensor::Tensor(
     data = Vector(flatLength);
 }
 
+double SgNet::Tensor::sum() const{
+    return data.sum();
+}
+
+int SgNet::Tensor::getDim(int idx) const{
+    return static_cast<int>(dims[idx].val());
+}
+
 
 void SgNet::Tensor::setIndexDims(){
     indexDims.resize(nDims);
@@ -215,6 +223,24 @@ SgNet::Frisbee SgNet::Tensor::at(SgNet::Vector indices){
     return data[index];
 }
 
+SgNet::Frisbee SgNet::Tensor::at(std::vector<int> indices){
+    // add dimensions checks
+
+    SgNet::Vector mIndices(nDims);
+    mIndices = indices;
+
+    if(nDims != indices.size()){
+        std::stringstream ss;
+        ss << "index vector is not of length " << nDims << "\n";
+        throw std::invalid_argument(ss.str());
+    }
+
+    double dbIdx = indexDims.dot(mIndices);
+    int index = static_cast<int>(dbIdx);
+
+    return data[index];
+}
+
 
 
 void SgNet::Tensor::setData(Vector newData){
@@ -297,6 +323,13 @@ const SgNet::Tensor SgNet::Tensor::operator[] (int index) const{
 }
 
 
+
+
+/*
+MORE OVERLOADS WILL BE ADDED AS THEY BECOME NECESSARY. I DONT NOT WANT TO DO ALL 30+ RIGHT NOW
+
+*/
+
 // addition overloads
 SgNet::Tensor SgNet::Tensor::operator+ (const double val) const{
     SgNet::Tensor output = Tensor(this->dims);
@@ -317,6 +350,10 @@ SgNet::Tensor SgNet::Tensor::operator- (const double val) const{
 
 void SgNet::Tensor::operator-= (const double val){
     data -= val;
+}
+
+void SgNet::Tensor::operator-=(Tensor other){
+    data -= other.data;
 }
 
 // multiplication overloads

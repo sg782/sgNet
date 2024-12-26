@@ -46,7 +46,18 @@ double* SgNet::Frisbee::address(){
     return(ref);
 }
 
-
+void SgNet::Frisbee::operator+= (const double val){
+    *ref += val;
+}
+void SgNet::Frisbee::operator-= (const double val){
+    *ref -= val;
+}
+void SgNet::Frisbee::operator*= (const double val){
+    *ref *= val;
+}
+void SgNet::Frisbee::operator/= (const double val){
+    *ref /= val;
+}
 
 
 bool SgNet::Frisbee::operator==(double* val){
