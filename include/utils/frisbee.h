@@ -35,7 +35,7 @@ namespace SgNet{
         bool operator== (double* val);
 
         const double val() const;
-        const double* address() const;
+        double* address();
 
         void printValue();
         void printAddress();

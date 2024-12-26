@@ -6,6 +6,7 @@
 #include "tensor/vector.h"
 #include "utils/frisbee.h"
 #include <vector>
+#include "initializer_list"
 
 namespace SgNet{
 
@@ -23,8 +24,10 @@ namespace SgNet{
         Tensor() = default;
         Tensor(Vector dims);
 
-        // vector should be of type int. I just dont want to add more overloads rn 
         Tensor(std::vector<double> dims);
+        Tensor(std::vector<int> dims);
+        Tensor(std::initializer_list<int>dims);
+
 
 
         void setConstant(double val);
@@ -46,6 +49,8 @@ namespace SgNet{
 
         Tensor getAxis(int axis,int index);
         Vector asVector();
+        Tensor block(Vector startPoint, Vector blockDims);
+        void copyData(Tensor other);
 
 
 
@@ -67,6 +72,8 @@ namespace SgNet{
        void operator-=(const double val);
        void operator*=(const double val);
        void operator/=(const double val);
+
+       void operator= (Tensor b);
 
 
         void print();

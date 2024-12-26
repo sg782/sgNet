@@ -6,7 +6,11 @@
 #include <vector>
 #include <random>
 
+/*
+Need to standardize operator= overloads and setter methods
 
+
+*/
 
 
 
@@ -88,6 +92,12 @@ SgNet::Vector SgNet::Vector::copy(){
     }
 
     return out;
+}
+
+void SgNet::Vector::copyReferences(SgNet::Vector vals){
+    for(int i=0;i<data.size();i++){
+        data[i].ref = vals[i].address();
+    }
 }
 
 SgNet::Vector SgNet::Vector::concat(SgNet::Vector other){
@@ -274,6 +284,23 @@ void SgNet::Vector::set(std::vector<double> v){
 
 }
 
+
+void SgNet::Vector::set(std::vector<int> v){
+
+    if(this->size() != v.size()){
+        std::stringstream ss;
+        ss << "Set with std::vector cannot be executed on dimensions of "
+           << this->size() << " and " << v.size() << "\n";
+        throw std::invalid_argument(ss.str());
+    }
+
+    for(int i=0;i<data.size();i++){
+        data[i] = new double(v[i]);
+    }
+
+}
+
+
 void SgNet::Vector::set(SgNet::Vector v){
     if(this->size() != v.size()){
         std::stringstream ss;
@@ -287,7 +314,22 @@ void SgNet::Vector::set(SgNet::Vector v){
     }
 }
 
-void SgNet::Vector::setReference(SgNet::Vector v){
+void SgNet::Vector::setValues(SgNet::Vector v){
+    // copies values 
+    if(this->size() != v.size()){
+        std::stringstream ss;
+        ss << "Set with SgNet::Vector cannot be executed on dimensions of "
+           << this->size() << " and " << v.size() << "\n";
+        throw std::invalid_argument(ss.str());
+    }
+
+    for(int i=0;i<this->size();i++){
+        data[i] = v[i].val();
+    }
+}
+
+void SgNet::Vector::overwrite(SgNet::Vector v){
+    // overwrites the data in a vector
     if(this->size() != v.size()){
         std::stringstream ss;
         ss << "Set with SgNet::Vector cannot be executed on dimensions of "
@@ -299,6 +341,7 @@ void SgNet::Vector::setReference(SgNet::Vector v){
         data[i] = v[i];
     }
 }
+
 
 
 // standard numeric operations

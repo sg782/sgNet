@@ -12,6 +12,9 @@ void SgNet::Frisbee::operator= (double* newPtr){
     ref = newPtr;
     //return *this;
 }
+
+
+
 void SgNet::Frisbee::operator= (const double val) const{
     *ref = val;
     //return *this;
@@ -39,7 +42,7 @@ const double SgNet::Frisbee::val() const{
 }
 
 
-const double* SgNet::Frisbee::address() const{
+double* SgNet::Frisbee::address(){
     return(ref);
 }
 

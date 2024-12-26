@@ -4,6 +4,7 @@
 #include <sstream>
 #include <stdexcept>
 #include "utils/frisbee.h"
+#include <initializer_list>
 
 SgNet::Tensor::Tensor(Vector dims){
     nDims = dims.size();
@@ -17,7 +18,9 @@ SgNet::Tensor::Tensor(Vector dims){
     data = Vector(flatLength);
 }
 
-SgNet::Tensor::Tensor(std::vector<double> dims){
+SgNet::Tensor::Tensor(
+    std::vector<double> dims
+    ){
     // vector should be of type int. I just dont want to add more overloads rn 
     
     nDims = dims.size();
@@ -30,6 +33,39 @@ SgNet::Tensor::Tensor(std::vector<double> dims){
     data.resize(flatLength);
     data = Vector(flatLength);
 }
+
+SgNet::Tensor::Tensor(
+    std::vector<int> dims
+    ){
+    // vector should be of type int. I just dont want to add more overloads rn 
+    
+    nDims = dims.size();
+    this->dims.resize(nDims);
+    this->dims.set(dims);
+
+    this->setIndexDims();
+
+    flatLength = static_cast<int>(this->dims.product());
+    data.resize(flatLength);
+    data = Vector(flatLength);
+}
+
+SgNet::Tensor::Tensor(
+    std::initializer_list<int> dims
+    ){
+    // vector should be of type int. I just dont want to add more overloads rn 
+    
+    nDims = dims.size();
+    this->dims.resize(nDims);
+    this->dims.set(dims);
+
+    this->setIndexDims();
+
+    flatLength = static_cast<int>(this->dims.product());
+    data.resize(flatLength);
+    data = Vector(flatLength);
+}
+
 
 void SgNet::Tensor::setIndexDims(){
     indexDims.resize(nDims);
@@ -110,6 +146,26 @@ SgNet::Vector SgNet::Tensor::asVector(){
     return data;
 }
 
+SgNet::Tensor SgNet::Tensor::block(SgNet::Vector startPoint, SgNet::Vector blockDims){
+    SgNet::Tensor out(blockDims);
+
+    for(int i=0;i<out.flatLength;i++){
+        /*
+        out[i]: get it from using the startpoint, plus the dimensionalIndex, dotted with tensor's indexDims
+
+        steps happening:
+        1. convert 'i' into the dimensional index (what the index would be if the tensor were truly the shape it is defined)
+        2. add the dimensional index with the start point, to get where in the original tensor we are currently indexing
+        3. translate it back to a flat coordinate, by finding its dotproduct with indexDims
+        4. use the flat coordinate to index the original
+        */
+       out.data[i] = data[(startPoint+out.getDimensionalIndex(i)).dot(indexDims)];
+    }
+
+    return out;
+}
+
+// add a byAxis() method, that lets us index by that axis
 SgNet::Tensor SgNet::Tensor::getAxis(int axis, int index){
     // 0 indexed
     SgNet::Vector newDims = dims.splice(axis,1).copy();
@@ -166,8 +222,13 @@ void SgNet::Tensor::setData(Vector newData){
         // error
     }
 
-    data.setReference(newData);
+    data = newData;
 }
+
+void SgNet::Tensor::copyData(SgNet::Tensor other){
+    data.setValues(other.data);
+}
+
 
 
 void SgNet::Tensor::print(){
@@ -185,6 +246,7 @@ void SgNet::Tensor::print(){
         }
         std::cout << data[i].val() << " ";
     }
+    std::cout << "\n";
 }
 
 SgNet::Tensor SgNet::Tensor::operator[](int index){
@@ -277,4 +339,12 @@ SgNet::Tensor SgNet::Tensor::operator/ (const double val) const{
 
 void SgNet::Tensor::operator/= (const double val){
     data /= val;
+}
+
+void SgNet::Tensor::operator= (Tensor b){
+    if(b.data.size()!=flatLength){
+    // error
+    }
+
+    data.copyReferences(b.data);
 }

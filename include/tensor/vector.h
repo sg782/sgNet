@@ -48,9 +48,16 @@ namespace SgNet {
         void setConstant(double val);
         void setRandomGaussian(double mean, double stdDev);
         void setRandomInt(int low, int high);
+
+
+
         void set(std::vector<double> vals);
+        void set(std::vector<int> vals);
         void set(SgNet::Vector vals);
-        void setReference(SgNet::Vector vals);
+
+        void setValues(SgNet::Vector vals);
+        void overwrite(SgNet::Vector vals);
+        void copyReferences(SgNet::Vector vals);
 
 
         void max(double val);

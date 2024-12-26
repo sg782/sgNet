@@ -17,8 +17,8 @@ int main() {
     using namespace SgNet;
 
     Vector aDims(2);
-    aDims[0] = 2;
-    aDims[1] = 3;
+    aDims[0] = 4;
+    aDims[1] = 4;
 
     Vector bDims(2);
     bDims[0] = 3;
@@ -27,19 +27,28 @@ int main() {
     Tensor a(aDims);
     Tensor b(bDims);
 
-    int low = 0;
-    int high = 5;
-
-    a.setRandomInt(low,high);
-    b.setRandomInt(low,high);
-
-    Tensor out = a.matMult(b);
+    a.setConstant(0);
+    b.setConstant(1);
 
     a.print();
-    std::cout << "\n";
     b.print();
-    std::cout << "\n";
-    out.print();
+
+    Vector startPoint(2);
+    startPoint[0] = 0;
+    startPoint[1] = 0;
+
+
+
+
+
+    Tensor c = a.block(startPoint,b.dims);
+
+    c.copyData(b);
+
+    
+
+
+    
 
 
 
