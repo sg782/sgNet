@@ -269,81 +269,6 @@ void SgNet::Vector::setRandomInt(int low, int high){
 }
 
 
-void SgNet::Vector::set(std::vector<double> v){
-
-    if(this->size() != v.size()){
-        std::stringstream ss;
-        ss << "Set with std::vector cannot be executed on dimensions of "
-           << this->size() << " and " << v.size() << "\n";
-        throw std::invalid_argument(ss.str());
-    }
-
-    for(int i=0;i<data.size();i++){
-        data[i] = new double(v[i]);
-    }
-
-}
-
-
-void SgNet::Vector::set(std::vector<int> v){
-
-    if(this->size() != v.size()){
-        std::stringstream ss;
-        ss << "Set with std::vector cannot be executed on dimensions of "
-           << this->size() << " and " << v.size() << "\n";
-        throw std::invalid_argument(ss.str());
-    }
-
-    for(int i=0;i<data.size();i++){
-        data[i] = new double(v[i]);
-    }
-
-}
-
-
-void SgNet::Vector::set(SgNet::Vector v){
-    // CREATES and returns NEW MEMORY
-    if(this->size() != v.size()){
-        std::stringstream ss;
-        ss << "Set with SgNet::Vector cannot be executed on dimensions of "
-           << this->size() << " and " << v.size() << "\n";
-        throw std::invalid_argument(ss.str());
-    }
-
-    for(int i=0;i<this->size();i++){
-        data[i] = new double(*v[i]);
-    }
-}
-
-void SgNet::Vector::setValues(SgNet::Vector v){
-    // copies values 
-    if(this->size() != v.size()){
-        std::stringstream ss;
-        ss << "Set with SgNet::Vector cannot be executed on dimensions of "
-           << this->size() << " and " << v.size() << "\n";
-        throw std::invalid_argument(ss.str());
-    }
-
-    for(int i=0;i<this->size();i++){
-        data[i] = v[i].val();
-    }
-}
-
-void SgNet::Vector::overwrite(SgNet::Vector v){
-    // OVERWRITES
-    // overwrites the data in a vector
-    if(this->size() != v.size()){
-        std::stringstream ss;
-        ss << "Set with SgNet::Vector cannot be executed on dimensions of "
-           << this->size() << " and " << v.size() << "\n";
-        throw std::invalid_argument(ss.str());
-    }
-
-    for(int i=0;i<this->size();i++){
-        data[i] = v[i];
-    }
-}
-
 
 
 // standard numeric operations
@@ -626,22 +551,174 @@ const SgNet::Frisbee& SgNet::Vector::operator[] (int index) const{
 }
 
 
+
+// operator= : UPDATES the VALUES
+// DOES NOT UPDATE MEMORY ADDRESSES
 void SgNet::Vector::operator= (double val){
     this->setConstant(val);
 }
 
+// operator= : UPDATES the VALUES
+// DOES NOT UPDATE MEMORY ADDRESSES
 void SgNet::Vector::operator= (const std::vector<double> v){
-    this->set(v);
+    this->setValues(v);
 }
 
+// operator= : UPDATES the VALUES
+// DOES NOT UPDATE MEMORY ADDRESSES
 void SgNet::Vector::operator= (const std::vector<int> v){
-    this->set(v);
-}
-
-void SgNet::Vector::operator= (const Vector v){
-
-    this->set(v);
+    this->setValues(v);
 }
 
 
+// // operator= : on a SgNet::Vector
+// void SgNet::Vector::operator= (const Vector v){
 
+//     /// not this
+//     this->setValues(v);
+// }
+
+
+// setValues(std::vector) : UPDATES the VALUES
+// DOES NOT UPDATE MEMORY ADDRESSES
+void SgNet::Vector::setValues(std::vector<double> v){
+
+    if(this->size() != v.size()){
+        std::stringstream ss;
+        ss << "SetValues with SgNet::Vector cannot be executed on dimensions of "
+           << this->size() << " and " << v.size() << "\n";
+        throw std::invalid_argument(ss.str());
+    }
+    // setValues
+    for(int i=0;i<this->size();i++){
+        if(data[i]==nullptr){
+            data[i] = new double(v[i]);
+        }else{
+            *data[i] = v[i];
+        }
+    }
+}
+
+// setValues(std::vector) : UPDATES the VALUES
+// DOES NOT UPDATE MEMORY ADDRESSES
+void SgNet::Vector::setValues(std::vector<int> v){
+
+    if(data.size() != v.size()){
+        std::stringstream ss;
+        ss << "SetValues with SgNet::Vector cannot be executed on dimensions of "
+           << this->size() << " and " << v.size() << "\n";
+        throw std::invalid_argument(ss.str());
+    }
+    // setValues
+    for(int i=0;i<this->size();i++){
+        if(data[i]==nullptr){
+            data[i] = new double(v[i]);
+        }else{
+            *data[i] = v[i];
+        }
+    }
+}
+
+// setValues(std::vector) : UPDATES the VALUES
+// DOES NOT UPDATE MEMORY ADDRESSES
+void SgNet::Vector::setValues(SgNet::Vector v){
+    // copies values 
+    if(this->size() != v.size()){
+        std::stringstream ss;
+        ss << "SetValues with SgNet::Vector cannot be executed on dimensions of "
+           << this->size() << " and " << v.size() << "\n";
+        throw std::invalid_argument(ss.str());
+    }
+
+    for(int i=0;i<this->size();i++){
+        if(data[i]==nullptr){
+            data[i] = new double(v[i].val());
+        }else{
+            data[i] = v[i].val();
+        }
+    }
+
+}
+
+
+// set(std::vector) : CREATES new MEMORY AND VALUE
+void SgNet::Vector::set(std::vector<double> v){
+
+    if(this->size() != v.size()){
+        std::stringstream ss;
+        ss << "Set with std::vector cannot be executed on dimensions of "
+           << this->size() << " and " << v.size() << "\n";
+        throw std::invalid_argument(ss.str());
+    }
+
+    for(int i=0;i<data.size();i++){
+        data[i] = new double(v[i]);
+    }
+
+}
+
+// set(std::vector) : CREATES new MEMORY AND VALUE
+void SgNet::Vector::set(std::vector<int> v){
+
+    if(this->size() != v.size()){
+        std::stringstream ss;
+        ss << "Set with std::vector cannot be executed on dimensions of "
+           << this->size() << " and " << v.size() << "\n";
+        throw std::invalid_argument(ss.str());
+    }
+
+    for(int i=0;i<data.size();i++){
+        data[i] = new double(v[i]);
+    }
+
+}
+
+// set(std::vector) : CREATES new MEMORY AND VALUE
+void SgNet::Vector::set(SgNet::Vector v){
+    // CREATES and returns NEW MEMORY
+    if(this->size() != v.size()){
+        std::stringstream ss;
+        ss << "Set with SgNet::Vector cannot be executed on dimensions of "
+           << this->size() << " and " << v.size() << "\n";
+        throw std::invalid_argument(ss.str());
+    }
+
+    for(int i=0;i<this->size();i++){
+        data[i] = new double(*v[i]);
+    }
+}
+
+
+// overwrite(std::vector) : OVERWRITES CURRENT VECTOR WITH THE DATA OF NEW VECTOR
+// REPLACES FRISBEE VALUES, both vectors now share the EXACT SAME memory (in each frisbee)
+void SgNet::Vector::overwrite(SgNet::Vector v){
+    // OVERWRITES
+    // overwrites the data in a vector
+    if(this->size() != v.size()){
+        std::stringstream ss;
+        ss << "Set with SgNet::Vector cannot be executed on dimensions of "
+           << this->size() << " and " << v.size() << "\n";
+        throw std::invalid_argument(ss.str());
+    }
+
+    for(int i=0;i<this->size();i++){
+        data[i] = v[i];
+    }
+}
+
+
+
+
+
+
+
+/*
+In the context of data passing operations, we need 3 different types of methods
+1. Purely updates the values 
+2. Updates the reference
+3. replaces with same frisbee object
+
+
+
+
+*/

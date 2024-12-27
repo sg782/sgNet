@@ -1,14 +1,12 @@
-#include "neural/layer/affine.h"
+#include "neural/layer/Affine1d.h"
 #include <vector>
 #include <iostream>
 #include "utils/timer.h"
 #include <cmath>
 
-// due to the existence of the Generic type, we must do somethign special here
-// should i look into inheritance for the tensors (yes);
+// Standard Affine transformation, where each row of data is a different item
 
-
-SgNet::Affine::Affine(int nDims, std::vector<int> dims,double learningRate){
+SgNet::Affine1d::Affine1d(int nDims, std::vector<int> dims,double learningRate){
     
     this->learningRate = learningRate;
     b.resize(dims[1]);
@@ -20,11 +18,10 @@ SgNet::Affine::Affine(int nDims, std::vector<int> dims,double learningRate){
     w *= std::sqrt(2. / dims[0]);
 }
 
-SgNet::Tensor2d SgNet::Affine::forward(Tensor2d inputs){
+SgNet::Tensor2d SgNet::Affine1d::forward(Tensor2d inputs){
     this-> inputs = inputs;
 
     // forward pass on generic tensor type
-    SgNet::Timer t = SgNet::Timer();
 
     Tensor2d out = inputs.matMult(w);
 
@@ -35,18 +32,12 @@ SgNet::Tensor2d SgNet::Affine::forward(Tensor2d inputs){
     return out;
 }
 
-SgNet::Tensor2d SgNet::Affine::backward(Tensor2d dValues){
-
-
+SgNet::Tensor2d SgNet::Affine1d::backward(Tensor2d dValues){
 
     Tensor2d dW = inputs.transpose().matMult(dValues);
     Vector dB = dValues.colSum();
 
-
-
     Tensor2d dInputs = dValues.matMult(w.transpose());
-
-
 
     // update weights
     w -= (dW * learningRate);

@@ -29,7 +29,6 @@ namespace SgNet{
         Tensor(std::initializer_list<int>dims);
 
 
-
         void setConstant(double val);
         void setRandomGaussian(double mean, double stdDev);
         void setRandomInt(int low, int high);
@@ -46,6 +45,9 @@ namespace SgNet{
 
         void setData(Vector data);
 
+        Tensor tranpose2d();
+
+
         // most important function 
         Tensor operator[] (int index);
         const Tensor operator[] (int index) const;
@@ -60,31 +62,33 @@ namespace SgNet{
 
 
         Frisbee at(int index);
-
         Frisbee at(Vector indices);
         Frisbee at(std::vector<int> indices);
+        Tensor tensorAt(Vector indices);
 
         /*
         make Tensor at(index) and at(vector indices) functions to get frisbee output
         */
 
-       Tensor operator+ (const double val) const;
-       Tensor operator- (const double val) const;
-       Tensor operator* (const double val) const;
-       Tensor operator/ (const double val) const;
+        Tensor operator+ (const double val) const;
+        Tensor operator- (const double val) const;
+        Tensor operator* (const double val) const;
+        Tensor operator/ (const double val) const;
 
-       void operator+=(const double val);
-       void operator-=(const double val);
-       void operator*=(const double val);
-       void operator/=(const double val);
+        void operator+=(const double val);
+        void operator-=(const double val);
+        void operator*=(const double val);
+        void operator/=(const double val);
 
-       void operator-=(Tensor other);
-       void operator*=(Tensor other);
+        
+        void operator-=(Tensor other);
+        void operator*=(Tensor other);
 
-       void operator= (Tensor b);
+        void operator= (Tensor b);
 
 
         void print();
+        void printShape();
     };
 }
 

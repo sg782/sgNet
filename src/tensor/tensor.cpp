@@ -38,15 +38,18 @@ SgNet::Tensor::Tensor(
     std::vector<int> dims
     ){
     // vector should be of type int. I just dont want to add more overloads rn 
-    
+
     this->nDims = dims.size();
+
     this->dims.resize(nDims);
-    this->dims.set(dims);
+
+    this->dims.setValues(dims);
 
     this->setIndexDims();
 
     flatLength = static_cast<int>(this->dims.product());
     data.resize(flatLength);
+
     data = Vector(flatLength);
 }
 
@@ -241,6 +244,24 @@ SgNet::Frisbee SgNet::Tensor::at(std::vector<int> indices){
     return data[index];
 }
 
+SgNet::Tensor SgNet::Tensor::tensorAt(SgNet::Vector indices){
+    // do bounds checking later
+
+    // uncompleted method to return a tensor at a given index. im pretty sure this is just gonna be a fancy getAxis() method, just with explicit indexing, which we dont need.
+    
+    int Isize = indices.size();
+
+    SgNet::Tensor out(dims.slice(Isize,nDims));
+
+    int nRemainingData = out.dims.product();
+
+    int startIndex = indexDims.slice(0,Isize).dot(indices);
+
+    out.data = (data.slice(startIndex,startIndex+nRemainingData));
+
+    return out;
+
+}
 
 
 void SgNet::Tensor::setData(Vector newData){
@@ -252,6 +273,7 @@ void SgNet::Tensor::setData(Vector newData){
 }
 
 void SgNet::Tensor::copyData(SgNet::Tensor other){
+
     data.setValues(other.data);
 }
 
@@ -273,6 +295,10 @@ void SgNet::Tensor::print(){
         std::cout << data[i].val() << " ";
     }
     std::cout << "\n";
+}
+
+void SgNet::Tensor::printShape(){
+    this->dims.print();
 }
 
 SgNet::Tensor SgNet::Tensor::operator[](int index){
@@ -299,7 +325,7 @@ SgNet::Tensor SgNet::Tensor::operator[](int index){
 
     SgNet::Tensor out(newDims);
 
-    // this is where our issue is
+    // this is where our issue is (i think resolved);
     out.data.overwrite(data.slice(startIdx,endIdx));
 
     return out;
@@ -322,7 +348,31 @@ const SgNet::Tensor SgNet::Tensor::operator[] (int index) const{
     return out;
 }
 
+//transpose makes a copy
+SgNet::Tensor SgNet::Tensor::tranpose2d(){
+    
+    //assert dims is 2
+    if(nDims!= 2){
+        throw std::runtime_error("transpose2d requires 2d tensors");
+    }
 
+    Tensor out(std::vector<int>{this->getDim(1),this->getDim(0)});
+
+    this->data.printAddresses();
+    out.data.printAddresses();
+
+    for(int i=0;i<out.getDim(0);i++){
+        for(int j=0;j<out.getDim(1);j++){
+            out.at(std::vector<int>{i,j}) = this->at(std::vector<int>{j,i}).val();
+        }
+    }
+
+        this->data.printAddresses();
+    out.data.printAddresses();
+
+    return out;
+
+}
 
 
 /*
@@ -336,6 +386,8 @@ SgNet::Tensor SgNet::Tensor::operator+ (const double val) const{
     output.setData(data+val);    
     return output;
 }
+
+
 
 void SgNet::Tensor::operator+= (const double val){
     data += val;
@@ -382,6 +434,8 @@ void SgNet::Tensor::operator/= (const double val){
 }
 
 void SgNet::Tensor::operator= (Tensor b){
+    // pretty much just puts tensor b in the place of this
+
     if(b.data.size()!=flatLength){
     // error
     }

@@ -8,7 +8,7 @@ add_library(SgNet
     src/tensor/vector.cpp
     src/tensor/tensor2d.cpp
     src/tensor/tensor.cpp
-    src/neural/layer/affine.cpp
+    src/neural/layer/affine1d.cpp
     src/neural/layer/relu.cpp
     src/neural/layer/softmax.cpp
     src/neural/layer/sigmoid.cpp
@@ -19,6 +19,8 @@ add_library(SgNet
     src/utils/fileReading.cpp
     src/utils/timer.cpp
     src/neural/layer/convolution2d.cpp
+    src/neural/layer/affine_t.cpp
+
 )
 
 

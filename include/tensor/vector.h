@@ -55,6 +55,8 @@ namespace SgNet {
         void set(std::vector<int> vals);
         void set(SgNet::Vector vals);
 
+        void setValues(std::vector<double> vals);
+        void setValues(std::vector<int> vals);
         void setValues(SgNet::Vector vals);
         void overwrite(SgNet::Vector vals);
         void copyReferences(SgNet::Vector vals);
@@ -151,7 +153,7 @@ namespace SgNet {
         void operator= (const std::vector<double> v);
         void operator= (const std::vector<int> v);
 
-        void operator= (const Vector v);
+        //void operator= (const Vector v);
 
         Frisbee& operator[] (int index);
         const Frisbee& operator[] (int index) const;

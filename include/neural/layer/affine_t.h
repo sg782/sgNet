@@ -1,28 +1,31 @@
 #pragma once
 
-#ifndef AFFINE_H
-#define AFFINE_H
+#ifndef AFFINE_TENSOR_H
+#define AFFINE_TENSOR_H
 
 #include <vector>
 #include <iostream>
 #include "tensor/vector.h"
 #include "tensor/tensor2d.h"
+#include "tensor/tensor.h"
+
 namespace SgNet{
 
 
-    class Affine{
+    class Affine_t{
         
     public:
         double learningRate;
-        Tensor2d w;
-        Tensor2d inputs;
-        Vector b;
-
-        Affine(int nDims, std::vector<int> dims,double learningRate);
         
-        Tensor2d forward(Tensor2d inputs);
+        Tensor w;
+        Tensor inputs;
+        Tensor b;
 
-        Tensor2d backward(Tensor2d dValues);
+        Affine_t(int nDims, std::vector<int> dims,double learningRate);
+        
+        Tensor forward(Tensor inputs);
+
+        Tensor backward(Tensor dValues);
 
     };
     

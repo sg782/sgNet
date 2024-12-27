@@ -1,5 +1,5 @@
 #include "tensor/tensor2d.h"
-#include "neural/layer/affine.h"
+#include "neural/layer/affine1d.h"
 #include "tensor/vector.h"
 #include "utils/frisbee.h"
 #include <iostream>
@@ -13,47 +13,36 @@
 #include "neural/layer/leakyRelu.h"
 #include "tensor/tensor.h"
 #include "neural/layer/convolution2d.h"
+#include "neural/layer/affine_t.h"
 
 int main() {
     using namespace SgNet;
 
-    Tensor inputs(std::vector<int>{1,1,10,10});\
-    inputs.setRandomInt(0,5);
+    // Tensor inputs(std::vector<int>{1,3,3});
+    // inputs.setRandomInt(0,5);
+
+    // Affine_t a(2,std::vector<int>{3,4},0);
+
+    // Tensor out = a.forward(inputs);
+
+    // std::cout<<"after forward\n";
+
+    // std::cout<<"before backward\n";
+
+    // //a.backward(out);
+
+    // std::cout<<"after backward\n";
 
 
-
-    double learningRate = 0.01;
-	
-	int kernelWidth = 3;
-	std::array<int, 2> kernelDims = { kernelWidth,kernelWidth };
-	int inputChannels = 1;
-	int numFilters = 1;
-	int strideLength = 1;
-	int padding = 0;
-
-	int convOutDim = (10 - kernelWidth+2*padding)/strideLength + 1;
-
-    
+    // inputs.print();
 
 
-    Convolution2d conv = Convolution2d(kernelDims, inputChannels, numFilters, learningRate, strideLength, padding);
+    // out.print();
 
-
-    Tensor out = conv.forward(inputs);
-
-    std::cout << "\nOut complete\n";
-
-    Tensor back = conv.backward(out);
-
-    std::cout << "\nBack complete\n";
-
-
-
-
-
-    
-
-
+    Tensor g(std::vector<int>{3,5});
+    g.setRandomInt(0,5);
+    g.print();
+    g.tranpose2d().print();
 
 
 

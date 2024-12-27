@@ -10,3 +10,4 @@ I am new to c++ so imma write some notes down
 5. if you are getting an odd warning using a friend operator that states that the definition isnt defined in hte namespace,
     just implement the friend function in the relevant header file, rather than declaring it and implementing in the .cpp file
         - idk why. sometimes having the definition and implementation in separate files is ok. I assume it is some user error
+6. No SOURCES given to target: issue <- haha make sure name is spelled right
