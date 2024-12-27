@@ -12,57 +12,40 @@
 #include "neural/layer/tanh.h"
 #include "neural/layer/leakyRelu.h"
 #include "tensor/tensor.h"
+#include "neural/layer/convolution2d.h"
 
 int main() {
     using namespace SgNet;
 
-    // Vector aDims(3);
-    // aDims = 4;
+    Tensor inputs(std::vector<int>{1,1,10,10});\
+    inputs.setRandomInt(0,5);
+
+
+
+    double learningRate = 0.01;
+	
+	int kernelWidth = 3;
+	std::array<int, 2> kernelDims = { kernelWidth,kernelWidth };
+	int inputChannels = 1;
+	int numFilters = 1;
+	int strideLength = 1;
+	int padding = 0;
+
+	int convOutDim = (10 - kernelWidth+2*padding)/strideLength + 1;
+
     
 
-    // Vector bDims(3);
-    // bDims[0] = 3;
-    // bDims[1] = 2;
-    // bDims[2] = 3;
 
-    // Tensor a(aDims);
-    // Tensor b(bDims);
-
-    // a.setConstant(0);
-    // b.setConstant(1);
-
-    // a.print();
-    // b.print();
-
-    // Vector startPoint(3);
-    // startPoint[0] = 1;
-    // startPoint[1] = 1;
-    // startPoint[2] = 1;
-
-    // a.print();
-
-    // b.print();
-
-    // a.block(startPoint,b.dims).copyData(b);
-
-   
-    // a.print();
-
-    // b.print();
+    Convolution2d conv = Convolution2d(kernelDims, inputChannels, numFilters, learningRate, strideLength, padding);
 
 
-    Vector aDims(3);
-    aDims = 4;
+    Tensor out = conv.forward(inputs);
 
-    Tensor a(aDims);
-    a.setConstant(5);
+    std::cout << "\nOut complete\n";
 
-    Tensor b(aDims);
-    b.setConstant(2);
+    Tensor back = conv.backward(out);
 
-    a-=b;
-
-    a.print();
+    std::cout << "\nBack complete\n";
 
 
 

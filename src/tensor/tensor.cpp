@@ -39,7 +39,7 @@ SgNet::Tensor::Tensor(
     ){
     // vector should be of type int. I just dont want to add more overloads rn 
     
-    nDims = dims.size();
+    this->nDims = dims.size();
     this->dims.resize(nDims);
     this->dims.set(dims);
 
@@ -300,7 +300,7 @@ SgNet::Tensor SgNet::Tensor::operator[](int index){
     SgNet::Tensor out(newDims);
 
     // this is where our issue is
-    out.setData(data.slice(startIdx,endIdx));
+    out.data.overwrite(data.slice(startIdx,endIdx));
 
     return out;
 }
@@ -367,6 +367,9 @@ void SgNet::Tensor::operator*= (const double val){
     data *= val;
 }
 
+void SgNet::Tensor::operator*=(Tensor other){
+    data *= other.data;
+}
 // division overloads
 SgNet::Tensor SgNet::Tensor::operator/ (const double val) const{
     SgNet::Tensor output = Tensor(this->dims);
@@ -382,6 +385,16 @@ void SgNet::Tensor::operator= (Tensor b){
     if(b.data.size()!=flatLength){
     // error
     }
+    
+    nDims = b.nDims;
+    
+    this->dims.resize(nDims);
+    this->dims = b.dims.copy();
 
+    this->setIndexDims();
+
+    flatLength = static_cast<int>(dims.product());
+    data.resize(flatLength);
+    data = Vector(flatLength);
     data.copyReferences(b.data);
 }

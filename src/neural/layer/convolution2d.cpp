@@ -26,12 +26,16 @@ SgNet::Convolution2d::Convolution2d(std::array<int, 2> kernelShape, int inputCha
 	// initialize weights and biases
 	this->filters = SgNet::Tensor(std::vector<int>{numFilters,kernelShape[0],kernelShape[1]});
 
+
 	for (int i = 0; i < numFilters; i++) {
 		filters[i].setRandomGaussian(0,1);
 		filters[i] *= std::sqrt(2. / kernelShape[0]);
 	}
+
+    this->bias.resize(numFilters);
 	this->bias = SgNet::Vector(numFilters);
     this->bias.setConstant(0);
+
 }
 
 SgNet::Tensor SgNet::Convolution2d::forward(SgNet::Tensor inputs) {
@@ -49,23 +53,20 @@ SgNet::Tensor SgNet::Convolution2d::forward(SgNet::Tensor inputs) {
 	int inputRows = inputs.dims[2].val();
 	int inputCols = inputs.dims[3].val();
 
+
     
     SgNet::Tensor paddedInputs(std::vector<int>{n,numChannels,inputRows + 2*padding,inputCols + 2*padding});
+    paddedInputs.setConstant(0);
 	//Eigen::MatrixXd paddedInput(inputRows + 2 * padding, inputCols + 2 * padding);
 	//paddedInput.setZero();
 
 	// pad inputs for each channel of each input
     SgNet::Vector startPoint(4);
-
-    // i need to improve SgNet::Vector initialization
-    startPoint[0] = 0;
-    startPoint[1] = 1;
-    startPoint[2] = padding;
-    startPoint[3] = padding;
+    startPoint = std::vector<int>{0,0,padding,padding};
 
 
+    paddedInputs.block(startPoint,inputs.dims).copyData(inputs);
 
-    paddedInputs.block(startPoint,inputs.dims).copyData(inputs);;
 	// for (int i = 0; i < n; i++) {
 	// 	for (int j = 0; j < numChannels; j++) {
 	// 		paddedInputs[i][j].block(padding, padding, inputRows, inputCols) = inputs[i][j];
@@ -77,13 +78,12 @@ SgNet::Tensor SgNet::Convolution2d::forward(SgNet::Tensor inputs) {
 	int outputRows = ((inputRows + 2 * padding - kernelShape[0]) / strideLength) + 1;
 	int outputCols = ((inputCols + 2 * padding - kernelShape[1]) / strideLength) + 1;
 
-	
 	// std::vector<std::vector<Eigen::MatrixXd>> output(n,
 	// 	std::vector<Eigen::MatrixXd>(numFilters,Eigen::MatrixXd::Zero(outputRows, outputCols))
 	// );
 
     SgNet::Tensor output({n,numFilters,outputRows,outputCols});
-
+	output.setConstant(0);
     
     SgNet::Vector indices(4);
     indices.setConstant(0);
@@ -92,6 +92,8 @@ SgNet::Tensor SgNet::Convolution2d::forward(SgNet::Tensor inputs) {
 
     SgNet::Vector blockDims(4);
     blockDims = std::vector<int>{1,1,kernelShape[0],kernelShape[1]};
+
+
 
 	for (int i = 0; i < n; i++) {
 	// for each test in batch
@@ -114,15 +116,17 @@ SgNet::Tensor SgNet::Convolution2d::forward(SgNet::Tensor inputs) {
 
             
                         
-                        SgNet::Vector blockDims(4);
 
                         SgNet::Tensor block = paddedInputs.block(blockIndices,blockDims);
 
                         // we can just do the dot prod! since they are represented by flat vectors
-                        double convSum = block.data.dot(filters.getAxis(9,j).asVector());
+                        double convSum = block.data.dot(filters.getAxis(i,j).asVector());
 
-                       // paddedInputs[i][p].block(k * strideLength, l * strideLength, filters[j].rows(), filters[j].cols())
+					// 	block.data.print();
+					// 	filters.data.print();
 
+                    //    // paddedInputs[i][p].block(k * strideLength, l * strideLength, filters[j].rows(), filters[j].cols())
+					// 	std::cout << convSum << "\n";
 
                         output.at(indices) += convSum;
 
@@ -136,15 +140,12 @@ SgNet::Tensor SgNet::Convolution2d::forward(SgNet::Tensor inputs) {
 				}
 			}
 
-
 			// add bias of filter j to the output activation
             SgNet::Vector ijInd(2);
             ijInd = std::vector<int>{i,j};
-			output.at(ijInd) += bias[j].val();;
+			output[i][j].data += bias[j].val();
 		}
-	}
-
-	
+	}	
 	return output;
 
 
@@ -155,7 +156,7 @@ SgNet::Tensor SgNet::Convolution2d::forward(SgNet::Tensor inputs) {
 
 SgNet::Tensor SgNet::Convolution2d::backward(SgNet::Tensor dValues) {
 
-	int batchSize = dValues.dims[0].val();
+	int batchSize = dValues.getDim(0);
 	
 
 	/*

@@ -79,6 +79,7 @@ namespace SgNet{
        void operator/=(const double val);
 
        void operator-=(Tensor other);
+       void operator*=(Tensor other);
 
        void operator= (Tensor b);
 

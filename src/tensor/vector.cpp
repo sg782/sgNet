@@ -302,6 +302,7 @@ void SgNet::Vector::set(std::vector<int> v){
 
 
 void SgNet::Vector::set(SgNet::Vector v){
+    // CREATES and returns NEW MEMORY
     if(this->size() != v.size()){
         std::stringstream ss;
         ss << "Set with SgNet::Vector cannot be executed on dimensions of "
@@ -329,6 +330,7 @@ void SgNet::Vector::setValues(SgNet::Vector v){
 }
 
 void SgNet::Vector::overwrite(SgNet::Vector v){
+    // OVERWRITES
     // overwrites the data in a vector
     if(this->size() != v.size()){
         std::stringstream ss;

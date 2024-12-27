@@ -19,6 +19,8 @@
 14. improve on vector initializations, allow me to do Vector v(3){1,3,2} type thing;
     - on top of this, somehow create a distinction between int and double initializations. 
 15. Im starting to get a little spaghetti with my vector class. specifically with reference handling and operator overloads. I must standardize soon
+16. look into memory unsafe practices. I am sure i have tons 
+17. LOCK DOWN the standard for if we are copying, overwriting, our updating frisbee values
 
 
 unrelated but i should make a voxel renderer
