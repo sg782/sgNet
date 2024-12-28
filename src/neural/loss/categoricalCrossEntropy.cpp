@@ -1,35 +1,52 @@
 #include "neural/loss/categoricalCrossEntropy.h"
 #include "tensor/tensor2d.h"
 #include <cmath>
+#include <stdexcept>
 
 
 SgNet::CCE::CCE(){
 
 }
 
-double SgNet::CCE::calculate(SgNet::Tensor2d x, SgNet::Vector y){
-    // we will average across the whole batch
-    double loss = 0.0;
-
-    for(int i=0;i<x.numRows();i++){
-        int correctClassIdx = y[i].val();
-        loss +=  -1 * std::log(x[i][correctClassIdx].val());
+double SgNet::CCE::calculate(SgNet::Tensor x, SgNet::Vector y){
+    // assume Tensor input is 2d
+    if(x.nDims != 2){
+        throw std::invalid_argument("Categorical Cross entropy requires a Tensor of dimension 2");
     }
 
-    loss /= x.numRows();
+
+    // we will average across the whole batch
+    double loss = 0.0;
+    SgNet::Vector idx(2);
+
+
+    for(int i=0;i<x.getDim(0);i++){
+        int correctClassIdx = y[i].val();
+        idx = std::vector<int>{i,correctClassIdx};
+        loss +=  -1 * std::log(x.at(idx).val());
+    }
+
+    loss /= x.getDim(0) * -1;
 
     return loss;
 }
 
-SgNet::Tensor2d SgNet::CCE::backward(SgNet::Tensor2d yPred, SgNet::Vector y){
-    SgNet::Tensor2d out(yPred.shape());
+SgNet::Tensor SgNet::CCE::backward(SgNet::Tensor yPred, SgNet::Vector y){
+    if(yPred.nDims != 2){
+        throw std::invalid_argument("Categorical Cross entropy requires a Tensor of dimension 2");
+    }
+    SgNet::Tensor out(yPred.dims);
     out.setConstant(0);
 
-    	double epsilon = 1e-10;
+    double epsilon = 1e-10;
 
+    SgNet::Vector idx(2);
 
-    for(int i=0;i<yPred.numRows();i++){
-        out[i][y[i].val()] = -1 / (yPred[i][y[i].val()].val() + epsilon);
+    for(int i=0;i<yPred.getDim(0);i++){
+        int correctClassIdx = y[i].val();
+        idx = std::vector<int>{i,correctClassIdx};
+
+        out.at(idx) = -1 / (yPred.at(idx).val() + epsilon);
     }
 
     return out;

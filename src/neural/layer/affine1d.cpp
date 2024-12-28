@@ -19,21 +19,30 @@ SgNet::Affine1d::Affine1d(int nDims, std::vector<int> dims,double learningRate){
 }
 
 SgNet::Tensor SgNet::Affine1d::forward(Tensor inputs){
+
     this-> inputs = inputs;
     // forward pass on generic tensor type
     Tensor out = inputs.matMult(w);
 
+    out.printShape();
+    std::cout << b.size() << "\n";
+
+
     out += b;
+            std::cout << "he2re\n";
+
     return out;
 }
 
 SgNet::Tensor SgNet::Affine1d::backward(Tensor dValues){
 
     Tensor dW = inputs.transpose2d().matMult(dValues);
-    Vector dB = dValues.axisSum(0);
+    Vector dB = dValues.axisSum(1);
 
     Tensor dInputs = dValues.matMult(w.transpose2d());
 
+    dW.printShape();
+    std::cout << dB.size() << "\n";
     // update weights
     w -= (dW * learningRate);
     b -= (dB * learningRate);

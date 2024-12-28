@@ -4,6 +4,7 @@
 #define CAT_CROSS_ENTROPY_H
 
 #include "tensor/tensor2d.h"
+#include "tensor/tensor.h"
 
 namespace SgNet{
     class CCE {
@@ -11,9 +12,9 @@ namespace SgNet{
 
         CCE();
 
-        double calculate(Tensor2d x, Vector y);
+        double calculate(Tensor x, Vector y);
 
-        Tensor2d backward(Tensor2d ypred, Vector y);
+        Tensor backward(Tensor ypred, Vector y);
     };
 }
 

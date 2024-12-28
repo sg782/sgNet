@@ -7,6 +7,7 @@
 #include "utils/frisbee.h"
 #include <vector>
 #include "initializer_list"
+#include "tensor2d.h"
 
 namespace SgNet{
 
@@ -59,6 +60,8 @@ namespace SgNet{
         Vector asVector();
         Tensor block(Vector startPoint, Vector blockDims);
         void copyData(Tensor other);
+        void copyData(Tensor2d other);
+
 
 
 

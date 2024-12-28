@@ -4,9 +4,12 @@
 
 #include "tensor/tensor2d.h"
 #include "tensor/vector.h"
+#include "tensor/tensor.h"
 
 namespace SgNet {
-    void loadData(Tensor2d& data, Vector& labels, int maxRows);
+    void loadData2d(Tensor2d& data, Vector& labels, int maxRows);
+
+    void loadMnistData(Tensor& data, Vector& labels, int maxRows);
 };
 
 

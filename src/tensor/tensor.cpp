@@ -5,6 +5,7 @@
 #include <stdexcept>
 #include "utils/frisbee.h"
 #include <initializer_list>
+#include "tensor/tensor2d.h"
 
 SgNet::Tensor::Tensor(Vector dims){
     nDims = dims.size();
@@ -287,6 +288,18 @@ void SgNet::Tensor::copyData(SgNet::Tensor other){
     data.setValues(other.data);
 }
 
+void SgNet::Tensor::copyData(SgNet::Tensor2d other){
+    if(flatLength!=other.numRows()*other.numCols()){
+        throw std::invalid_argument("Tensors not of compatible volumes");
+    }
+
+    for(int i=0;i<other.numRows();i++){
+        for(int j=0;j<other.numCols();j++){
+            data[i*other.numCols() + j] = other[i][j].val();
+        }
+    }
+}
+
 
 
 void SgNet::Tensor::print(){
@@ -394,7 +407,7 @@ void SgNet::Tensor::operator+= (const double val){
     data += val;
 }
 void SgNet::Tensor::operator+= (Vector v){
-    if(v.size()!=dims[0].val()){
+    if(v.size()!=dims[dims.size()-1].val()){
         throw std::runtime_error("Vector length does not match the innermost dimension");
     }
 
@@ -441,6 +454,8 @@ void SgNet::Tensor::operator/= (const double val){
 }
 void SgNet::Tensor::operator= (Tensor b){
     // pretty much just puts tensor b in the place of this
+
+
 
     if(b.data.size()!=flatLength){
     // error
@@ -496,3 +511,4 @@ SgNet::Tensor SgNet::Tensor::exp(){
 
     return out;
 }
+
