@@ -42,10 +42,12 @@ namespace SgNet{
 
         Vector getDimensionalIndex(int index);
 
+        Vector axisSum(int axiss);
+
 
         void setData(Vector data);
 
-        Tensor tranpose2d();
+        Tensor transpose2d();
 
 
         // most important function 
@@ -70,21 +72,29 @@ namespace SgNet{
         make Tensor at(index) and at(vector indices) functions to get frisbee output
         */
 
+        void min(double val);
+
         Tensor operator+ (const double val) const;
         Tensor operator- (const double val) const;
         Tensor operator* (const double val) const;
         Tensor operator/ (const double val) const;
+
+        Tensor operator* (Tensor b);
 
         void operator+=(const double val);
         void operator-=(const double val);
         void operator*=(const double val);
         void operator/=(const double val);
 
+        void operator +=(Vector other);
+
         
         void operator-=(Tensor other);
         void operator*=(Tensor other);
 
         void operator= (Tensor b);
+
+        Tensor operator> (double val);
 
 
         void print();

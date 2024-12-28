@@ -21,7 +21,8 @@
 15. Im starting to get a little spaghetti with my vector class. specifically with reference handling and operator overloads. I must standardize soon
 16. look into memory unsafe/ inefficient practices. I am sure i have tons 
 17. LOCK DOWN the standard for if we are copying, overwriting, our updating frisbee values
-18. remove unnecessary overloads that are leading to confusion
+18. remove unnecessary overloads that are leading to confusion. maybe im overloading too much
+
 
 
 unrelated but i should make a voxel renderer

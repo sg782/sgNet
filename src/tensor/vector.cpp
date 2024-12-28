@@ -502,10 +502,12 @@ SgNet::Vector SgNet::Vector::operator> (const double val) const{
     Vector out = Vector(this->size());
     out.setConstant(0);
     for(int i=0;i<this->size();i++){
-        if(this->operator[](i).val() > val){
+        if(data[i].val() > val){
+
             out[i] = 1;
         }
     }
+
     return out;
 
 }

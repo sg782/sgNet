@@ -7,6 +7,7 @@
 #include <iostream>
 #include "tensor/vector.h"
 #include "tensor/tensor2d.h"
+#include "tensor/tensor.h"
 namespace SgNet{
 
 
@@ -14,15 +15,15 @@ namespace SgNet{
         
     public:
         double learningRate;
-        Tensor2d w;
-        Tensor2d inputs;
+        Tensor w;
+        Tensor inputs;
         Vector b;
 
         Affine1d(int nDims, std::vector<int> dims,double learningRate);
         
-        Tensor2d forward(Tensor2d inputs);
+        Tensor forward(Tensor inputs);
 
-        Tensor2d backward(Tensor2d dValues);
+        Tensor backward(Tensor dValues);
 
     };
     

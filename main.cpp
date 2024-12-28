@@ -14,6 +14,7 @@
 #include "tensor/tensor.h"
 #include "neural/layer/convolution2d.h"
 #include "neural/layer/affine_t.h"
+#include "neural/layer/relu.h"
 
 int main() {
     using namespace SgNet;
@@ -39,10 +40,22 @@ int main() {
 
     // out.print();
 
-    Tensor g(std::vector<int>{3,5});
-    g.setRandomInt(0,5);
-    g.print();
-    g.tranpose2d().print();
+    //    src/neural/layer/affine1d.cpp
+
+
+    Tensor g(std::vector<int>{5,3,2});
+
+    g.setRandomInt(-5,5);
+
+    Relu r(std::vector<int>{0});
+
+    Tensor out = r.forward(g);
+
+    out.print();
+
+    Tensor back = r.backward(out);
+
+    back.print();
 
 
 

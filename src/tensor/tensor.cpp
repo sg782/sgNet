@@ -78,6 +78,16 @@ int SgNet::Tensor::getDim(int idx) const{
 }
 
 
+SgNet::Vector SgNet::Tensor::axisSum(int axis){
+    int axisWidth = this->getDim(axis);
+    SgNet::Vector out(axisWidth);
+
+    for(int i=0;i<axisWidth;i++){
+        out[i] = this->getAxis(axis,i).sum();
+    }
+    return out;
+}
+
 void SgNet::Tensor::setIndexDims(){
     indexDims.resize(nDims);
     indexDims.setConstant(1);
@@ -349,7 +359,7 @@ const SgNet::Tensor SgNet::Tensor::operator[] (int index) const{
 }
 
 //transpose makes a copy
-SgNet::Tensor SgNet::Tensor::tranpose2d(){
+SgNet::Tensor SgNet::Tensor::transpose2d(){
     
     //assert dims is 2
     if(nDims!= 2){
@@ -358,18 +368,12 @@ SgNet::Tensor SgNet::Tensor::tranpose2d(){
 
     Tensor out(std::vector<int>{this->getDim(1),this->getDim(0)});
 
-    this->data.printAddresses();
-    out.data.printAddresses();
 
     for(int i=0;i<out.getDim(0);i++){
         for(int j=0;j<out.getDim(1);j++){
             out.at(std::vector<int>{i,j}) = this->at(std::vector<int>{j,i}).val();
         }
     }
-
-        this->data.printAddresses();
-    out.data.printAddresses();
-
     return out;
 
 }
@@ -386,12 +390,20 @@ SgNet::Tensor SgNet::Tensor::operator+ (const double val) const{
     output.setData(data+val);    
     return output;
 }
-
-
-
 void SgNet::Tensor::operator+= (const double val){
     data += val;
 }
+void SgNet::Tensor::operator+= (Vector v){
+    if(v.size()!=dims[0].val()){
+        throw std::runtime_error("Vector length does not match the innermost dimension");
+    }
+
+    for(int i=0;i<dims[0].val();i++){
+        this->operator[](i) += v[i].val();;
+    }
+
+}
+
 
 // subtraction overloads
 SgNet::Tensor SgNet::Tensor::operator- (const double val) const{
@@ -399,11 +411,9 @@ SgNet::Tensor SgNet::Tensor::operator- (const double val) const{
     output.setData(data-val);    
     return output;
 }
-
 void SgNet::Tensor::operator-= (const double val){
     data -= val;
 }
-
 void SgNet::Tensor::operator-=(Tensor other){
     data -= other.data;
 }
@@ -414,11 +424,9 @@ SgNet::Tensor SgNet::Tensor::operator* (const double val) const{
     output.setData(data*val);    
     return output;
 }
-
 void SgNet::Tensor::operator*= (const double val){
     data *= val;
 }
-
 void SgNet::Tensor::operator*=(Tensor other){
     data *= other.data;
 }
@@ -428,11 +436,9 @@ SgNet::Tensor SgNet::Tensor::operator/ (const double val) const{
     output.setData(data/val);    
     return output;
 }
-
 void SgNet::Tensor::operator/= (const double val){
     data /= val;
 }
-
 void SgNet::Tensor::operator= (Tensor b){
     // pretty much just puts tensor b in the place of this
 
@@ -451,4 +457,34 @@ void SgNet::Tensor::operator= (Tensor b){
     data.resize(flatLength);
     data = Vector(flatLength);
     data.copyReferences(b.data);
+}
+
+
+SgNet::Tensor SgNet::Tensor::operator> (double val){
+    Tensor out(this->dims);
+
+    out.data = (data>0);
+
+    return out;
+}
+
+SgNet::Tensor SgNet::Tensor::operator* (SgNet::Tensor b){
+
+    // bounds checking
+    if(this->flatLength!=b.flatLength){
+        throw std::runtime_error("Tensors not of same volume, cannot elementwise multiply");
+
+    }
+
+    SgNet::Tensor out(this->dims);
+
+    out.data = data;
+    out.data *= b.data;
+
+    return out;
+}
+
+
+void SgNet::Tensor::min(double val){
+    data.min(val);
 }

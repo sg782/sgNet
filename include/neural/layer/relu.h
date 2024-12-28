@@ -6,20 +6,20 @@
 #include <vector>
 #include <iostream>
 #include "tensor/vector.h"
-#include "tensor/tensor2d.h"
+#include "tensor/Tensor.h"
 namespace SgNet{
 
 
     class Relu{
         
     public:
-        Tensor2d inputs;
+        Tensor inputs;
 
         Relu(std::vector<int> dims);
         
-        Tensor2d forward(Tensor2d inputs);
+        Tensor forward(Tensor inputs);
 
-        Tensor2d backward(Tensor2d dValues);
+        Tensor backward(Tensor dValues);
 
     };
 
