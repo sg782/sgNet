@@ -16,6 +16,7 @@ namespace SgNet{
     public:
         Tensor inputs;
         Tensor output;
+        int axis;
 
         Softmax(int nInputs);
         

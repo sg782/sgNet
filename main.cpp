@@ -58,5 +58,9 @@ int main() {
 
     out.print();
 
+    Tensor back = s.backward(out);
+
+    back.print();
+
 
 }
