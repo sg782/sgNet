@@ -488,3 +488,11 @@ SgNet::Tensor SgNet::Tensor::operator* (SgNet::Tensor b){
 void SgNet::Tensor::min(double val){
     data.min(val);
 }
+
+SgNet::Tensor SgNet::Tensor::exp(){
+    SgNet::Tensor out(this->dims);
+
+    out.data = data.exp();
+
+    return out;
+}

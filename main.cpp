@@ -15,6 +15,7 @@
 #include "neural/layer/convolution2d.h"
 #include "neural/layer/affine_t.h"
 #include "neural/layer/relu.h"
+#include "neural/layer/softmax.h"
 
 int main() {
     using namespace SgNet;
@@ -41,22 +42,21 @@ int main() {
     // out.print();
 
     //    src/neural/layer/affine1d.cpp
+    
 
 
-    Tensor g(std::vector<int>{5,3,2});
+    Tensor g(std::vector<int>{3,3,3,3});
+
+    Vector idx(1);
+    idx = 0;
 
     g.setRandomInt(-5,5);
 
-    Relu r(std::vector<int>{0});
+    Softmax s(0);
 
-    Tensor out = r.forward(g);
+    Tensor out = s.forward(g,3);
 
     out.print();
-
-    Tensor back = r.backward(out);
-
-    back.print();
-
 
 
 }

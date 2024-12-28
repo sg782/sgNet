@@ -9,7 +9,6 @@ add_library(SgNet
     src/tensor/tensor2d.cpp
     src/tensor/tensor.cpp
     src/neural/layer/relu.cpp
-    src/neural/layer/softmax.cpp
     src/neural/layer/sigmoid.cpp
     src/neural/layer/tanh.cpp
     src/neural/layer/leakyRelu.cpp
@@ -20,6 +19,7 @@ add_library(SgNet
     src/neural/layer/convolution2d.cpp
     src/neural/layer/affine_t.cpp
     src/neural/layer/affine1d.cpp
+    src/neural/layer/softmax.cpp
 
 )
 

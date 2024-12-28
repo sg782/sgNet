@@ -6,7 +6,7 @@
 #include <vector>
 #include <iostream>
 #include "tensor/vector.h"
-#include "tensor/tensor2d.h"
+#include "tensor/Tensor.h"
 namespace SgNet{
 
 
@@ -14,14 +14,14 @@ namespace SgNet{
     {
         
     public:
-        Tensor2d inputs;
-        Tensor2d output;
+        Tensor inputs;
+        Tensor output;
 
         Softmax(int nInputs);
         
-        Tensor2d forward(Tensor2d inputs);
+        Tensor forward(Tensor inputs, int axis);
 
-        Tensor2d backward(Tensor2d dValues);
+        Tensor backward(Tensor dValues);
 
     };
 

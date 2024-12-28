@@ -74,6 +74,8 @@ namespace SgNet{
 
         void min(double val);
 
+        Tensor exp();
+
         Tensor operator+ (const double val) const;
         Tensor operator- (const double val) const;
         Tensor operator* (const double val) const;
