@@ -26,7 +26,7 @@ double SgNet::CCE::calculate(SgNet::Tensor x, SgNet::Vector y){
         loss +=  -1 * std::log(x.at(idx).val());
     }
 
-    loss /= x.getDim(0) * -1;
+    loss /= x.getDim(0);
 
     return loss;
 }
@@ -48,6 +48,9 @@ SgNet::Tensor SgNet::CCE::backward(SgNet::Tensor yPred, SgNet::Vector y){
 
         out.at(idx) = -1 / (yPred.at(idx).val() + epsilon);
     }
+
+    out.print();
+    y.print();
 
     return out;
 }

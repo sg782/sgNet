@@ -24,7 +24,10 @@ SgNet::Tensor SgNet::Softmax::forward(SgNet::Tensor inputs, int axis){
     SgNet::Vector idx(axis);
     for(int i=0;i<inputs.flatLength;i+=kernelDims.product()){
         idx = inputs.getDimensionalIndex(i).slice(0,axis);
-        SgNet::Tensor expVals = inputs.tensorAt(idx).exp();
+        Tensor section = inputs.tensorAt(idx);
+        double maxVal = section.data.max();
+        SgNet::Tensor expVals = (section-maxVal).exp();
+
         SgNet::Tensor subOut = expVals/expVals.sum();
 
         out.tensorAt(idx).copyData(subOut);

@@ -29,7 +29,6 @@ SgNet::Tensor SgNet::Affine1d::forward(Tensor inputs){
 
 
     out += b;
-            std::cout << "he2re\n";
 
     return out;
 }
@@ -41,8 +40,6 @@ SgNet::Tensor SgNet::Affine1d::backward(Tensor dValues){
 
     Tensor dInputs = dValues.matMult(w.transpose2d());
 
-    dW.printShape();
-    std::cout << dB.size() << "\n";
     // update weights
     w -= (dW * learningRate);
     b -= (dB * learningRate);
