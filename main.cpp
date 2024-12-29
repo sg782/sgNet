@@ -30,7 +30,7 @@ int main() {
 	data -= 127.5;
     data/=127.5;
 
-    double learningRate = 0.00001;
+    double learningRate = 0.001;
 
 
     Affine1d a1 = Affine1d(2,std::vector<int>{784,128},learningRate);
@@ -43,6 +43,7 @@ int main() {
 
     for(int i=0;i<nIters;i++){
         Tensor out1 = a1.forward(data);
+
 
         Tensor rOut1 = r1.forward(out1);
 

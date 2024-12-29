@@ -443,6 +443,11 @@ void SgNet::Tensor::operator*= (const double val){
 void SgNet::Tensor::operator*=(Tensor other){
     data *= other.data;
 }
+
+// SgNet::Tensor SgNet::Tensor::operator* (Tensor other){
+
+// }
+
 // division overloads
 SgNet::Tensor SgNet::Tensor::operator/ (const double val) const{
     SgNet::Tensor output = Tensor(this->dims);
@@ -493,7 +498,7 @@ SgNet::Tensor SgNet::Tensor::operator* (SgNet::Tensor b){
 
     SgNet::Tensor out(this->dims);
 
-    out.data = data;
+    out.data = data.copy();
     out.data *= b.data;
 
     return out;

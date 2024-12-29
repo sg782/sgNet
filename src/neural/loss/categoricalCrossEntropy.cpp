@@ -49,8 +49,5 @@ SgNet::Tensor SgNet::CCE::backward(SgNet::Tensor yPred, SgNet::Vector y){
         out.at(idx) = -1 / (yPred.at(idx).val() + epsilon);
     }
 
-    out.print();
-    y.print();
-
     return out;
 }
