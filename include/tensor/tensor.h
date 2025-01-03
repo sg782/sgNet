@@ -43,7 +43,7 @@ namespace SgNet{
 
         Vector getDimensionalIndex(int index);
 
-        Vector axisSum(int axiss);
+        Vector axisSum(int axis);
 
 
         void setData(Vector data);
@@ -77,14 +77,42 @@ namespace SgNet{
 
         void min(double val);
 
-        Tensor exp();
+        Vector shape();
+
+        Tensor square() const;
+        Tensor tanh() const;
+        Tensor exp() const;
 
         Tensor operator+ (const double val) const;
         Tensor operator- (const double val) const;
         Tensor operator* (const double val) const;
         Tensor operator/ (const double val) const;
 
+        friend Tensor operator+ (double scalar, Tensor tensor){
+            Tensor out(tensor.shape());
+            out.data = scalar + tensor.data;
+            return out;
+        }
+
+        friend Tensor operator- (double scalar, Tensor tensor){
+            Tensor out(tensor.shape());
+            out.data = scalar - tensor.data;
+            return out;
+        }
+        friend Tensor operator* (double scalar, Tensor tensor){
+            Tensor out(tensor.shape());
+            out.data = scalar * tensor.data;
+            return out;
+        }
+        friend Tensor operator/ (double scalar, Tensor tensor){
+            Tensor out(tensor.shape());
+            out.data = scalar / tensor.data;
+            return out;
+        }
+
+
         Tensor operator* (Tensor b);
+        Tensor operator+ (Tensor b);
 
         void operator+=(const double val);
         void operator-=(const double val);
@@ -100,6 +128,8 @@ namespace SgNet{
         void operator= (Tensor b);
 
         Tensor operator> (double val);
+
+        Tensor operator<= (double val);
 
 
         void print();

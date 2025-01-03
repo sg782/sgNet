@@ -79,6 +79,9 @@ int SgNet::Tensor::getDim(int idx) const{
 }
 
 
+
+
+
 SgNet::Vector SgNet::Tensor::axisSum(int axis){
     int axisWidth = this->getDim(axis);
     SgNet::Vector out(axisWidth);
@@ -482,8 +485,14 @@ void SgNet::Tensor::operator= (Tensor b){
 
 SgNet::Tensor SgNet::Tensor::operator> (double val){
     Tensor out(this->dims);
-
     out.data = (data>0);
+
+    return out;
+}
+
+SgNet::Tensor SgNet::Tensor::operator<= (double val){
+    Tensor out(this->dims);
+    out.data = (data<=0);
 
     return out;
 }
@@ -504,12 +513,46 @@ SgNet::Tensor SgNet::Tensor::operator* (SgNet::Tensor b){
     return out;
 }
 
+SgNet::Tensor SgNet::Tensor::operator+ (SgNet::Tensor b){
+
+    // bounds checking
+    if(this->flatLength!=b.flatLength){
+        throw std::runtime_error("Tensors not of same volume, cannot elementwise multiply");
+
+    }
+
+    SgNet::Tensor out(this->dims);
+
+    out.data = data.copy();
+    out.data += b.data;
+
+    return out;
+}
+
 
 void SgNet::Tensor::min(double val){
     data.min(val);
 }
 
-SgNet::Tensor SgNet::Tensor::exp(){
+SgNet::Vector SgNet::Tensor::shape(){
+    return dims;
+}
+
+SgNet::Tensor SgNet::Tensor::square() const{
+    SgNet::Tensor out(this->dims);
+
+    out.data = data.square();
+    return out;
+}
+
+SgNet::Tensor SgNet::Tensor::tanh() const{
+    SgNet::Tensor out(this->dims);
+
+    out.data = data.tanh();
+    return out;
+}
+
+SgNet::Tensor SgNet::Tensor::exp() const{
     SgNet::Tensor out(this->dims);
 
     out.data = data.exp();

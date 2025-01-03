@@ -3,7 +3,7 @@
 #ifndef TANH_H
 #define TANH_H
 
-#include "tensor/tensor2d.h"
+#include "tensor/tensor.h"
 
 
 namespace SgNet{
@@ -11,19 +11,19 @@ namespace SgNet{
     public:
         int inputDim;
 
-        Tensor2d inputs;
+        Tensor inputs;
 
-        Tensor2d tanhInputs;
+        Tensor tanhInputs;
 
         Tanh() = default;
         Tanh(int nInput);
 
 
-        SgNet::Tensor2d forward(SgNet::Tensor2d& input);
+        SgNet::Tensor forward(SgNet::Tensor& input);
 
-        SgNet::Tensor2d backward(const SgNet::Tensor2d& dValues);
+        SgNet::Tensor backward(const SgNet::Tensor& dValues);
 
-        SgNet::Tensor2d calculateTanh(SgNet::Tensor2d input);
+        SgNet::Tensor calculateTanh(SgNet::Tensor input);
 
     };
 }

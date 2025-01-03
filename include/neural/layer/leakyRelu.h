@@ -3,21 +3,21 @@
 #ifndef LEAKYRELU_H
 #define LEAKYRELU_H
 
-#include "tensor/tensor2d.h"
+#include "tensor/Tensor.h"
 
 namespace SgNet{
     class LeakyRelu {
     public:
         int inputDim;
         double leakiness;
-        Tensor2d inputs;
+        Tensor inputs;
 
         LeakyRelu() = default;
         LeakyRelu(int nInput,double leakiness);
 
-        Tensor2d forward(Tensor2d& input);
+        Tensor forward(Tensor& input);
 
-        Tensor2d backward(Tensor2d& dValues);
+        Tensor backward(Tensor& dValues);
 
     };
 }
