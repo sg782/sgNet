@@ -30,11 +30,11 @@ int main() {
 	data -= 127.5;
     data/=127.5;
 
-    double learningRate = 0.001;
+    double learningRate = 0.005;
 
 
     Affine1d a1 = Affine1d(2,std::vector<int>{784,128},learningRate);
-    LeakyRelu r1 = LeakyRelu(10,0.2);
+    Sigmoid r1 = Sigmoid(10);
     Affine1d a2 = Affine1d(2,std::vector<int>{128,10},learningRate);
     Softmax s2 = Softmax(0);
     CCE cce = CCE();

@@ -4,7 +4,7 @@
 #define SIGMOID_H
 
 
-#include "tensor/tensor2d.h"
+#include "tensor/Tensor.h"
 
 namespace SgNet{
 
@@ -12,18 +12,18 @@ namespace SgNet{
     public:
         int inputDim;
 
-        Tensor2d inputs;
-        Tensor2d sigmoidInputs;
+        Tensor inputs;
+        Tensor sigmoidInputs;
 
         Sigmoid() = default;
         Sigmoid(int nInput);
 
 
-        Tensor2d forward(const Tensor2d& input);
+        Tensor forward(const Tensor& input);
 
-        Tensor2d backward(Tensor2d& dValues);
+        Tensor backward(Tensor& dValues);
 
-        Tensor2d calculateSigmoid(Tensor2d input);
+        Tensor calculateSigmoid(Tensor input);
 
 
     };
