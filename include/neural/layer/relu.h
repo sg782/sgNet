@@ -15,7 +15,7 @@ namespace SgNet{
     public:
         Tensor inputs;
 
-        Relu(std::vector<int> dims);
+        Relu();
         
         Tensor forward(Tensor inputs);
 

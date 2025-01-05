@@ -134,6 +134,12 @@ build CMakeFiles/SgNet.dir/src/neural/layer/softmax.cpp.obj: CXX_COMPILER__SgNet
   OBJECT_DIR = CMakeFiles\SgNet.dir
   OBJECT_FILE_DIR = CMakeFiles\SgNet.dir\src\neural\layer
 
+build CMakeFiles/SgNet.dir/src/neural/layer/flatten.cpp.obj: CXX_COMPILER__SgNet_unscanned_ C$:/Users/User/Desktop/Personal_Programming/sgNet/src/neural/layer/flatten.cpp || cmake_object_order_depends_target_SgNet
+  DEP_FILE = CMakeFiles\SgNet.dir\src\neural\layer\flatten.cpp.obj.d
+  INCLUDES = -IC:/Users/User/Desktop/Personal_Programming/sgNet/include
+  OBJECT_DIR = CMakeFiles\SgNet.dir
+  OBJECT_FILE_DIR = CMakeFiles\SgNet.dir\src\neural\layer
+
 
 # =============================================================================
 # Link build statements for STATIC_LIBRARY target SgNet
@@ -142,7 +148,7 @@ build CMakeFiles/SgNet.dir/src/neural/layer/softmax.cpp.obj: CXX_COMPILER__SgNet
 #############################################
 # Link the static library libSgNet.a
 
-build libSgNet.a: CXX_STATIC_LIBRARY_LINKER__SgNet_ CMakeFiles/SgNet.dir/src/tensor/vector.cpp.obj CMakeFiles/SgNet.dir/src/tensor/tensor2d.cpp.obj CMakeFiles/SgNet.dir/src/tensor/tensor.cpp.obj CMakeFiles/SgNet.dir/src/neural/layer/relu.cpp.obj CMakeFiles/SgNet.dir/src/neural/layer/sigmoid.cpp.obj CMakeFiles/SgNet.dir/src/neural/layer/tanh.cpp.obj CMakeFiles/SgNet.dir/src/neural/layer/leakyRelu.cpp.obj CMakeFiles/SgNet.dir/src/utils/frisbee.cpp.obj CMakeFiles/SgNet.dir/src/neural/loss/categoricalCrossEntropy.cpp.obj CMakeFiles/SgNet.dir/src/utils/fileReading.cpp.obj CMakeFiles/SgNet.dir/src/utils/timer.cpp.obj CMakeFiles/SgNet.dir/src/neural/layer/convolution2d.cpp.obj CMakeFiles/SgNet.dir/src/neural/layer/affine_t.cpp.obj CMakeFiles/SgNet.dir/src/neural/layer/affine1d.cpp.obj CMakeFiles/SgNet.dir/src/neural/layer/softmax.cpp.obj
+build libSgNet.a: CXX_STATIC_LIBRARY_LINKER__SgNet_ CMakeFiles/SgNet.dir/src/tensor/vector.cpp.obj CMakeFiles/SgNet.dir/src/tensor/tensor2d.cpp.obj CMakeFiles/SgNet.dir/src/tensor/tensor.cpp.obj CMakeFiles/SgNet.dir/src/neural/layer/relu.cpp.obj CMakeFiles/SgNet.dir/src/neural/layer/sigmoid.cpp.obj CMakeFiles/SgNet.dir/src/neural/layer/tanh.cpp.obj CMakeFiles/SgNet.dir/src/neural/layer/leakyRelu.cpp.obj CMakeFiles/SgNet.dir/src/utils/frisbee.cpp.obj CMakeFiles/SgNet.dir/src/neural/loss/categoricalCrossEntropy.cpp.obj CMakeFiles/SgNet.dir/src/utils/fileReading.cpp.obj CMakeFiles/SgNet.dir/src/utils/timer.cpp.obj CMakeFiles/SgNet.dir/src/neural/layer/convolution2d.cpp.obj CMakeFiles/SgNet.dir/src/neural/layer/affine_t.cpp.obj CMakeFiles/SgNet.dir/src/neural/layer/affine1d.cpp.obj CMakeFiles/SgNet.dir/src/neural/layer/softmax.cpp.obj CMakeFiles/SgNet.dir/src/neural/layer/flatten.cpp.obj
   OBJECT_DIR = CMakeFiles\SgNet.dir
   POST_BUILD = cd .
   PRE_LINK = cd .

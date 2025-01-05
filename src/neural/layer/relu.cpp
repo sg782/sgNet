@@ -2,7 +2,7 @@
 #include <vector>
 #include "tensor/tensor.h"
 
-SgNet::Relu::Relu(std::vector<int> dims){
+SgNet::Relu::Relu(){
 
 }
 

@@ -20,6 +20,7 @@ add_library(SgNet
     src/neural/layer/affine_t.cpp
     src/neural/layer/affine1d.cpp
     src/neural/layer/softmax.cpp
+    src/neural/layer/flatten.cpp
 
 )
 

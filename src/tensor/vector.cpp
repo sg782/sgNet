@@ -46,6 +46,13 @@ void SgNet::Vector::printAddresses(){
     std::cout << "\n";
 }
 
+
+void SgNet::Vector::append(double val){
+        double* v = new double(val);
+        Frisbee f(v);
+        data.push_back(f);
+}
+
 void SgNet::Vector::resize(int newSize){
     data.resize(newSize);
 }

@@ -120,7 +120,11 @@ SgNet::Tensor SgNet::Convolution2d::forward(SgNet::Tensor inputs) {
                         SgNet::Tensor block = paddedInputs.block(blockIndices,blockDims);
 
                         // we can just do the dot prod! since they are represented by flat vectors
-                        double convSum = block.data.dot(filters.getAxis(i,j).asVector());
+
+
+                        double convSum = block.data.dot(filters.getAxis(0,j).asVector());
+
+
 
 					// 	block.data.print();
 					// 	filters.data.print();
@@ -142,8 +146,11 @@ SgNet::Tensor SgNet::Convolution2d::forward(SgNet::Tensor inputs) {
 
 			// add bias of filter j to the output activation
             SgNet::Vector ijInd(2);
+
             ijInd = std::vector<int>{i,j};
+
 			output[i][j].data += bias[j].val();
+
 		}
 	}	
 	return output;

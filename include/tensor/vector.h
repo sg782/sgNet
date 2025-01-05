@@ -30,6 +30,8 @@ namespace SgNet {
         Vector() = default;
         Vector(int size);
 
+        void append(double val);
+
     
 
         void print();
