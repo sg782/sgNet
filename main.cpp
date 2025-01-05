@@ -35,7 +35,7 @@ int main() {
 
 
 
-    double learningRate = 0.05;
+    double learningRate = 0.005;
 
 	
 	int kernelWidth = 3;

@@ -242,6 +242,22 @@ double SgNet::Vector::dot(const SgNet::Vector& v){
     
 }
 
+double SgNet::Vector::dot(const std::vector<int>& v){
+        if(this->size() != v.size()){
+        std::stringstream ss;
+        ss << "Dot product cannot be executed on dimensions of "
+           << this->size() << " and " << v.size() << "\n";
+        throw std::invalid_argument(ss.str());
+    }
+
+    double sum = 0;
+    for(int i=0;i<this->size();i++){
+        sum += data[i].val() * v[i];
+    }
+    return sum;
+    
+}
+
 
 void SgNet::Vector::setConstant(double val){
     for(int i=0;i<this->size();i++){

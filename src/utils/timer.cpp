@@ -20,7 +20,7 @@ double SgNet::Timer::timeStop(std::string message) {
 
 	std::cout << "\nTime Log\n";
 	std::cout << "\t - " << message << "\n";
-	std::cout << "\t - Time since previous call: " << recentDuration.count() << " ms\n";
+	std::cout << "\t - Time since previous call: " << recentDuration.count() << " ns\n";
 
 	recentTime = curTime;
     return recentDuration.count();

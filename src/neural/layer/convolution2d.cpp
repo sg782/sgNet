@@ -6,6 +6,8 @@
 #include "neural/layer/convolution2d.h"
 #include <cmath>
 
+#include "utils/timer.h"
+
 
 
 /*
@@ -160,6 +162,8 @@ SgNet::Tensor SgNet::Convolution2d::forward(SgNet::Tensor inputs) {
 
 SgNet::Tensor SgNet::Convolution2d::backward(SgNet::Tensor dValues) {
 
+	Timer t = Timer();
+
 	int batchSize = dValues.getDim(0);
 	
 	std::cout << "this\n";
@@ -234,12 +238,27 @@ SgNet::Tensor SgNet::Convolution2d::backward(SgNet::Tensor dValues) {
 	// fully naive and shameless 'solution'
     SgNet::Tensor dInputs(inputs.dims);
 
+	
+	t.start();
+
+	t.timeStop("begin");
+
+	//
+	/*
+	This following functions is the only thing that is devastatingly slow currently
+	I must find a way to improve it, the issue is with stride, which (seems to) throw away the possibility at some smooth matrix multiplication
+	
+	*/
+
+	//
+
 	for (int i = 0; i < batchSize; i++) {
+		//t.timeStop("batch");
 		for (int j = 0; j < numFilters; j++) {
 
 			// this part especially can be trimmed down
-			for (int k = 0; k < inputs[i][j].getDim(0);k++) {
-				for (int l = 0; l < inputs[i][j].getDim(1);l++) {
+			for (int k = 0; k < inputs.getDim(2);k++) {
+				for (int l = 0; l < inputs.getDim(3);l++) {
 
 					for (int m = 0; m < dValues.getDim(2); m++) {
 						for (int n = 0; n < dValues.getDim(3); n++) {
@@ -255,7 +274,7 @@ SgNet::Tensor SgNet::Convolution2d::backward(SgNet::Tensor dValues) {
 								weightIndexRow < filters[j].getDim(0) && 
 								weightIndexCol < filters[j].getDim(1)
 								) {
-
+								
                                 dInputs.at(std::vector<int>{i,j,k,l}) += filters.at(std::vector<int>{j,weightIndexRow,weightIndexCol}).val() * dValues.at(std::vector<int>{i,j,m,n}).val();
 							}
 							else {
@@ -270,6 +289,52 @@ SgNet::Tensor SgNet::Convolution2d::backward(SgNet::Tensor dValues) {
 
 		}
 	}
+
+/*
+	for (int i = 0; i < batchSize; i++) {
+		//t.timeStop("batch");
+		for (int j = 0; j < numFilters; j++) {
+
+			// this part especially can be trimmed down
+			for (int k = 0; k < inputs.getDim(2);k++) {
+				for (int l = 0; l < inputs.getDim(3);l++) {
+
+					for (int m = 0; m < dValues.getDim(2); m++) {
+						for (int n = 0; n < dValues.getDim(3); n++) {
+
+							// inside this loop we can quite explicitly find dO[m,n] / dA[k,l]
+							int weightIndexRow = k - (m * strideLength);
+							int weightIndexCol = l - (n * strideLength);
+
+							// i said shameless
+							// here, we are checking if our weight indices are in  bounds
+							if (weightIndexRow >= 0 && 
+								weightIndexCol >= 0 &&
+								weightIndexRow < filters[j].getDim(0) && 
+								weightIndexCol < filters[j].getDim(1)
+								) {
+								
+                                dInputs.at(std::vector<int>{i,j,k,l}) += filters.at(std::vector<int>{j,weightIndexRow,weightIndexCol}).val() * dValues.at(std::vector<int>{i,j,m,n}).val();
+							}
+							else {
+								// add zero
+							}
+
+						}
+					}
+				}
+			}
+
+
+		}
+	}
+
+
+
+*/
+
+
+	t.timeStop("end");
 	
 	//update weights (in theory)
 

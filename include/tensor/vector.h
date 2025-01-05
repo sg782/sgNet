@@ -46,6 +46,7 @@ namespace SgNet {
   
 
         double dot(const Vector& v);
+        double dot(const std::vector<int>& v);
 
         void setConstant(double val);
         void setRandomGaussian(double mean, double stdDev);
