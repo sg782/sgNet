@@ -2,6 +2,7 @@
 #include "tensor/tensor2d.h"
 #include <cmath>
 #include <stdexcept>
+#include <iostream>
 
 
 SgNet::CCE::CCE(){
@@ -25,6 +26,8 @@ double SgNet::CCE::calculate(SgNet::Tensor x, SgNet::Vector y){
         idx = std::vector<int>{i,correctClassIdx};
         loss +=  -1 * std::log(x.at(idx).val());
     }
+
+
 
     loss /= x.getDim(0);
 

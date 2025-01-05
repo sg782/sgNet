@@ -23,7 +23,7 @@ int main() {
     using namespace SgNet;
 
 
-    int maxRows = 10;
+    int maxRows = 11;
 
     Tensor data(std::vector<int>{maxRows,1,28,28});
     Vector labels(maxRows);
@@ -35,7 +35,7 @@ int main() {
 
 
 
-    double learningRate = 0.005;
+    double learningRate = 0.05;
 
 	
 	int kernelWidth = 3;
@@ -45,7 +45,7 @@ int main() {
 	int strideLength = 1;
 	int padding = 0;
 
-	int convOutDim = (14 - kernelWidth+2*padding)/strideLength + 1;
+	int convOutDim = (28 - kernelWidth+2*padding)/strideLength + 1;
 	labels.print();
 
 
@@ -90,6 +90,7 @@ int main() {
 
 
         double loss = cce.calculate(sOut2,labels);
+
 
         std::cout << "Loss: " << loss << "\n";
 

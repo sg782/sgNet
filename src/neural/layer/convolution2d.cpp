@@ -26,11 +26,8 @@ SgNet::Convolution2d::Convolution2d(std::array<int, 2> kernelShape, int inputCha
 	// initialize weights and biases
 	this->filters = SgNet::Tensor(std::vector<int>{numFilters,kernelShape[0],kernelShape[1]});
 
-
-	for (int i = 0; i < numFilters; i++) {
-		filters[i].setRandomGaussian(0,1);
-		filters[i] *= std::sqrt(2. / kernelShape[0]);
-	}
+	filters.setRandomGaussian(0,1);
+	filters*= 2. / kernelShape[0];
 
     this->bias.resize(numFilters);
 	this->bias = SgNet::Vector(numFilters);
@@ -165,7 +162,7 @@ SgNet::Tensor SgNet::Convolution2d::backward(SgNet::Tensor dValues) {
 
 	int batchSize = dValues.getDim(0);
 	
-
+	std::cout << "this\n";
 	/*
 		Must calculate dW,dB, and dInputs **for each channel**
 
@@ -183,13 +180,11 @@ SgNet::Tensor SgNet::Convolution2d::backward(SgNet::Tensor dValues) {
 	}
 	db /= batchSize;
 	
-
+	std::cout << "this\n";
 	// dW
     SgNet::Tensor dW(std::vector<int>{numFilters,kernelShape[0],kernelShape[1]});
+	dW.setConstant(0);
 
-	for (int i = 0; i < dW.getDim(0); i++) {
-		dW[i].setConstant(0);
-	}
 	for (int i = 0; i < batchSize; i++) {
 		for (int j = 0; j < numFilters; j++) {
 			// since we are zero indexed, the formula will be slightly altered
@@ -198,8 +193,8 @@ SgNet::Tensor SgNet::Convolution2d::backward(SgNet::Tensor dValues) {
 				for (int l = 0; l < kernelShape[1]; l++) {
 
                     // could that also be written as dValues.getDim(2) and getDim(3)?
-					for (int m = 0; m < dValues[i][j].getDim(0); m++) {
-						for (int n =  0; n < dValues[i][j].getDim(1); n++) {
+					for (int m = 0; m < dValues.getDim(2); m++) {
+						for (int n =  0; n < dValues.getDim(3); n++) {
 							int dValRow = (m * strideLength) + k;
 							int dValCol = (n * strideLength) + l;
 
@@ -215,10 +210,8 @@ SgNet::Tensor SgNet::Convolution2d::backward(SgNet::Tensor dValues) {
 	}
 	
 	// average across batch
-	for (int i = 0; i < dW.getDim(0); i++) {
-		dW[i] /= batchSize;
-	}
-	
+	dW/=batchSize;
+
 	// dInputs
 	//how each value affects the output -> loss
 
@@ -236,7 +229,7 @@ SgNet::Tensor SgNet::Convolution2d::backward(SgNet::Tensor dValues) {
 	
 	*/
 
-
+	std::cout << "this\n";
 
 	// fully naive and shameless 'solution'
     SgNet::Tensor dInputs(inputs.dims);
@@ -248,8 +241,8 @@ SgNet::Tensor SgNet::Convolution2d::backward(SgNet::Tensor dValues) {
 			for (int k = 0; k < inputs[i][j].getDim(0);k++) {
 				for (int l = 0; l < inputs[i][j].getDim(1);l++) {
 
-					for (int m = 0; m < dValues[i][j].getDim(0); m++) {
-						for (int n = 0; n < dValues[i][j].getDim(1); n++) {
+					for (int m = 0; m < dValues.getDim(2); m++) {
+						for (int n = 0; n < dValues.getDim(3); n++) {
 
 							// inside this loop we can quite explicitly find dO[m,n] / dA[k,l]
 							int weightIndexRow = k - (m * strideLength);

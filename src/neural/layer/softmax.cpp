@@ -15,7 +15,10 @@ SgNet::Tensor SgNet::Softmax::forward(SgNet::Tensor inputs, int axis){
 
     // dimension of relevant softmax kernel shape (since it may not be 2d)
     // kernel may not be the appropriate term
-    SgNet::Vector kernelDims = inputs.dims.slice(0,inputs.dims.size()-axis);
+    SgNet::Vector kernelDims = inputs.dims.slice(axis,inputs.dims.size());
+
+    kernelDims.print();
+    inputs.dims.print();
 
     SgNet::Tensor out(inputs.dims);
 

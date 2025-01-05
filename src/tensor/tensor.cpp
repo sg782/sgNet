@@ -415,9 +415,8 @@ void SgNet::Tensor::operator+= (Vector v){
     }
 
     for(int i=0;i<dims[0].val();i++){
-        this->operator[](i) += v[i].val();;
+        this->operator[](i).asVector() += v;
     }
-
 }
 
 
@@ -517,7 +516,7 @@ SgNet::Tensor SgNet::Tensor::operator+ (SgNet::Tensor b){
 
     // bounds checking
     if(this->flatLength!=b.flatLength){
-        throw std::runtime_error("Tensors not of same volume, cannot elementwise multiply");
+        throw std::runtime_error("Tensors not of same volume, cannot elementwise add");
 
     }
 

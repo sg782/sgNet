@@ -24,6 +24,7 @@ SgNet::Tensor SgNet::Affine1d::forward(Tensor inputs){
     // forward pass on generic tensor type
     Tensor out = inputs.matMult(w);
 
+
     out += b;
 
     return out;
